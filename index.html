@@ -758,8 +758,14 @@ function toast(msg){const t=$('toast');$('toastMsg').textContent=msg;t.classList
 function openMo(id){
   // reset modals when opening
   if(id==='mo-addFriend'){renderTagCheckboxes('fn-tags-sel',[]);}
-  if(id==='mo-editFriend'){} // handled in editFriend
   if(id==='mo-addBroadcast'){$('bc-tag-wrap').style.display='none';$('bc-target').value='all';}
+  if(id==='mo-addTemplate'){
+    $('tp-name').value='';$('tp-body').value='';$('tp-prev-name').value='山田 太郎';
+    $('tp-preview').style.display='none';
+  }
+  if(id==='mo-addScenario'){['sn-name','sn-desc','sn-s1','sn-s2','sn-s3'].forEach(i=>$(i)&&($(i).value=''));}
+  if(id==='mo-addReminder'){['rm-name','rm-time','rm-msg'].forEach(i=>$(i)&&($(i).value=''));}
+  if(id==='mo-addTraffic'){['tr-name','tr-url','tr-source'].forEach(i=>$(i)&&($(i).value=''));}
   $(id).classList.add('op');
 }
 function closeMo(id){$(id).classList.remove('op')}
@@ -976,6 +982,7 @@ function renderScenario(){
         <div class="sc-nm">${s.name}</div>
         <div style="display:flex;align-items:center;gap:8px">
           <span class="badge ${s.active?'b-green':'b-gray'}">${s.active?'● 稼働中':'○ 停止中'}</span>
+          <button class="btn-e" onclick="scenarioSend(${s.id},event)">+送信</button>
           <button class="btn-e" onclick="toggleScenario(${s.id},event)">切替</button>
           <button class="btn-d" onclick="delScenario(${s.id},event)">削除</button>
         </div>
@@ -983,7 +990,7 @@ function renderScenario(){
       <div class="sc-meta">
         <div class="sc-mi">トリガー: <strong>${s.trigger}</strong></div>
         <div class="sc-mi">ステップ数: <strong>${s.steps.length}</strong></div>
-        <div class="sc-mi">送信数: <strong>${s.sent}件</strong></div>
+        <div class="sc-mi">累計送信: <strong>${s.sent}件</strong></div>
         <div class="sc-mi">${s.desc}</div>
       </div>
       <div class="sc-steps ${openSteps.has(s.id)?'open':''}" id="ss-${s.id}">
@@ -995,6 +1002,15 @@ function renderScenario(){
       </div>
     </div>`).join('');
 }
+function scenarioSend(id,e){
+  e.stopPropagation();
+  const s=D.scenarios.find(x=>x.id===id);
+  if(!s)return;
+  if(!s.active){toast('停止中のシナリオは送信できません');return;}
+  s.sent+=D.friends.filter(f=>f.status==='フォロー中').length;
+  D.activity.unshift({type:'auto',icon:'📋',text:`シナリオ「${s.name}」を送信`,time:'たった今',color:'qi-b'});
+  save();renderScenario();renderDash();toast(`シナリオ「${s.name}」を送信しました 📋`);
+}
 function toggleScSteps(id){openSteps.has(id)?openSteps.delete(id):openSteps.add(id);renderScenario();}
 function toggleScenario(id,e){
   e.stopPropagation();
@@ -1004,7 +1020,9 @@ function toggleScenario(id,e){
 function delScenario(id,e){
   e.stopPropagation();
   if(!confirm('削除しますか？'))return;
-  D.scenarios=D.scenarios.filter(x=>x.id!==id);save();renderScenario();toast('削除しました');
+  D.scenarios=D.scenarios.filter(x=>x.id!==id);
+  openSteps.delete(id);
+  save();renderScenario();toast('削除しました');
 }
 function addScenario(){
   const name=$('sn-name').value.trim();
@@ -1022,11 +1040,7 @@ function addScenario(){
 }
 
 // ==================== BROADCAST ====================
-document.addEventListener('DOMContentLoaded',function(){
-  $('bc-target').addEventListener('change',function(){$('bc-tag-wrap').style.display=this.value==='tag'?'block':'none'});
-  $('tp-body').addEventListener('input',previewTemplate);
-  $('tp-prev-name').addEventListener('input',previewTemplate);
-});
+// event listeners attached at INIT (DOM already ready at script bottom)
 function renderBroadcast(){
   $('broadcastList').innerHTML=D.broadcasts.map(b=>{
     const statusBadge=b.status==='sent'?'b-green':b.status==='scheduled'?'b-blue':'b-gray';
@@ -1094,12 +1108,11 @@ function copyTemplate(id){
 function delTemplate(id){if(!confirm('削除しますか？'))return;D.templates=D.templates.filter(x=>x.id!==id);save();renderTemplate();toast('削除しました')}
 function addTemplate(){
   const name=$('tp-name').value.trim();const body=$('tp-body').value.trim();
-  if(!name||!body)return;
+  if(!name){alert('テンプレート名を入力してください');return;}
+  if(!body){alert('本文を入力してください');return;}
   const vars=[...(body.match(/\{\{(\w+)\}\}/g)||[])].map(v=>v.replace(/[{}]/g,''));
   D.templates.push({id:nid(),name,cat:$('tp-cat').value,body,vars:[...new Set(vars)]});
   save();renderTemplate();closeMo('mo-addTemplate');
-  ['tp-name','tp-body','tp-prev-name'].forEach(i=>$(i).value='');
-  $('tp-preview').style.display='none';
   toast('テンプレートを作成しました 📄');
 }
 
@@ -1352,6 +1365,11 @@ const renders={
 };
 
 // ==================== INIT ====================
+// Attach event listeners (DOM is ready - script runs at end of body)
+$('bc-target').addEventListener('change',function(){$('bc-tag-wrap').style.display=this.value==='tag'?'block':'none'});
+$('tp-body').addEventListener('input',previewTemplate);
+$('tp-prev-name').addEventListener('input',previewTemplate);
+
 renderDash();
 renderTagCheckboxes('fn-tags-sel',[]);
 renderFriends();
