@@ -3,1295 +3,1350 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ラインダー - LINE CRM Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>ラインダー - LINE CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg-sidebar: #1a1f2e;
-  --bg-sidebar-hover: #252b3d;
-  --bg-main: #f4f6fa;
-  --green: #06c755;
-  --green-dark: #05a847;
-  --green-light: #e8faf0;
-  --text-primary: #1a1f2e;
-  --text-secondary: #6b7280;
-  --text-sidebar: #9ca3af;
-  --border: #e5e7eb;
-  --white: #ffffff;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-  --radius: 14px;
-  --radius-sm: 8px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sb:#1a1f2e;--sb2:#252b3d;--bg:#f0f2f8;--green:#06c755;--gd:#05a847;--gl:#e8faf0;
+  --tx:#1a1f2e;--ts:#6b7280;--br:#e5e7eb;--wh:#fff;
+  --sh:0 1px 3px rgba(0,0,0,.08);--shm:0 4px 16px rgba(0,0,0,.1);--r:12px;--r2:8px;
 }
-body {
-  font-family: 'Noto Sans JP', 'Inter', sans-serif;
-  background: var(--bg-main);
-  color: var(--text-primary);
-  display: flex;
-  min-height: 100vh;
-}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);display:flex;min-height:100vh;font-size:14px}
 /* SIDEBAR */
-.sidebar {
-  width: 230px;
-  min-width: 230px;
-  background: var(--bg-sidebar);
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow-y: auto;
-  position: fixed;
-  left: 0; top: 0;
-  z-index: 100;
-}
-.sidebar::-webkit-scrollbar { width: 0; }
-.sidebar-logo {
-  padding: 18px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-.logo-icon {
-  width: 36px; height: 36px;
-  background: var(--green);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 15px; color: white;
-  flex-shrink: 0;
-}
-.logo-text h1 { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
-.logo-text p { font-size: 10.5px; color: #6b7280; margin-top: 1px; }
-.sidebar-nav { padding: 12px 8px; flex: 1; }
-.nav-label {
-  font-size: 9.5px; font-weight: 600; color: #4b5563;
-  text-transform: uppercase; letter-spacing: 1.2px;
-  padding: 10px 10px 4px;
-}
-.nav-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8.5px 10px; border-radius: 8px;
-  cursor: pointer; color: var(--text-sidebar);
-  font-size: 13px; font-weight: 400;
-  transition: all 0.15s;
-  position: relative;
-  user-select: none;
-  margin-bottom: 1px;
-}
-.nav-item:hover { background: var(--bg-sidebar-hover); color: #d1d5db; }
-.nav-item.active { background: rgba(6,199,85,0.13); color: var(--green); font-weight: 500; }
-.nav-dot {
-  display: none;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--green); position: absolute; right: 10px;
-}
-.nav-item.active .nav-dot { display: block; }
-.nav-icon { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; }
-
+.sb{width:228px;min-width:228px;background:var(--sb);display:flex;flex-direction:column;height:100vh;overflow-y:auto;position:fixed;left:0;top:0;z-index:100}
+.sb::-webkit-scrollbar{width:0}
+.sb-logo{padding:16px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.07)}
+.logo-ico{width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;flex-shrink:0}
+.logo-tx h1{font-size:15px;font-weight:700;color:#fff;letter-spacing:.3px}
+.logo-tx p{font-size:10px;color:#6b7280;margin-top:1px}
+.sb-nav{padding:10px 8px;flex:1}
+.nl{font-size:9px;font-weight:600;color:#4b5563;text-transform:uppercase;letter-spacing:1.2px;padding:10px 10px 3px}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;cursor:pointer;color:#9ca3af;font-size:13px;transition:all .15s;position:relative;user-select:none;margin-bottom:1px}
+.ni:hover{background:var(--sb2);color:#d1d5db}
+.ni.act{background:rgba(6,199,85,.14);color:var(--green);font-weight:500}
+.ni.act::after{content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:var(--green)}
+.ni-ico{font-size:14px;width:17px;text-align:center;flex-shrink:0}
 /* MAIN */
-.main {
-  margin-left: 230px;
-  flex: 1;
-  height: 100vh;
-  overflow-y: auto;
-}
-.page { display: none; padding: 30px 34px; min-height: 100vh; }
-.page.active { display: block; }
-.page-header {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  margin-bottom: 26px;
-}
-.page-title h2 { font-size: 24px; font-weight: 700; color: var(--text-primary); }
-.page-title p { font-size: 12.5px; color: var(--text-secondary); margin-top: 3px; }
-
-.btn-green {
-  background: var(--green); color: white;
-  border: none; border-radius: 8px;
-  padding: 10px 18px; font-size: 13px; font-weight: 600;
-  cursor: pointer; display: flex; align-items: center; gap: 5px;
-  font-family: inherit;
-  transition: all 0.15s;
-}
-.btn-green:hover { background: var(--green-dark); transform: translateY(-1px); }
-
-/* STATUS BADGE */
-.status-badge {
-  display: inline-flex; align-items: center;
-  padding: 3px 10px; border-radius: 20px;
-  font-size: 12px; font-weight: 500;
-}
-.status-follow { background: #e8faf0; color: #059669; }
-.status-block { background: #f3f4f6; color: #6b7280; }
-
-/* TAG BADGE */
-.tag-badge {
-  display: inline-flex; align-items: center;
-  padding: 3px 9px; border-radius: 20px;
-  font-size: 11.5px; font-weight: 500;
-  margin: 2px;
-}
-.tag-trial { background: #fed7aa; color: #c2410c; }
-.tag-new { background: #bbf7d0; color: #15803d; }
-.tag-hot { background: #fde68a; color: #92400e; }
-.tag-vip { background: #c4b5fd; color: #5b21b6; }
-.tag-bought { background: #bfdbfe; color: #1d4ed8; }
-.tag-seminar { background: #a5f3fc; color: #0e7490; }
-.tag-doc { background: #e9d5ff; color: #7c3aed; }
-.tag-sleep { background: #e5e7eb; color: #374151; }
-
-/* EVENT TYPE BADGE */
-.ev-badge {
-  display: inline-flex; align-items: center;
-  padding: 3px 10px; border-radius: 20px;
-  font-size: 11.5px; font-weight: 500;
-}
-.ev-purchase { background: #fce7f3; color: #be185d; }
-.ev-submit { background: #dbeafe; color: #1d4ed8; }
-.ev-signup { background: #d1fae5; color: #065f46; }
-
+.main{margin-left:228px;flex:1;height:100vh;overflow-y:auto}
+.pg{display:none;padding:28px 32px;min-height:100vh;animation:fadeIn .2s ease}
+.pg.act{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+.pt h2{font-size:22px;font-weight:700}
+.pt p{font-size:12px;color:var(--ts);margin-top:2px}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:9px 16px;border-radius:var(--r2);font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .15s}
+.btn-g{background:var(--green);color:#fff}.btn-g:hover{background:var(--gd);transform:translateY(-1px)}
+.btn-s{background:#f3f4f6;color:var(--tx)}.btn-s:hover{background:#e5e7eb}
+.btn-d{background:none;color:#ef4444;border:none;cursor:pointer;font-family:inherit;font-size:12px;padding:4px 8px;border-radius:5px}.btn-d:hover{background:#fef2f2}
+.btn-e{background:none;color:#6b7280;border:none;cursor:pointer;font-family:inherit;font-size:12px;padding:4px 8px;border-radius:5px;border:1px solid var(--br)}.btn-e:hover{border-color:var(--green);color:var(--green)}
 /* CARD */
-.card {
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 22px 24px;
-}
-
-/* ============ DASHBOARD ============ */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 26px;
-}
-.stat-card {
-  border-radius: var(--radius);
-  padding: 24px;
-  color: white;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  min-height: 140px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-.stat-card::before {
-  content: '';
-  position: absolute;
-  right: -20px; top: -20px;
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.12);
-}
-.stat-card::after {
-  content: '';
-  position: absolute;
-  right: 20px; top: 30px;
-  width: 60px; height: 60px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.08);
-}
-.stat-card-green { background: linear-gradient(135deg, #06c755, #04a845); }
-.stat-card-blue { background: linear-gradient(135deg, #6096f8, #4475e8); }
-.stat-card-purple { background: linear-gradient(135deg, #a78bfa, #7c5def); }
-.stat-card-yellow { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
-.stat-card-red { background: linear-gradient(135deg, #f87171, #ef4444); }
-.stat-card-teal { background: linear-gradient(135deg, #34d399, #10b981); }
-.stat-icon {
-  font-size: 20px;
-  background: rgba(255,255,255,0.2);
-  width: 40px; height: 40px;
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-}
-.stat-arrow {
-  position: absolute; right: 16px; top: 50%;
-  transform: translateY(-50%);
-  font-size: 18px; opacity: 0.5;
-}
-.stat-number { font-size: 40px; font-weight: 700; line-height: 1; margin-top: 8px; }
-.stat-label { font-size: 13px; opacity: 0.85; }
-.stat-sub { font-size: 11px; opacity: 0.65; margin-top: 2px; }
-
-.quick-actions { margin-top: 8px; }
-.quick-title {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 14px;
-}
-.quick-title h3 { font-size: 16px; font-weight: 600; }
-.quick-title span { font-size: 12px; color: var(--text-secondary); }
-.quick-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-.quick-item {
-  background: var(--white);
-  border-radius: 10px;
-  padding: 14px 16px;
-  display: flex; align-items: center; gap: 12px;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  transition: all 0.15s;
-}
-.quick-item:hover { border-color: var(--green); box-shadow: 0 2px 8px rgba(6,199,85,0.12); }
-.quick-item-icon {
-  width: 36px; height: 36px; border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 17px; flex-shrink: 0;
-}
-.qi-green { background: var(--green-light); }
-.qi-blue { background: #eff6ff; }
-.qi-purple { background: #f5f3ff; }
-.qi-red { background: #fef2f2; }
-.qi-yellow { background: #fffbeb; }
-.quick-item-text h4 { font-size: 13px; font-weight: 600; }
-.quick-item-text p { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
-.quick-arrow { margin-left: auto; color: #d1d5db; font-size: 14px; }
-
-/* STATUS INDICATOR */
-.status-indicator {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12.5px; color: #059669; font-weight: 500;
-}
-.status-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--green);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%,100% { box-shadow: 0 0 0 0 rgba(6,199,85,0.4); }
-  50% { box-shadow: 0 0 0 5px rgba(6,199,85,0); }
-}
-
-/* ============ FRIENDS PAGE ============ */
-.filter-bar {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 20px;
-}
-.filter-bar label { font-size: 13px; color: var(--text-secondary); }
-.filter-select {
-  appearance: none;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 8px 32px 8px 12px;
-  font-size: 13px; font-family: inherit;
-  color: var(--text-primary);
-  cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-}
-.count-badge { font-size: 13px; color: var(--text-secondary); }
-.friends-table { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-.table-header {
-  display: grid;
-  grid-template-columns: 2fr 1fr 2fr 1fr 30px;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-  font-size: 12px; font-weight: 600; color: var(--text-secondary);
-}
-.friend-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 2fr 1fr 30px;
-  padding: 14px 20px;
-  border-bottom: 1px solid #f3f4f6;
-  align-items: center;
-  transition: background 0.1s;
-  cursor: pointer;
-}
-.friend-row:last-child { border-bottom: none; }
-.friend-row:hover { background: #fafafa; }
-.friend-info { display: flex; align-items: center; gap: 12px; }
-.avatar {
-  width: 40px; height: 40px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; flex-shrink: 0;
-  background: #f3f4f6;
-}
-.friend-name { font-size: 14px; font-weight: 500; }
-.friend-sub { font-size: 11.5px; color: var(--text-secondary); margin-top: 1px; }
-.tags-cell { display: flex; flex-wrap: wrap; gap: 2px; }
-.date-cell { font-size: 13px; color: var(--text-secondary); }
-.expand-btn { font-size: 16px; color: #9ca3af; cursor: pointer; justify-self: end; }
-
-/* ============ CV PAGE ============ */
-.cv-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 20px;
-}
-.cv-card {
-  background: var(--white);
-  border-radius: var(--radius);
-  padding: 20px 22px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-}
-.cv-card-top {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  margin-bottom: 12px;
-}
-.cv-card-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
-.cv-card-number { font-size: 36px; font-weight: 700; color: var(--text-primary); }
-.cv-card-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-.cv-card-row { display: flex; align-items: baseline; gap: 14px; }
-.cv-sales { font-size: 18px; font-weight: 600; color: #059669; }
-
-.cv-table-wrap { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-.cv-table-header {
-  display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr 1.2fr 80px;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-  font-size: 12px; font-weight: 600; color: var(--text-secondary);
-}
-.cv-table-row {
-  display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr 1.2fr 80px;
-  padding: 16px 20px;
-  border-bottom: 1px solid #f3f4f6;
-  align-items: center;
-  transition: background 0.1s;
-}
-.cv-table-row:last-child { border-bottom: none; }
-.cv-table-row:hover { background: #fafafa; }
-.cv-name { font-size: 14px; font-weight: 500; }
-.cv-amount { font-size: 14px; font-weight: 500; }
-.cv-date { font-size: 13px; color: var(--text-secondary); }
-
+.card{background:var(--wh);border-radius:var(--r);box-shadow:var(--sh);padding:20px 22px}
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
+.b-green{background:#d1fae5;color:#065f46}.b-gray{background:#f3f4f6;color:#6b7280}
+.b-pink{background:#fce7f3;color:#be185d}.b-blue{background:#dbeafe;color:#1d4ed8}
+.b-cyan{background:#cffafe;color:#0e7490}.b-purple{background:#ede9fe;color:#5b21b6}
+.b-orange{background:#ffedd5;color:#c2410c}.b-yellow{background:#fef9c3;color:#854d0e}
+.b-red{background:#fee2e2;color:#991b1b}
+/* TAG COLORS */
+.tc-0{background:#fed7aa;color:#c2410c}.tc-1{background:#bbf7d0;color:#15803d}
+.tc-2{background:#fde68a;color:#92400e}.tc-3{background:#c4b5fd;color:#5b21b6}
+.tc-4{background:#bfdbfe;color:#1d4ed8}.tc-5{background:#a5f3fc;color:#0e7490}
+.tc-6{background:#e9d5ff;color:#7c3aed}.tc-7{background:#e5e7eb;color:#374151}
+/* TABLE */
+.tbl{background:var(--wh);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.tbl-h{display:grid;padding:10px 18px;border-bottom:1px solid var(--br);font-size:11px;font-weight:600;color:var(--ts);background:#fafafa}
+.tbl-r{display:grid;padding:13px 18px;border-bottom:1px solid #f3f4f6;align-items:center;transition:background .1s;cursor:pointer}
+.tbl-r:last-child{border-bottom:none}
+.tbl-r:hover{background:#fafbfc}
 /* MODAL */
-.modal-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 200;
-  align-items: center; justify-content: center;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 28px;
-  width: 460px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-  animation: modalIn 0.2s ease;
-}
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.95) translateY(-10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
-.modal-title { font-size: 17px; font-weight: 700; }
-.modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: #9ca3af; }
-.form-group { margin-bottom: 16px; }
-.form-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-.form-input {
-  width: 100%; padding: 10px 12px;
-  border: 1px solid var(--border); border-radius: 8px;
-  font-size: 13.5px; font-family: inherit;
-  color: var(--text-primary);
-  transition: border-color 0.15s;
-}
-.form-input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(6,199,85,0.12); }
-.form-select {
-  width: 100%; padding: 10px 12px;
-  border: 1px solid var(--border); border-radius: 8px;
-  font-size: 13.5px; font-family: inherit;
-  background: white; cursor: pointer;
-  appearance: none;
-}
-.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
-.btn-cancel {
-  background: #f3f4f6; color: var(--text-primary);
-  border: none; border-radius: 8px;
-  padding: 10px 18px; font-size: 13px; font-weight: 500;
-  cursor: pointer; font-family: inherit;
-}
-.btn-cancel:hover { background: #e5e7eb; }
-
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;align-items:center;justify-content:center}
+.mo.op{display:flex}
+.mo-box{background:var(--wh);border-radius:16px;padding:26px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18);animation:moin .2s ease}
+@keyframes moin{from{opacity:0;transform:scale(.95) translateY(-8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mo-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.mo-t{font-size:16px;font-weight:700}
+.mo-x{background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af;line-height:1}
+/* FORM */
+.fg{margin-bottom:14px}
+.fl{display:block;font-size:12.5px;font-weight:500;margin-bottom:5px;color:var(--ts)}
+.fi,.fs,.fta{width:100%;padding:9px 11px;border:1px solid var(--br);border-radius:var(--r2);font-size:13px;font-family:inherit;color:var(--tx);transition:border-color .15s;background:var(--wh)}
+.fi:focus,.fs:focus,.fta:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(6,199,85,.1)}
+.fs{appearance:none;cursor:pointer}
+.fta{resize:vertical;min-height:80px}
+.mf{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
 /* TOAST */
-.toast {
-  position: fixed; bottom: 24px; right: 24px;
-  background: #1a1f2e; color: white;
-  padding: 12px 20px; border-radius: 10px;
-  font-size: 13.5px; font-weight: 500;
-  display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  z-index: 999;
-  transform: translateY(80px); opacity: 0;
-  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast-icon { font-size: 16px; }
+.toast{position:fixed;bottom:22px;right:22px;background:#1a1f2e;color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:999;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.toast.show{transform:translateY(0);opacity:1}
+/* SEARCH */
+.srch{position:relative;flex:1;max-width:300px}
+.srch input{width:100%;padding:8px 12px 8px 34px;border:1px solid var(--br);border-radius:var(--r2);font-size:13px;font-family:inherit;background:var(--wh)}
+.srch input:focus{outline:none;border-color:var(--green)}
+.srch::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px}
+/* STATUS DOT */
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(6,199,85,.4)}50%{box-shadow:0 0 0 5px rgba(6,199,85,0)}}
 
-/* STUB PAGES */
-.coming-soon {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 60vh; gap: 12px;
-}
-.coming-soon .icon { font-size: 56px; }
-.coming-soon h3 { font-size: 18px; font-weight: 600; color: var(--text-primary); }
-.coming-soon p { font-size: 13px; color: var(--text-secondary); }
+/* ===DASHBOARD=== */
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.sc{border-radius:var(--r);padding:22px;color:#fff;position:relative;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;min-height:130px;display:flex;flex-direction:column;justify-content:space-between}
+.sc:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.16)}
+.sc::before{content:'';position:absolute;right:-15px;top:-15px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.12)}
+.sc::after{content:'';position:absolute;right:25px;top:35px;width:55px;height:55px;border-radius:50%;background:rgba(255,255,255,.07)}
+.sc-g{background:linear-gradient(135deg,#06c755,#04a845)}
+.sc-b{background:linear-gradient(135deg,#6096f8,#4475e8)}
+.sc-p{background:linear-gradient(135deg,#a78bfa,#7c5def)}
+.sc-y{background:linear-gradient(135deg,#fbbf24,#f59e0b)}
+.sc-r{background:linear-gradient(135deg,#f87171,#ef4444)}
+.sc-t{background:linear-gradient(135deg,#34d399,#10b981)}
+.sc-ico{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:17px}
+.sc-n{font-size:38px;font-weight:700;line-height:1;margin-top:6px}
+.sc-l{font-size:12.5px;opacity:.9}
+.sc-s{font-size:10.5px;opacity:.65;margin-top:2px}
+.sc-arr{position:absolute;right:14px;bottom:14px;font-size:18px;opacity:.4}
+/* ACTIVITY */
+.act-list{display:flex;flex-direction:column;gap:0}
+.act-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #f3f4f6}
+.act-item:last-child{border-bottom:none}
+.act-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.act-tx{flex:1}
+.act-tx strong{font-size:13px;font-weight:500}
+.act-tx span{font-size:11.5px;color:var(--ts);display:block;margin-top:1px}
+.act-time{font-size:11px;color:var(--ts)}
+/* QUICK */
+.qg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.qi{background:var(--wh);border-radius:10px;padding:13px 15px;display:flex;align-items:center;gap:11px;cursor:pointer;border:1px solid var(--br);transition:all .15s}
+.qi:hover{border-color:var(--green);box-shadow:0 2px 10px rgba(6,199,85,.1)}
+.qi-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.qi-g{background:#e8faf0}.qi-b{background:#eff6ff}.qi-p{background:#f5f3ff}.qi-r{background:#fef2f2}.qi-y{background:#fffbeb}.qi-t{background:#f0fdf4}
+.qi-tx h4{font-size:13px;font-weight:600}
+.qi-tx p{font-size:11px;color:var(--ts);margin-top:1px}
+.qi-arr{margin-left:auto;color:#d1d5db;font-size:14px}
 
-/* SECTION DIVIDER */
-.section-divider { height: 1px; background: var(--border); margin: 24px 0; }
+/* ===FRIENDS=== */
+.fb{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.fs2{appearance:none;background:var(--wh);border:1px solid var(--br);border-radius:var(--r2);padding:7px 28px 7px 11px;font-size:12.5px;font-family:inherit;color:var(--tx);cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center}
+.fr-row{display:grid;grid-template-columns:2.2fr 1fr 2fr 1.1fr 70px;padding:12px 18px;border-bottom:1px solid #f3f4f6;align-items:center;transition:background .1s}
+.fr-row:last-child{border-bottom:none}
+.fr-row:hover{background:#fafbfc}
+.av{width:37px;height:37px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;background:#f3f4f6;flex-shrink:0}
+.fn{font-size:13.5px;font-weight:500}
+.fj{font-size:11px;color:var(--ts);margin-top:1px}
+.tags{display:flex;flex-wrap:wrap;gap:3px}
+/* DETAIL PANEL */
+.fr-detail{display:none;grid-column:1/-1;padding:14px 18px 16px;background:#fafbfd;border-top:1px solid #f3f4f6;border-bottom:1px solid #f3f4f6}
+.fr-detail.open{display:block}
+.fd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.fd-item label{font-size:10.5px;color:var(--ts);display:block;margin-bottom:3px}
+.fd-item span{font-size:13px;font-weight:500}
 
-/* SCORING PAGE */
-.score-table-wrap { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-.score-table-header {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 80px;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-  font-size: 12px; font-weight: 600; color: var(--text-secondary);
-}
-.score-table-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 80px;
-  padding: 14px 20px;
-  border-bottom: 1px solid #f3f4f6;
-  align-items: center;
-}
-.score-table-row:last-child { border-bottom: none; }
-.score-table-row:hover { background: #fafafa; }
-.score-val { font-weight: 700; color: var(--green); font-size: 15px; }
+/* ===CHAT=== */
+.chat-wrap{display:grid;grid-template-columns:260px 1fr;height:calc(100vh - 56px);background:var(--wh);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.chat-list{border-right:1px solid var(--br);overflow-y:auto}
+.chat-list::-webkit-scrollbar{width:4px}.chat-list::-webkit-scrollbar-thumb{background:#e5e7eb;border-radius:2px}
+.cl-item{padding:12px 14px;border-bottom:1px solid #f5f5f5;cursor:pointer;transition:background .1s;display:flex;align-items:center;gap:10px}
+.cl-item:hover{background:#fafafa}
+.cl-item.sel{background:#f0fdf4;border-left:3px solid var(--green)}
+.cl-name{font-size:13px;font-weight:500}
+.cl-msg{font-size:11.5px;color:var(--ts);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px}
+.cl-time{font-size:10.5px;color:var(--ts);margin-left:auto;flex-shrink:0}
+.chat-main{display:flex;flex-direction:column}
+.chat-header{padding:14px 18px;border-bottom:1px solid var(--br);display:flex;align-items:center;gap:12px;background:#fff}
+.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f7f8fc}
+.chat-msgs::-webkit-scrollbar{width:4px}.chat-msgs::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+.msg{max-width:70%;display:flex;flex-direction:column;gap:3px}
+.msg.mine{align-self:flex-end;align-items:flex-end}
+.msg.them{align-self:flex-start;align-items:flex-start}
+.msg-bub{padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.5}
+.msg.mine .msg-bub{background:var(--green);color:#fff;border-bottom-right-radius:3px}
+.msg.them .msg-bub{background:#fff;color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.08);border-bottom-left-radius:3px}
+.msg-time{font-size:10px;color:var(--ts)}
+.chat-input-area{padding:12px 16px;border-top:1px solid var(--br);display:flex;gap:10px;background:#fff}
+.chat-input{flex:1;border:1px solid var(--br);border-radius:20px;padding:9px 15px;font-size:13px;font-family:inherit;resize:none;max-height:80px;overflow-y:auto}
+.chat-input:focus{outline:none;border-color:var(--green)}
+.chat-send{background:var(--green);color:#fff;border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;flex-shrink:0;align-self:flex-end;transition:background .15s}
+.chat-send:hover{background:var(--gd)}
 
-/* AUTOMATION */
-.auto-list { display: flex; flex-direction: column; gap: 12px; }
-.auto-card {
-  background: var(--white); border-radius: var(--radius);
-  padding: 18px 22px; box-shadow: var(--shadow);
-  display: flex; align-items: center; gap: 16px;
-  cursor: pointer; transition: box-shadow 0.15s;
-}
-.auto-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
-.auto-icon {
-  width: 44px; height: 44px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center; font-size: 20px;
-}
-.auto-info { flex: 1; }
-.auto-name { font-size: 14.5px; font-weight: 600; }
-.auto-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-.auto-toggle {
-  width: 44px; height: 24px; border-radius: 12px;
-  background: var(--green); position: relative; cursor: pointer;
-  transition: background 0.2s; flex-shrink: 0;
-}
-.auto-toggle::after {
-  content: ''; position: absolute;
-  width: 20px; height: 20px; border-radius: 50%;
-  background: white; top: 2px; right: 2px;
-  transition: right 0.2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-.auto-toggle.off { background: #d1d5db; }
-.auto-toggle.off::after { right: 22px; }
+/* ===SCENARIO=== */
+.sc-card{background:var(--wh);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);border-left:4px solid var(--green);margin-bottom:10px;cursor:pointer;transition:box-shadow .15s}
+.sc-card:hover{box-shadow:var(--shm)}
+.sc-card.inactive{border-left-color:#d1d5db}
+.sc-head{display:flex;justify-content:space-between;align-items:center}
+.sc-nm{font-size:15px;font-weight:600}
+.sc-meta{display:flex;gap:18px;margin-top:10px}
+.sc-mi{font-size:12px;color:var(--ts)}
+.sc-mi strong{color:var(--tx);font-weight:600}
+.sc-steps{margin-top:14px;padding-top:14px;border-top:1px solid var(--br);display:none}
+.sc-steps.open{display:block}
+.step-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;padding:10px 14px;background:#fafafa;border-radius:8px}
+.step-num{width:24px;height:24px;background:var(--green);border-radius:50%;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-tx strong{font-size:13px}
+.step-tx span{font-size:11.5px;color:var(--ts);display:block;margin-top:2px}
 
-/* SCENARIO */
-.scenario-list { display: flex; flex-direction: column; gap: 12px; }
-.scenario-card {
-  background: var(--white); border-radius: var(--radius);
-  padding: 18px 22px; box-shadow: var(--shadow);
-  border-left: 4px solid var(--green);
-}
-.scenario-head { display: flex; justify-content: space-between; align-items: flex-start; }
-.scenario-name { font-size: 15px; font-weight: 600; }
-.scenario-status {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 12px; padding: 3px 10px; border-radius: 20px;
-  background: var(--green-light); color: #059669; font-weight: 500;
-}
-.scenario-meta { display: flex; gap: 20px; margin-top: 10px; }
-.scenario-meta-item { font-size: 12px; color: var(--text-secondary); }
-.scenario-meta-item strong { color: var(--text-primary); font-weight: 600; }
+/* ===BROADCAST=== */
+.bc-card{background:var(--wh);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);margin-bottom:10px;display:flex;align-items:center;gap:14px}
+.bc-ico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.bc-info{flex:1}
+.bc-name{font-size:14px;font-weight:600}
+.bc-meta{font-size:12px;color:var(--ts);margin-top:3px}
+.bc-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+
+/* ===TEMPLATE=== */
+.tp-card{background:var(--wh);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);margin-bottom:10px}
+.tp-head{display:flex;justify-content:space-between;align-items:flex-start}
+.tp-name{font-size:14.5px;font-weight:600}
+.tp-body{margin-top:10px;padding:12px 14px;background:#f8fafc;border-radius:8px;font-size:13px;line-height:1.6;color:#374151;border-left:3px solid var(--green)}
+.tp-vars{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.tp-var{background:#eff6ff;color:#1d4ed8;padding:2px 8px;border-radius:4px;font-size:11px;font-family:monospace}
+
+/* ===REMINDER=== */
+.rm-card{background:var(--wh);border-radius:var(--r);padding:16px 20px;box-shadow:var(--sh);margin-bottom:10px;display:flex;align-items:center;gap:14px}
+.rm-date{text-align:center;background:#f0fdf4;border-radius:8px;padding:8px 12px;flex-shrink:0;min-width:56px}
+.rm-date .rd-d{font-size:22px;font-weight:700;color:var(--green);line-height:1}
+.rm-date .rd-m{font-size:10px;color:#059669}
+.rm-info{flex:1}
+.rm-nm{font-size:14px;font-weight:600}
+.rm-meta{font-size:12px;color:var(--ts);margin-top:3px}
+
+/* ===TRAFFIC=== */
+.tr-stat{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.tr-card{background:var(--wh);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);text-align:center}
+.tr-n{font-size:32px;font-weight:700;color:var(--tx)}
+.tr-l{font-size:12px;color:var(--ts);margin-top:4px}
+.tr-bar{height:5px;background:#f3f4f6;border-radius:3px;margin-top:12px;overflow:hidden}
+.tr-fill{height:100%;background:var(--green);border-radius:3px;transition:width .6s ease}
+/* LINK ROW */
+.lk-row{grid-template-columns:2fr 1fr 1fr 1fr 80px}
+.lk-url{font-family:monospace;font-size:12px;color:#6b7280;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ===CV=== */
+.cv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.cv-card2{background:var(--wh);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);border:1px solid var(--br)}
+.cv-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.cv-nm{font-size:13.5px;font-weight:500}
+.cv-n{font-size:34px;font-weight:700;line-height:1}
+.cv-row{display:flex;align-items:baseline;gap:12px;margin-top:4px}
+.cv-sales{font-size:16px;font-weight:600;color:#059669}
+
+/* ===SCORING=== */
+.sc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.lb-row{grid-template-columns:40px 2fr 1fr 1fr 1fr}
+.lb-rank{font-size:15px;font-weight:700;color:var(--ts)}
+.lb-rank.top{color:var(--green)}
+.score-bar{height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden;margin-top:4px;width:80px}
+.score-fill{height:100%;background:linear-gradient(90deg,var(--green),#34d399);border-radius:3px}
+
+/* ===AUTOMATION=== */
+.au-card{background:var(--wh);border-radius:var(--r);padding:16px 20px;box-shadow:var(--sh);margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:box-shadow .15s}
+.au-card:hover{box-shadow:var(--shm)}
+.au-ico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.au-info{flex:1}
+.au-nm{font-size:14px;font-weight:600}
+.au-desc{font-size:12px;color:var(--ts);margin-top:2px}
+.tgl{width:42px;height:23px;border-radius:12px;background:var(--green);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.tgl::after{content:'';position:absolute;width:19px;height:19px;border-radius:50%;background:#fff;top:2px;right:2px;transition:right .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.tgl.off{background:#d1d5db}
+.tgl.off::after{right:21px}
+
+/* ===WEBHOOK=== */
+.wh-card{background:var(--wh);border-radius:var(--r);padding:16px 20px;box-shadow:var(--sh);margin-bottom:10px;display:flex;align-items:center;gap:14px}
+.wh-url{font-family:monospace;font-size:12px;color:#6b7280;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wh-status{display:flex;align-items:center;gap:5px;font-size:12px}
+
+/* ===SETTINGS=== */
+.set-section{background:var(--wh);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:18px}
+.set-title{padding:14px 20px;border-bottom:1px solid var(--br);font-size:14px;font-weight:600;background:#fafafa}
+.set-row{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #f3f4f6}
+.set-row:last-child{border-bottom:none}
+.set-row label{font-size:13.5px;font-weight:500}
+.set-row span{font-size:12px;color:var(--ts);margin-top:2px;display:block}
+.set-val{font-size:13px;color:var(--ts)}
+
+/* ===NOTIFY=== */
+.nf-row{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #f3f4f6}
+.nf-row:last-child{border-bottom:none}
+
+/* SECTION HDR */
+.sec-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sec-h h3{font-size:15px;font-weight:600}
+.sec-h span{font-size:12px;color:var(--ts)}
 </style>
 </head>
 <body>
 
 <!-- SIDEBAR -->
-<nav class="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-icon">ラ</div>
-    <div class="logo-text">
-      <h1>ラインダー</h1>
-      <p>LINE CRM Dashboard</p>
-    </div>
+<nav class="sb">
+  <div class="sb-logo">
+    <div class="logo-ico">ラ</div>
+    <div class="logo-tx"><h1>ラインダー</h1><p>LINE CRM Dashboard</p></div>
   </div>
-  <div class="sidebar-nav">
-    <div class="nav-item active" onclick="navigate('dashboard')">
-      <span class="nav-icon">🏠</span> ダッシュボード
-      <span class="nav-dot"></span>
-    </div>
-    <div class="nav-item" onclick="navigate('friends')">
-      <span class="nav-icon">👥</span> 友だち管理
-      <span class="nav-dot"></span>
-    </div>
-    <div class="nav-item" onclick="navigate('chat')">
-      <span class="nav-icon">💬</span> 個別チャット
-      <span class="nav-dot"></span>
-    </div>
-
-    <div class="nav-label">配信</div>
-    <div class="nav-item" onclick="navigate('scenario')">
-      <span class="nav-icon">📋</span> シナリオ配信
-      <span class="nav-dot"></span>
-    </div>
-    <div class="nav-item" onclick="navigate('broadcast')">
-      <span class="nav-icon">📢</span> 一斉配信
-      <span class="nav-dot"></span>
-    </div>
-    <div class="nav-item" onclick="navigate('template')">
-      <span class="nav-icon">📄</span> テンプレート
-      <span class="nav-dot"></span>
-    </div>
-    <div class="nav-item" onclick="navigate('reminder')">
-      <span class="nav-icon">⏰</span> リマインダ
-      <span class="nav-dot"></span>
-    </div>
-
-    <div class="nav-label">分析</div>
-    <div class="nav-item" onclick="navigate('traffic')">
-      <span class="nav-icon">🔀</span> 流入経路
-      <span class="nav-dot"></span>
-    </div>
-    <div class="nav-item" onclick="navigate('cv')">
-      <span class="nav-icon">📊</span> CV計測
-      <span class="nav-dot"></span>
-    </div>
-    <div class="nav-item" onclick="navigate('scoring')">
-      <span class="nav-icon">⭐</span> スコアリング
-      <span class="nav-dot"></span>
-    </div>
-
-    <div class="nav-label">自動化</div>
-    <div class="nav-item" onclick="navigate('automation')">
-      <span class="nav-icon">⚡</span> オートメーション
-      <span class="nav-dot"></span>
-    </div>
-    <div class="nav-item" onclick="navigate('webhook')">
-      <span class="nav-icon">🔗</span> Webhook
-      <span class="nav-dot"></span>
-    </div>
-    <div class="nav-item" onclick="navigate('notify')">
-      <span class="nav-icon">🔔</span> 通知
-      <span class="nav-dot"></span>
-    </div>
-
-    <div class="nav-label">設定</div>
-    <div class="nav-item" onclick="navigate('settings')">
-      <span class="nav-icon">⚙️</span> LINEアカウント
-      <span class="nav-dot"></span>
-    </div>
+  <div class="sb-nav">
+    <div class="ni act" data-pg="dashboard"><span class="ni-ico">🏠</span>ダッシュボード</div>
+    <div class="ni" data-pg="friends"><span class="ni-ico">👥</span>友だち管理</div>
+    <div class="ni" data-pg="chat"><span class="ni-ico">💬</span>個別チャット</div>
+    <div class="nl">配信</div>
+    <div class="ni" data-pg="scenario"><span class="ni-ico">📋</span>シナリオ配信</div>
+    <div class="ni" data-pg="broadcast"><span class="ni-ico">📢</span>一斉配信</div>
+    <div class="ni" data-pg="template"><span class="ni-ico">📄</span>テンプレート</div>
+    <div class="ni" data-pg="reminder"><span class="ni-ico">⏰</span>リマインダ</div>
+    <div class="nl">分析</div>
+    <div class="ni" data-pg="traffic"><span class="ni-ico">🔀</span>流入経路</div>
+    <div class="ni" data-pg="cv"><span class="ni-ico">📊</span>CV計測</div>
+    <div class="ni" data-pg="scoring"><span class="ni-ico">⭐</span>スコアリング</div>
+    <div class="nl">自動化</div>
+    <div class="ni" data-pg="automation"><span class="ni-ico">⚡</span>オートメーション</div>
+    <div class="ni" data-pg="webhook"><span class="ni-ico">🔗</span>Webhook</div>
+    <div class="ni" data-pg="notify"><span class="ni-ico">🔔</span>通知</div>
+    <div class="nl">設定</div>
+    <div class="ni" data-pg="settings"><span class="ni-ico">⚙️</span>LINEアカウント</div>
   </div>
 </nav>
 
-<!-- MAIN -->
 <main class="main">
 
-  <!-- ========== DASHBOARD ========== -->
-  <div class="page active" id="page-dashboard">
-    <div class="page-header">
-      <div class="page-title">
-        <h2>ダッシュボード</h2>
-        <p>LINE公式アカウント CRM 管理画面</p>
-      </div>
-      <div class="status-indicator">
-        <div class="status-dot"></div>
-        システム稼働中
-      </div>
+<!-- ====DASHBOARD==== -->
+<div class="pg act" id="pg-dashboard">
+  <div class="ph">
+    <div class="pt"><h2>ダッシュボード</h2><p>LINE公式アカウント CRM 管理画面</p></div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#059669;font-weight:500">
+      <div class="sdot"></div>システム稼働中
     </div>
-    <div class="stats-grid">
-      <div class="stat-card stat-card-green" onclick="navigate('friends')">
-        <div class="stat-icon">👥</div>
-        <div>
-          <div class="stat-number">30</div>
-          <div class="stat-label">友だち数</div>
-          <div class="stat-sub">フォロー中の友だち</div>
-        </div>
-        <div class="stat-arrow">›</div>
-      </div>
-      <div class="stat-card stat-card-blue" onclick="navigate('scenario')">
-        <div class="stat-icon">📋</div>
-        <div>
-          <div class="stat-number">4</div>
-          <div class="stat-label">アクティブシナリオ</div>
-          <div class="stat-sub">稼働中のシナリオ</div>
-        </div>
-        <div class="stat-arrow">›</div>
-      </div>
-      <div class="stat-card stat-card-purple" onclick="navigate('broadcast')">
-        <div class="stat-icon">📢</div>
-        <div>
-          <div class="stat-number">7</div>
-          <div class="stat-label">配信数</div>
-          <div class="stat-sub">累計ブロードキャスト</div>
-        </div>
-        <div class="stat-arrow">›</div>
-      </div>
-      <div class="stat-card stat-card-yellow" onclick="navigate('template')">
-        <div class="stat-icon">📄</div>
-        <div>
-          <div class="stat-number">6</div>
-          <div class="stat-label">テンプレート</div>
-          <div class="stat-sub">再利用可能なテンプレート</div>
-        </div>
-        <div class="stat-arrow">›</div>
-      </div>
-      <div class="stat-card stat-card-red" onclick="navigate('automation')">
-        <div class="stat-icon">⚡</div>
-        <div>
-          <div class="stat-number">5</div>
-          <div class="stat-label">オートメーション</div>
-          <div class="stat-sub">稼働中の自動化ルール</div>
-        </div>
-        <div class="stat-arrow">›</div>
-      </div>
-      <div class="stat-card stat-card-teal" onclick="navigate('scoring')">
-        <div class="stat-icon">⭐</div>
-        <div>
-          <div class="stat-number">5</div>
-          <div class="stat-label">スコアリング</div>
-          <div class="stat-sub">リードスコアリングルール</div>
-        </div>
-        <div class="stat-arrow">›</div>
-      </div>
+  </div>
+  <div class="sg" id="dash-stats"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="card">
+      <div class="sec-h"><h3>最近のアクティビティ</h3><span id="act-time"></span></div>
+      <div class="act-list" id="dash-activity"></div>
     </div>
-    <div class="quick-actions">
-      <div class="quick-title">
-        <h3>クイックアクション</h3>
-        <span>6件のアクション</span>
-      </div>
-      <div class="quick-grid">
-        <div class="quick-item" onclick="navigate('friends')">
-          <div class="quick-item-icon qi-green">👥</div>
-          <div class="quick-item-text">
-            <h4>友だち管理</h4>
-            <p>友だちの一覧・タグ管理</p>
-          </div>
-          <div class="quick-arrow">›</div>
-        </div>
-        <div class="quick-item" onclick="navigate('scenario')">
-          <div class="quick-item-icon qi-blue">📋</div>
-          <div class="quick-item-text">
-            <h4>シナリオ配信</h4>
-            <p>自動配信シナリオの作成</p>
-          </div>
-          <div class="quick-arrow">›</div>
-        </div>
-        <div class="quick-item" onclick="navigate('broadcast')">
-          <div class="quick-item-icon qi-purple">📢</div>
-          <div class="quick-item-text">
-            <h4>一斉配信</h4>
-            <p>メッセージの一斉送信・予約</p>
-          </div>
-          <div class="quick-arrow">›</div>
-        </div>
-        <div class="quick-item" onclick="navigate('chat')">
-          <div class="quick-item-icon qi-green">💬</div>
-          <div class="quick-item-text">
-            <h4>チャット</h4>
-            <p>オペレーターチャット管理</p>
-          </div>
-          <div class="quick-arrow">›</div>
-        </div>
-        <div class="quick-item" onclick="navigate('automation')">
-          <div class="quick-item-icon qi-red">⚡</div>
-          <div class="quick-item-text">
-            <h4>オートメーション</h4>
-            <p>IF-THENルールの設定</p>
-          </div>
-          <div class="quick-arrow">›</div>
-        </div>
-        <div class="quick-item" onclick="navigate('webhook')">
-          <div class="quick-item-icon qi-yellow">🛡️</div>
-          <div class="quick-item-text">
-            <h4>BAN検知</h4>
-            <p>アカウント健康度の監視</p>
-          </div>
-          <div class="quick-arrow">›</div>
-        </div>
+    <div class="card">
+      <div class="sec-h"><h3>クイックアクション</h3><span>6件</span></div>
+      <div class="qg">
+        <div class="qi" onclick="nav('friends')"><div class="qi-ico qi-g">👥</div><div class="qi-tx"><h4>友だち管理</h4><p>一覧・タグ管理</p></div><div class="qi-arr">›</div></div>
+        <div class="qi" onclick="nav('scenario')"><div class="qi-ico qi-b">📋</div><div class="qi-tx"><h4>シナリオ</h4><p>自動配信設定</p></div><div class="qi-arr">›</div></div>
+        <div class="qi" onclick="nav('broadcast')"><div class="qi-ico qi-p">📢</div><div class="qi-tx"><h4>一斉配信</h4><p>メッセージ送信</p></div><div class="qi-arr">›</div></div>
+        <div class="qi" onclick="nav('chat')"><div class="qi-ico qi-g">💬</div><div class="qi-tx"><h4>チャット</h4><p>個別返信</p></div><div class="qi-arr">›</div></div>
+        <div class="qi" onclick="nav('cv')"><div class="qi-ico qi-r">📊</div><div class="qi-tx"><h4>CV計測</h4><p>コンバージョン</p></div><div class="qi-arr">›</div></div>
+        <div class="qi" onclick="nav('automation')"><div class="qi-ico qi-y">⚡</div><div class="qi-tx"><h4>自動化</h4><p>IF-THENルール</p></div><div class="qi-arr">›</div></div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ========== FRIENDS PAGE ========== -->
-  <div class="page" id="page-friends">
-    <div class="page-header">
-      <div class="page-title">
-        <h2>友だち管理</h2>
-      </div>
-      <button class="btn-green" onclick="openModal('addFriend')">＋ 友だち追加</button>
-    </div>
-    <div class="filter-bar">
-      <label>タグで絞り込み:</label>
-      <select class="filter-select" id="tagFilter" onchange="filterFriends()">
-        <option value="すべて">すべて</option>
-        <option value="トライアル">トライアル</option>
-        <option value="新規">新規</option>
-        <option value="HOTリード">HOTリード</option>
-        <option value="VIP">VIP</option>
-        <option value="購入済み">購入済み</option>
-        <option value="セミナー参加">セミナー参加</option>
-        <option value="資料請求">資料請求</option>
-        <option value="休眠">休眠</option>
-      </select>
-      <span class="count-badge" id="friendCount">30 件</span>
-    </div>
-    <div class="friends-table">
-      <div class="table-header">
-        <div>アイコン / 表示名</div>
-        <div>ステータス</div>
-        <div>タグ</div>
-        <div>登録日</div>
-        <div></div>
-      </div>
-      <div id="friendsList"></div>
-    </div>
+<!-- ====FRIENDS==== -->
+<div class="pg" id="pg-friends">
+  <div class="ph">
+    <div class="pt"><h2>友だち管理</h2></div>
+    <button class="btn btn-g" onclick="openMo('mo-addFriend')">＋ 友だち追加</button>
   </div>
+  <div class="fb">
+    <label style="font-size:13px;color:var(--ts)">タグで絞り込み:</label>
+    <select class="fs2" id="tagFilter" onchange="renderFriends()">
+      <option value="">すべて</option>
+      <option>トライアル</option><option>新規</option><option>HOTリード</option>
+      <option>VIP</option><option>購入済み</option><option>セミナー参加</option>
+      <option>資料請求</option><option>休眠</option>
+    </select>
+    <div class="srch"><input id="friendSearch" placeholder="名前・職業で検索…" oninput="renderFriends()"></div>
+    <span id="friendCount" style="font-size:13px;color:var(--ts)"></span>
+  </div>
+  <div class="tbl">
+    <div class="tbl-h fr-row" style="cursor:default">
+      <div>アイコン / 表示名</div><div>ステータス</div><div>タグ</div><div>登録日</div><div>操作</div>
+    </div>
+    <div id="friendsList"></div>
+  </div>
+</div>
 
-  <!-- ========== CV PAGE ========== -->
-  <div class="page" id="page-cv">
-    <div class="page-header">
-      <div class="page-title">
-        <h2>コンバージョン計測</h2>
-        <p>CVポイント定義 &amp; レポート</p>
+<!-- ====CHAT==== -->
+<div class="pg" id="pg-chat">
+  <div class="ph"><div class="pt"><h2>個別チャット</h2></div></div>
+  <div class="chat-wrap">
+    <div class="chat-list" id="chatList"></div>
+    <div class="chat-main">
+      <div class="chat-header" id="chatHeader">
+        <div class="av" id="chatAv" style="width:38px;height:38px;font-size:20px">👥</div>
+        <div><div style="font-size:14px;font-weight:600" id="chatName">友だちを選択</div><div style="font-size:11.5px;color:var(--ts)" id="chatJob"></div></div>
+        <div style="margin-left:auto;display:flex;gap:8px" id="chatTags"></div>
       </div>
-      <button class="btn-green" onclick="openModal('addCV')">＋ CVポイント作成</button>
-    </div>
-    <div class="cv-cards-grid" id="cvCards"></div>
-    <div class="cv-table-wrap">
-      <div class="cv-table-header">
-        <div>CV名</div>
-        <div>イベントタイプ</div>
-        <div>金額</div>
-        <div>作成日</div>
-        <div>操作</div>
+      <div class="chat-msgs" id="chatMsgs">
+        <div style="text-align:center;color:var(--ts);font-size:13px;margin-top:40px">左のリストから友だちを選択してください</div>
       </div>
-      <div id="cvList"></div>
+      <div class="chat-input-area">
+        <textarea class="chat-input" id="chatInput" placeholder="メッセージを入力…" rows="1" onkeydown="chatKey(event)"></textarea>
+        <button class="chat-send" onclick="sendMsg()">➤</button>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- ========== SCORING PAGE ========== -->
-  <div class="page" id="page-scoring">
-    <div class="page-header">
-      <div class="page-title">
-        <h2>スコアリング</h2>
-        <p>リードスコアリングルール設定</p>
-      </div>
-      <button class="btn-green" onclick="openModal('addScore')">＋ ルール追加</button>
-    </div>
-    <div class="score-table-wrap">
-      <div class="score-table-header">
-        <div>アクション</div>
-        <div>スコア</div>
-        <div>状態</div>
-        <div>操作</div>
-      </div>
-      <div id="scoreList"></div>
-    </div>
+<!-- ====SCENARIO==== -->
+<div class="pg" id="pg-scenario">
+  <div class="ph">
+    <div class="pt"><h2>シナリオ配信</h2><p>自動配信シナリオの管理</p></div>
+    <button class="btn btn-g" onclick="openMo('mo-addScenario')">＋ シナリオ作成</button>
   </div>
+  <div id="scenarioList"></div>
+</div>
 
-  <!-- ========== AUTOMATION PAGE ========== -->
-  <div class="page" id="page-automation">
-    <div class="page-header">
-      <div class="page-title">
-        <h2>オートメーション</h2>
-        <p>IF-THENルールで自動化</p>
-      </div>
-      <button class="btn-green" onclick="openModal('addAuto')">＋ ルール追加</button>
-    </div>
-    <div class="auto-list" id="autoList"></div>
+<!-- ====BROADCAST==== -->
+<div class="pg" id="pg-broadcast">
+  <div class="ph">
+    <div class="pt"><h2>一斉配信</h2><p>全員または特定グループへメッセージ送信</p></div>
+    <button class="btn btn-g" onclick="openMo('mo-addBroadcast')">＋ 配信作成</button>
   </div>
+  <div id="broadcastList"></div>
+</div>
 
-  <!-- ========== SCENARIO PAGE ========== -->
-  <div class="page" id="page-scenario">
-    <div class="page-header">
-      <div class="page-title">
-        <h2>シナリオ配信</h2>
-        <p>自動配信シナリオの管理</p>
-      </div>
-      <button class="btn-green" onclick="openModal('addScenario')">＋ シナリオ作成</button>
-    </div>
-    <div class="scenario-list" id="scenarioList"></div>
+<!-- ====TEMPLATE==== -->
+<div class="pg" id="pg-template">
+  <div class="ph">
+    <div class="pt"><h2>テンプレート</h2><p>変数付きメッセージ雛形</p></div>
+    <button class="btn btn-g" onclick="openMo('mo-addTemplate')">＋ テンプレート作成</button>
   </div>
+  <div id="templateList"></div>
+</div>
 
-  <!-- ========== STUB PAGES ========== -->
-  <div class="page" id="page-chat">
-    <div class="page-header"><div class="page-title"><h2>個別チャット</h2></div></div>
-    <div class="coming-soon"><div class="icon">💬</div><h3>チャット機能</h3><p>友だちと1対1でLINEメッセージを送受信できます</p></div>
+<!-- ====REMINDER==== -->
+<div class="pg" id="pg-reminder">
+  <div class="ph">
+    <div class="pt"><h2>リマインダ</h2><p>日時指定カウントダウン配信</p></div>
+    <button class="btn btn-g" onclick="openMo('mo-addReminder')">＋ リマインダ作成</button>
   </div>
-  <div class="page" id="page-broadcast">
-    <div class="page-header"><div class="page-title"><h2>一斉配信</h2></div><button class="btn-green">＋ 配信作成</button></div>
-    <div class="coming-soon"><div class="icon">📢</div><h3>一斉配信</h3><p>全員または特定タグのユーザーへメッセージを配信します</p></div>
+  <div id="reminderList"></div>
+</div>
+
+<!-- ====TRAFFIC==== -->
+<div class="pg" id="pg-traffic">
+  <div class="ph">
+    <div class="pt"><h2>流入経路</h2><p>トラッキングリンク管理・クリック計測</p></div>
+    <button class="btn btn-g" onclick="openMo('mo-addTraffic')">＋ リンク作成</button>
   </div>
-  <div class="page" id="page-template">
-    <div class="page-header"><div class="page-title"><h2>テンプレート</h2></div><button class="btn-green">＋ 作成</button></div>
-    <div class="coming-soon"><div class="icon">📄</div><h3>テンプレート管理</h3><p>{{name}}等の変数付きメッセージ雛形を保存・再利用します</p></div>
+  <div class="tr-stat" id="trafficStats"></div>
+  <div class="tbl">
+    <div class="tbl-h lk-row" style="cursor:default">
+      <div>リンク名</div><div>クリック数</div><div>CV数</div><div>CVR</div><div>操作</div>
+    </div>
+    <div id="trafficList"></div>
   </div>
-  <div class="page" id="page-reminder">
-    <div class="page-header"><div class="page-title"><h2>リマインダ</h2></div><button class="btn-green">＋ 作成</button></div>
-    <div class="coming-soon"><div class="icon">⏰</div><h3>リマインダ配信</h3><p>イベントX日前・当日にカウントダウン配信します</p></div>
+</div>
+
+<!-- ====CV==== -->
+<div class="pg" id="pg-cv">
+  <div class="ph">
+    <div class="pt"><h2>コンバージョン計測</h2><p>CVポイント定義 &amp; レポート</p></div>
+    <button class="btn btn-g" onclick="openMo('mo-addCV')">＋ CVポイント作成</button>
   </div>
-  <div class="page" id="page-traffic">
-    <div class="page-header"><div class="page-title"><h2>流入経路</h2></div></div>
-    <div class="coming-soon"><div class="icon">🔀</div><h3>流入経路分析</h3><p>トラッキングリンクからの流入データを分析します</p></div>
+  <div class="cv-grid" id="cvCards"></div>
+  <div class="tbl">
+    <div class="tbl-h" style="grid-template-columns:2fr 1.5fr 1fr 1.2fr 80px;cursor:default">
+      <div>CV名</div><div>イベントタイプ</div><div>金額</div><div>作成日</div><div>操作</div>
+    </div>
+    <div id="cvList"></div>
   </div>
-  <div class="page" id="page-webhook">
-    <div class="page-header"><div class="page-title"><h2>Webhook</h2></div><button class="btn-green">＋ 追加</button></div>
-    <div class="coming-soon"><div class="icon">🔗</div><h3>Webhook設定</h3><p>外部サービスとのAPI連携を設定します</p></div>
+</div>
+
+<!-- ====SCORING==== -->
+<div class="pg" id="pg-scoring">
+  <div class="ph">
+    <div class="pt"><h2>スコアリング</h2><p>リードスコアリングルール設定</p></div>
+    <button class="btn btn-g" onclick="openMo('mo-addScore')">＋ ルール追加</button>
   </div>
-  <div class="page" id="page-notify">
-    <div class="page-header"><div class="page-title"><h2>通知</h2></div></div>
-    <div class="coming-soon"><div class="icon">🔔</div><h3>通知設定</h3><p>システム通知の設定を管理します</p></div>
+  <div class="sc-stats" id="scoreStats"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div>
+      <div class="sec-h"><h3>スコアリングルール</h3></div>
+      <div class="tbl">
+        <div class="tbl-h" style="grid-template-columns:2fr 1fr 1fr 70px;cursor:default">
+          <div>アクション</div><div>スコア</div><div>状態</div><div>操作</div>
+        </div>
+        <div id="scoreList"></div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-h"><h3>リードランキング</h3></div>
+      <div class="tbl">
+        <div class="tbl-h lb-row" style="cursor:default">
+          <div>#</div><div>名前</div><div>スコア</div><div>タグ</div><div>登録日</div>
+        </div>
+        <div id="leaderboard"></div>
+      </div>
+    </div>
   </div>
-  <div class="page" id="page-settings">
-    <div class="page-header"><div class="page-title"><h2>LINEアカウント設定</h2></div></div>
-    <div class="coming-soon"><div class="icon">⚙️</div><h3>アカウント設定</h3><p>LINEアカウントの接続・設定を管理します</p></div>
+</div>
+
+<!-- ====AUTOMATION==== -->
+<div class="pg" id="pg-automation">
+  <div class="ph">
+    <div class="pt"><h2>オートメーション</h2><p>IF-THENルールで自動化</p></div>
+    <button class="btn btn-g" onclick="openMo('mo-addAuto')">＋ ルール追加</button>
   </div>
+  <div id="autoList"></div>
+</div>
+
+<!-- ====WEBHOOK==== -->
+<div class="pg" id="pg-webhook">
+  <div class="ph">
+    <div class="pt"><h2>Webhook</h2><p>外部サービスへのイベント通知</p></div>
+    <button class="btn btn-g" onclick="openMo('mo-addWebhook')">＋ Webhook追加</button>
+  </div>
+  <div id="webhookList"></div>
+</div>
+
+<!-- ====NOTIFY==== -->
+<div class="pg" id="pg-notify">
+  <div class="ph"><div class="pt"><h2>通知設定</h2><p>システム通知の管理</p></div></div>
+  <div class="set-section">
+    <div class="set-title">通知チャンネル</div>
+    <div id="notifyList"></div>
+  </div>
+</div>
+
+<!-- ====SETTINGS==== -->
+<div class="pg" id="pg-settings">
+  <div class="ph"><div class="pt"><h2>LINEアカウント設定</h2><p>接続・API設定</p></div></div>
+  <div class="set-section" id="settingsContent"></div>
+</div>
 
 </main>
 
-<!-- MODALS -->
-<div class="modal-overlay" id="modal-addFriend">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">友だちを追加</div>
-      <button class="modal-close" onclick="closeModal('addFriend')">×</button>
-    </div>
-    <div class="form-group">
-      <label class="form-label">表示名</label>
-      <input class="form-input" id="newFriendName" placeholder="例: 山田 太郎">
-    </div>
-    <div class="form-group">
-      <label class="form-label">職業 / 備考</label>
-      <input class="form-input" id="newFriendJob" placeholder="例: エンジニア">
-    </div>
-    <div class="form-group">
-      <label class="form-label">タグ</label>
-      <select class="form-select" id="newFriendTag">
-        <option>新規</option><option>トライアル</option><option>HOTリード</option>
-        <option>VIP</option><option>購入済み</option><option>セミナー参加</option><option>資料請求</option>
-      </select>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('addFriend')">キャンセル</button>
-      <button class="btn-green" onclick="addFriend()">追加する</button>
-    </div>
-  </div>
-</div>
+<!-- ====MODALS==== -->
 
-<div class="modal-overlay" id="modal-addCV">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">CVポイント作成</div>
-      <button class="modal-close" onclick="closeModal('addCV')">×</button>
-    </div>
-    <div class="form-group">
-      <label class="form-label">CV名</label>
-      <input class="form-input" id="newCVName" placeholder="例: 資料請求完了">
-    </div>
-    <div class="form-group">
-      <label class="form-label">イベントタイプ</label>
-      <select class="form-select" id="newCVType">
-        <option value="purchase">purchase（購入）</option>
-        <option value="form_submit">form_submit（フォーム送信）</option>
-        <option value="signup">signup（登録）</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="form-label">金額（円、0の場合は無料）</label>
-      <input class="form-input" id="newCVAmount" type="number" placeholder="0" value="0">
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('addCV')">キャンセル</button>
-      <button class="btn-green" onclick="addCV()">作成する</button>
-    </div>
-  </div>
-</div>
+<!-- ADD FRIEND -->
+<div class="mo" id="mo-addFriend">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">友だちを追加</div><button class="mo-x" onclick="closeMo('mo-addFriend')">×</button></div>
+  <div class="fg"><label class="fl">表示名 *</label><input class="fi" id="fn-name" placeholder="例: 山田 太郎"></div>
+  <div class="fg"><label class="fl">職業 / 備考</label><input class="fi" id="fn-job" placeholder="例: エンジニア"></div>
+  <div class="fg"><label class="fl">ステータス</label>
+    <select class="fs" id="fn-status"><option>フォロー中</option><option>ブロック/退会</option></select></div>
+  <div class="fg"><label class="fl">タグ（複数選択可）</label>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="fn-tags-sel"></div></div>
+  <div class="fg"><label class="fl">スコア（初期値）</label><input class="fi" id="fn-score" type="number" value="0"></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addFriend')">キャンセル</button><button class="btn btn-g" onclick="addFriend()">追加する</button></div>
+</div></div>
 
-<div class="modal-overlay" id="modal-addScore">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">スコアリングルール追加</div>
-      <button class="modal-close" onclick="closeModal('addScore')">×</button>
-    </div>
-    <div class="form-group">
-      <label class="form-label">アクション名</label>
-      <input class="form-input" id="newScoreName" placeholder="例: メッセージ送信">
-    </div>
-    <div class="form-group">
-      <label class="form-label">スコア（ポイント）</label>
-      <input class="form-input" id="newScoreVal" type="number" placeholder="10">
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('addScore')">キャンセル</button>
-      <button class="btn-green" onclick="addScore()">追加する</button>
-    </div>
-  </div>
-</div>
+<!-- EDIT FRIEND -->
+<div class="mo" id="mo-editFriend">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">友だち編集</div><button class="mo-x" onclick="closeMo('mo-editFriend')">×</button></div>
+  <input type="hidden" id="ef-id">
+  <div class="fg"><label class="fl">表示名</label><input class="fi" id="ef-name"></div>
+  <div class="fg"><label class="fl">職業 / 備考</label><input class="fi" id="ef-job"></div>
+  <div class="fg"><label class="fl">ステータス</label>
+    <select class="fs" id="ef-status"><option>フォロー中</option><option>ブロック/退会</option></select></div>
+  <div class="fg"><label class="fl">タグ</label><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="ef-tags-sel"></div></div>
+  <div class="fg"><label class="fl">スコア</label><input class="fi" id="ef-score" type="number"></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-editFriend')">キャンセル</button><button class="btn btn-g" onclick="saveEditFriend()">保存する</button></div>
+</div></div>
 
-<div class="modal-overlay" id="modal-addAuto">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">オートメーション追加</div>
-      <button class="modal-close" onclick="closeModal('addAuto')">×</button>
-    </div>
-    <div class="form-group">
-      <label class="form-label">ルール名</label>
-      <input class="form-input" id="newAutoName" placeholder="例: 友だち追加時にウェルカムメッセージ">
-    </div>
-    <div class="form-group">
-      <label class="form-label">トリガー</label>
-      <select class="form-select" id="newAutoTrigger">
-        <option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option><option>フォーム送信</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="form-label">アクション</label>
-      <select class="form-select" id="newAutoAction">
-        <option>メッセージ送信</option><option>タグ付与</option><option>シナリオ開始</option><option>Webhook送信</option>
-      </select>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('addAuto')">キャンセル</button>
-      <button class="btn-green" onclick="addAuto()">作成する</button>
-    </div>
-  </div>
-</div>
+<!-- ADD SCENARIO -->
+<div class="mo" id="mo-addScenario">
+<div class="mo-box" style="width:540px">
+  <div class="mo-h"><div class="mo-t">シナリオ作成</div><button class="mo-x" onclick="closeMo('mo-addScenario')">×</button></div>
+  <div class="fg"><label class="fl">シナリオ名 *</label><input class="fi" id="sn-name" placeholder="例: 友だち追加フォロー"></div>
+  <div class="fg"><label class="fl">トリガー</label>
+    <select class="fs" id="sn-trigger"><option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option><option>フォーム送信</option></select></div>
+  <div class="fg"><label class="fl">説明</label><input class="fi" id="sn-desc" placeholder="このシナリオの目的を入力"></div>
+  <div class="fg"><label class="fl">ステップ1 メッセージ</label><textarea class="fta" id="sn-s1" placeholder="こんにちは{{name}}さん！友だち追加ありがとうございます🎉"></textarea></div>
+  <div class="fg"><label class="fl">ステップ2（delay: 1日後）</label><textarea class="fta" id="sn-s2" placeholder="昨日はご連絡ありがとうございました！"></textarea></div>
+  <div class="fg"><label class="fl">ステップ3（delay: 3日後）</label><textarea class="fta" id="sn-s3" placeholder="お役立ち情報をお届けします📚"></textarea></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addScenario')">キャンセル</button><button class="btn btn-g" onclick="addScenario()">作成する</button></div>
+</div></div>
 
-<div class="modal-overlay" id="modal-addScenario">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">シナリオ作成</div>
-      <button class="modal-close" onclick="closeModal('addScenario')">×</button>
-    </div>
-    <div class="form-group">
-      <label class="form-label">シナリオ名</label>
-      <input class="form-input" id="newScenarioName" placeholder="例: 友だち追加フォロー">
-    </div>
-    <div class="form-group">
-      <label class="form-label">トリガー</label>
-      <select class="form-select" id="newScenarioTrigger">
-        <option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="form-label">ステップ数</label>
-      <input class="form-input" id="newScenarioSteps" type="number" placeholder="3" value="3">
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal('addScenario')">キャンセル</button>
-      <button class="btn-green" onclick="addScenario()">作成する</button>
-    </div>
-  </div>
-</div>
+<!-- ADD BROADCAST -->
+<div class="mo" id="mo-addBroadcast">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">配信作成</div><button class="mo-x" onclick="closeMo('mo-addBroadcast')">×</button></div>
+  <div class="fg"><label class="fl">配信名 *</label><input class="fi" id="bc-name" placeholder="例: 5月キャンペーン告知"></div>
+  <div class="fg"><label class="fl">ターゲット</label>
+    <select class="fs" id="bc-target"><option value="all">全員</option><option value="tag">タグ指定</option><option value="follow">フォロー中のみ</option></select></div>
+  <div class="fg" id="bc-tag-wrap" style="display:none"><label class="fl">対象タグ</label>
+    <select class="fs" id="bc-tag"><option>新規</option><option>HOTリード</option><option>VIP</option><option>セミナー参加</option><option>トライアル</option></select></div>
+  <div class="fg"><label class="fl">メッセージ *</label><textarea class="fta" id="bc-msg" placeholder="こんにちは{{name}}さん！お知らせがあります…" style="min-height:100px"></textarea></div>
+  <div class="fg"><label class="fl">配信日時（空欄=即時）</label><input class="fi" id="bc-time" type="datetime-local"></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addBroadcast')">キャンセル</button><button class="btn btn-g" onclick="addBroadcast()">作成する</button></div>
+</div></div>
+
+<!-- ADD TEMPLATE -->
+<div class="mo" id="mo-addTemplate">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">テンプレート作成</div><button class="mo-x" onclick="closeMo('mo-addTemplate')">×</button></div>
+  <div class="fg"><label class="fl">テンプレート名 *</label><input class="fi" id="tp-name" placeholder="例: ウェルカムメッセージ"></div>
+  <div class="fg"><label class="fl">カテゴリ</label>
+    <select class="fs" id="tp-cat"><option>ウェルカム</option><option>フォローアップ</option><option>プロモーション</option><option>リマインダ</option><option>その他</option></select></div>
+  <div class="fg"><label class="fl">本文（{{name}}{{job}}等の変数使用可）*</label><textarea class="fta" id="tp-body" style="min-height:120px" placeholder="こんにちは{{name}}さん！&#10;&#10;この度はご登録ありがとうございます😊&#10;&#10;{{job}}のお仕事されているんですね！"></textarea></div>
+  <div class="fg"><label class="fl">プレビュー名前</label><input class="fi" id="tp-prev-name" placeholder="山田 太郎" value="山田 太郎"></div>
+  <div id="tp-preview" style="display:none;margin-top:6px;padding:12px 14px;background:#f0fdf4;border-radius:8px;font-size:13px;border-left:3px solid var(--green);line-height:1.6;white-space:pre-wrap"></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addTemplate')">キャンセル</button><button class="btn btn-g" onclick="addTemplate()">作成する</button></div>
+</div></div>
+
+<!-- ADD REMINDER -->
+<div class="mo" id="mo-addReminder">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">リマインダ作成</div><button class="mo-x" onclick="closeMo('mo-addReminder')">×</button></div>
+  <div class="fg"><label class="fl">リマインダ名 *</label><input class="fi" id="rm-name" placeholder="例: セミナー前日リマインダ"></div>
+  <div class="fg"><label class="fl">送信日時 *</label><input class="fi" id="rm-time" type="datetime-local"></div>
+  <div class="fg"><label class="fl">ターゲット</label>
+    <select class="fs" id="rm-target"><option value="all">全員</option><option value="tag">タグ指定</option></select></div>
+  <div class="fg"><label class="fl">メッセージ *</label><textarea class="fta" id="rm-msg" placeholder="{{name}}さん、明日のセミナーはお忘れなく！"></textarea></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addReminder')">キャンセル</button><button class="btn btn-g" onclick="addReminder()">作成する</button></div>
+</div></div>
+
+<!-- ADD TRAFFIC -->
+<div class="mo" id="mo-addTraffic">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">トラッキングリンク作成</div><button class="mo-x" onclick="closeMo('mo-addTraffic')">×</button></div>
+  <div class="fg"><label class="fl">リンク名 *</label><input class="fi" id="tr-name" placeholder="例: Instagram プロフィール"></div>
+  <div class="fg"><label class="fl">リダイレクト先URL</label><input class="fi" id="tr-url" placeholder="https://example.com/landing"></div>
+  <div class="fg"><label class="fl">UTMソース</label><input class="fi" id="tr-source" placeholder="instagram"></div>
+  <div class="fg"><label class="fl">タグ自動付与（クリック時）</label>
+    <select class="fs" id="tr-tag"><option value="">なし</option><option>新規</option><option>HOTリード</option><option>セミナー参加</option></select></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addTraffic')">キャンセル</button><button class="btn btn-g" onclick="addTraffic()">作成する</button></div>
+</div></div>
+
+<!-- ADD CV -->
+<div class="mo" id="mo-addCV">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">CVポイント作成</div><button class="mo-x" onclick="closeMo('mo-addCV')">×</button></div>
+  <div class="fg"><label class="fl">CV名 *</label><input class="fi" id="cv-name" placeholder="例: 資料請求完了"></div>
+  <div class="fg"><label class="fl">イベントタイプ</label>
+    <select class="fs" id="cv-type"><option value="purchase">purchase（購入）</option><option value="form_submit">form_submit（フォーム）</option><option value="signup">signup（登録）</option><option value="click">click（クリック）</option></select></div>
+  <div class="fg"><label class="fl">金額（¥）0=無料</label><input class="fi" id="cv-amount" type="number" value="0"></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addCV')">キャンセル</button><button class="btn btn-g" onclick="addCV()">作成する</button></div>
+</div></div>
+
+<!-- ADD SCORE -->
+<div class="mo" id="mo-addScore">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">スコアリングルール追加</div><button class="mo-x" onclick="closeMo('mo-addScore')">×</button></div>
+  <div class="fg"><label class="fl">アクション名 *</label><input class="fi" id="sc-name" placeholder="例: セミナー参加"></div>
+  <div class="fg"><label class="fl">スコア（ポイント）</label><input class="fi" id="sc-val" type="number" placeholder="10" value="10"></div>
+  <div class="fg"><label class="fl">トリガー</label>
+    <select class="fs" id="sc-trigger"><option>手動</option><option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option><option>CV達成</option><option>リンククリック</option></select></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addScore')">キャンセル</button><button class="btn btn-g" onclick="addScore()">追加する</button></div>
+</div></div>
+
+<!-- ADD AUTO -->
+<div class="mo" id="mo-addAuto">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">オートメーション追加</div><button class="mo-x" onclick="closeMo('mo-addAuto')">×</button></div>
+  <div class="fg"><label class="fl">ルール名 *</label><input class="fi" id="au-name" placeholder="例: 友だち追加時にウェルカムメッセージ"></div>
+  <div class="fg"><label class="fl">IF（トリガー）</label>
+    <select class="fs" id="au-trigger"><option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option><option>フォーム送信</option><option>リンククリック</option><option>スコア到達</option></select></div>
+  <div class="fg"><label class="fl">THEN（アクション）</label>
+    <select class="fs" id="au-action"><option>メッセージ送信</option><option>シナリオ開始</option><option>タグ付与</option><option>Webhook送信</option><option>スコア加算</option></select></div>
+  <div class="fg"><label class="fl">説明</label><input class="fi" id="au-desc" placeholder="このルールの説明"></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addAuto')">キャンセル</button><button class="btn btn-g" onclick="addAuto()">作成する</button></div>
+</div></div>
+
+<!-- ADD WEBHOOK -->
+<div class="mo" id="mo-addWebhook">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">Webhook追加</div><button class="mo-x" onclick="closeMo('mo-addWebhook')">×</button></div>
+  <div class="fg"><label class="fl">名前 *</label><input class="fi" id="wh-name" placeholder="例: Slack通知"></div>
+  <div class="fg"><label class="fl">URL *</label><input class="fi" id="wh-url" placeholder="https://hooks.slack.com/services/..."></div>
+  <div class="fg"><label class="fl">イベント</label>
+    <select class="fs" id="wh-event"><option>友だち追加</option><option>CV達成</option><option>フォーム送信</option><option>購入完了</option><option>全イベント</option></select></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addWebhook')">キャンセル</button><button class="btn btn-g" onclick="addWebhook()">追加する</button></div>
+</div></div>
 
 <!-- TOAST -->
-<div class="toast" id="toast">
-  <span class="toast-icon">✅</span>
-  <span id="toastMsg">保存しました</span>
-</div>
+<div class="toast" id="toast"><span id="toastMsg">保存しました ✅</span></div>
 
 <script>
-// ===== DATA =====
-const AVATARS = ['🧑','👩','👨','🧕','👴','👵','🧔','👱','🙍','🙎','😊','🥰','😎','🤓','🧑‍💼','👩‍💼','👨‍💼'];
-const TAG_CLASSES = {
-  'トライアル':'tag-trial','新規':'tag-new','HOTリード':'tag-hot',
-  'VIP':'tag-vip','購入済み':'tag-bought','セミナー参加':'tag-seminar',
-  '資料請求':'tag-doc','休眠':'tag-sleep'
+// ==================== DATA ====================
+const TAG_LIST = ['トライアル','新規','HOTリード','VIP','購入済み','セミナー参加','資料請求','休眠'];
+const AVATARS = ['🧑','👩','👨','🧕','👴','🧔','👱','🙍','😊','🥰','😎','🤓','🧑‍💼','👩‍💼','🧑‍🎨','👨‍🏫'];
+const ICONS_AUTO = ['🎉','🔥','📄','😴','🛒','📧','⭐','🎯'];
+const COLORS_AUTO = ['qi-g','qi-r','qi-b','qi-y','qi-p','qi-t','qi-g','qi-r'];
+
+function ls(k,d){try{const v=localStorage.getItem('ld_'+k);return v?JSON.parse(v):d}catch(e){return d}}
+function ss(k,v){try{localStorage.setItem('ld_'+k,JSON.stringify(v))}catch(e){}}
+
+let D = {
+  friends: ls('friends', [
+    {id:1,name:'坂本 ひなた',job:'パティシエ',status:'フォロー中',tags:['トライアル','新規'],date:'2026/02/20',score:45,av:'🧑',msgs:[]},
+    {id:2,name:'近藤 大和',job:'投資家',status:'フォロー中',tags:['HOTリード','VIP','購入済み'],date:'2026/02/18',score:180,av:'👨',msgs:[]},
+    {id:3,name:'村上 桃花',job:'アロマセラピスト',status:'フォロー中',tags:['トライアル'],date:'2026/02/15',score:60,av:'👩',msgs:[]},
+    {id:4,name:'長谷川 悠',job:'建築家',status:'フォロー中',tags:['セミナー参加','資料請求'],date:'2026/02/13',score:90,av:'🧔',msgs:[]},
+    {id:5,name:'後藤 萌',job:'ライター',status:'フォロー中',tags:['HOTリード','購入済み'],date:'2026/02/10',score:130,av:'🙍',msgs:[]},
+    {id:6,name:'岡田 蒼空',job:'サーファー',status:'ブロック/退会',tags:['休眠'],date:'2026/02/08',score:10,av:'👱',msgs:[]},
+    {id:7,name:'藤田 莉子',job:'カメラウーマン',status:'フォロー中',tags:['新規','資料請求'],date:'2026/02/05',score:35,av:'🧕',msgs:[]},
+    {id:8,name:'前田 陽翔',job:'コンサルタント',status:'フォロー中',tags:['HOTリード','VIP','購入済み'],date:'2026/02/01',score:220,av:'🤓',msgs:[]},
+    {id:9,name:'石井 七海',job:'看護師',status:'フォロー中',tags:['セミナー参加'],date:'2026/01/28',score:75,av:'😊',msgs:[]},
+    {id:10,name:'橋本 颯太',job:'デザイナー',status:'フォロー中',tags:['新規'],date:'2026/01/25',score:20,av:'😎',msgs:[]},
+    {id:11,name:'山本 彩音',job:'教師',status:'フォロー中',tags:['HOTリード','セミナー参加'],date:'2026/01/22',score:110,av:'👩',msgs:[]},
+    {id:12,name:'田中 優斗',job:'営業マン',status:'フォロー中',tags:['購入済み'],date:'2026/01/18',score:95,av:'🧑‍💼',msgs:[]},
+  ]),
+  scenarios: ls('scenarios', [
+    {id:1,name:'友だち追加フォローシナリオ',trigger:'友だち追加',desc:'友だち追加後に3ステップでウォームアップ',steps:[{delay:'即時',msg:'こんにちは{{name}}さん！ラインダーのご登録ありがとうございます🎉'},{delay:'1日後',msg:'{{name}}さん、昨日はいかがでしたか？何かご質問あればお気軽に😊'},{delay:'3日後',msg:'お役立ち情報をお届けします📚 本日のテーマは…'}],sent:28,active:true},
+    {id:2,name:'セミナー参加者フォロー',trigger:'タグ付与（セミナー参加）',desc:'セミナー後のフォローアップシナリオ',steps:[{delay:'即時',msg:'本日のセミナーご参加ありがとうございました！'},{delay:'2日後',msg:'セミナーの資料をお送りします📎'},{delay:'7日後',msg:'ご感想はいかがでしたか？'}],sent:12,active:true},
+    {id:3,name:'購入後サンクスシナリオ',trigger:'購入イベント',desc:'購入完了後のサンクスとフォロー',steps:[{delay:'即時',msg:'ご購入ありがとうございます！🛒'},{delay:'3日後',msg:'商品はお手元に届きましたか？'},{delay:'14日後',msg:'使用感はいかがですか？レビューをお待ちしています⭐'},{delay:'30日後',msg:'1ヶ月が経ちました。継続してご利用いただいていますか？'}],sent:9,active:true},
+    {id:4,name:'資料請求ナーチャリング',trigger:'フォーム送信',desc:'資料請求後のリード育成シナリオ',steps:[{delay:'即時',msg:'資料をお送りします📄 5分で読めます！'},{delay:'2日後',msg:'資料はご覧いただけましたか？'},{delay:'5日後',msg:'よくある質問をまとめました💡'},{delay:'10日後',msg:'実際のケーススタディをご紹介します'},{delay:'21日後',msg:'そろそろご検討はいかがですか？'}],sent:6,active:false},
+  ]),
+  broadcasts: ls('broadcasts', [
+    {id:1,name:'3月キャンペーン告知',target:'all',targetLabel:'全員（30名）',msg:'{{name}}さん、春のキャンペーンのお知らせです🌸',scheduledAt:'2026/03/01 10:00',status:'sent',sent:30},
+    {id:2,name:'VIP向け特別オファー',target:'tag',targetLabel:'VIP（3名）',msg:'VIPの{{name}}さんへ特別なご案内です✨',scheduledAt:'2026/02/20 09:00',status:'sent',sent:3},
+    {id:3,name:'セミナー案内メール',target:'tag',targetLabel:'HOTリード（4名）',msg:'{{name}}さん、3/15のウェビナーにご参加いただけますか？',scheduledAt:'2026/03/10 11:00',status:'scheduled',sent:0},
+  ]),
+  templates: ls('templates', [
+    {id:1,name:'ウェルカムメッセージ',cat:'ウェルカム',body:'こんにちは{{name}}さん！\n\nご登録ありがとうございます🎉\n{{job}}されているんですね！\n\nまずはお気軽にご質問ください😊',vars:['name','job']},
+    {id:2,name:'フォローアップ（3日後）',cat:'フォローアップ',body:'{{name}}さん、ご登録から3日が経ちました！\n\n何かご不明な点はございますか？\nサポートはいつでも対応しています💪',vars:['name']},
+    {id:3,name:'プロモーション配信',cat:'プロモーション',body:'【期間限定】{{name}}さんだけへの特別オファーです🎁\n\n今月末まで30%OFF！\n詳しくはこちら→ https://example.com',vars:['name']},
+    {id:4,name:'セミナーリマインダ',cat:'リマインダ',body:'{{name}}さん、明日のセミナーはお忘れなく！\n\n📅 日時: 明日 14:00〜\n📍 場所: Zoom（URLは後日お送りします）',vars:['name']},
+  ]),
+  reminders: ls('reminders', [
+    {id:1,name:'セミナー前日通知',time:'2026-03-14T09:00',target:'all',msg:'{{name}}さん、明日14時からセミナーです！',status:'scheduled'},
+    {id:2,name:'月次レポート配信',time:'2026-03-31T10:00',target:'all',msg:'{{name}}さん、3月のご利用レポートをお送りします📊',status:'scheduled'},
+  ]),
+  traffic: ls('traffic', [
+    {id:1,name:'Instagram プロフィール',url:'https://lin.ee/xxx001',source:'instagram',clicks:342,cvs:28,tag:'新規'},
+    {id:2,name:'Twitter/X bio',url:'https://lin.ee/xxx002',source:'twitter',clicks:189,cvs:15,tag:'新規'},
+    {id:3,name:'メルマガ フッター',url:'https://lin.ee/xxx003',source:'email',clicks:521,cvs:47,tag:'HOTリード'},
+    {id:4,name:'LP ボタン',url:'https://lin.ee/xxx004',source:'lp',clicks:876,cvs:89,tag:'トライアル'},
+  ]),
+  cvPoints: ls('cvPoints', [
+    {id:1,name:'無料トライアル',type:'signup',amount:0,date:'2026/2/1',count:6},
+    {id:2,name:'商品購入',type:'purchase',amount:9800,date:'2026/1/15',count:9},
+    {id:3,name:'セミナー申込',type:'form_submit',amount:0,date:'2026/1/1',count:5},
+    {id:4,name:'資料請求完了',type:'form_submit',amount:0,date:'2025/12/1',count:6},
+  ]),
+  scoreRules: ls('scoreRules', [
+    {id:1,name:'友だち追加',score:10,trigger:'友だち追加',active:true},
+    {id:2,name:'メッセージ送信',score:5,trigger:'メッセージ受信',active:true},
+    {id:3,name:'リンククリック',score:3,trigger:'リンククリック',active:true},
+    {id:4,name:'フォーム送信',score:15,trigger:'CV達成',active:true},
+    {id:5,name:'商品購入',score:50,trigger:'CV達成',active:true},
+  ]),
+  automations: ls('automations', [
+    {id:1,name:'友だち追加 → ウェルカムメッセージ',trigger:'友だち追加',action:'シナリオ開始',desc:'友だち追加フォローシナリオを自動開始',icon:'🎉',color:'qi-g',active:true},
+    {id:2,name:'HOTリード → Slack通知',trigger:'タグ付与',action:'Webhook送信',desc:'HOTリードタグ付与時にSlackへ通知',icon:'🔥',color:'qi-r',active:true},
+    {id:3,name:'フォーム送信 → 資料配信',trigger:'フォーム送信',action:'メッセージ送信',desc:'資料請求フォーム送信時に自動返信',icon:'📄',color:'qi-b',active:true},
+    {id:4,name:'30日未返信 → 休眠タグ',trigger:'メッセージ受信',action:'タグ付与',desc:'30日間未アクション時に休眠タグを付与',icon:'😴',color:'qi-y',active:false},
+    {id:5,name:'購入完了 → サンクスシナリオ',trigger:'CV達成',action:'シナリオ開始',desc:'商品購入完了後にサンクスシナリオ開始',icon:'🛒',color:'qi-p',active:true},
+  ]),
+  webhooks: ls('webhooks', [
+    {id:1,name:'Slack 友だち通知',url:'https://hooks.slack.com/services/T00/B00/xxx',event:'友だち追加',active:true,calls:142},
+    {id:2,name:'Zapier CV連携',url:'https://hooks.zapier.com/hooks/catch/xxx',event:'CV達成',active:true,calls:67},
+    {id:3,name:'CRM同期',url:'https://api.mycrm.com/webhook/line',event:'全イベント',active:false,calls:0},
+  ]),
+  notify: ls('notify', [
+    {id:1,name:'友だち追加通知',desc:'新しい友だちが追加された時',active:true},
+    {id:2,name:'ブロック/退会通知',desc:'ユーザーがブロック・退会した時',active:true},
+    {id:3,name:'CV達成通知',desc:'コンバージョンが発生した時',active:true},
+    {id:4,name:'シナリオエラー通知',desc:'シナリオ配信でエラーが発生した時',active:false},
+    {id:5,name:'Webhookエラー通知',desc:'Webhook送信に失敗した時',active:true},
+  ]),
+  activity: ls('activity', [
+    {type:'friend',icon:'👤',text:'坂本 ひなたさんが友だち追加',time:'5分前',color:'qi-g'},
+    {type:'cv',icon:'💰',text:'田中 優斗さんが商品購入 ¥9,800',time:'23分前',color:'qi-r'},
+    {type:'msg',icon:'💬',text:'近藤 大和さんからメッセージ受信',time:'1時間前',color:'qi-b'},
+    {type:'auto',icon:'⚡',text:'自動化: 友だち追加 → シナリオ開始',time:'1時間前',color:'qi-y'},
+    {type:'cv',icon:'📊',text:'石井 七海さんがセミナー申込',time:'2時間前',color:'qi-p'},
+  ]),
+  chatActive: null,
 };
+let ID = ls('nextId',100);
+function nid(){ID++;ss('nextId',ID);return ID}
+function save(){Object.keys(D).forEach(k=>ss(k,D[k]))}
 
-let friends = [
-  { name:'坂本 ひなた', job:'パティシエ', status:'フォロー中', tags:['トライアル','新規'], date:'2026/02/20', avatar:'🧑' },
-  { name:'近藤 大和', job:'投資家', status:'フォロー中', tags:['HOTリード','VIP','購入済み'], date:'2026/02/18', avatar:'👨' },
-  { name:'村上 桃花', job:'アロマセラピスト', status:'フォロー中', tags:['トライアル'], date:'2026/02/15', avatar:'👩' },
-  { name:'長谷川 悠', job:'建築家', status:'フォロー中', tags:['セミナー参加','資料請求'], date:'2026/02/13', avatar:'🧔' },
-  { name:'後藤 萌', job:'ライター', status:'フォロー中', tags:['HOTリード','購入済み'], date:'2026/02/10', avatar:'🙍' },
-  { name:'岡田 蒼空', job:'サーフィン', status:'ブロック/退会', tags:['休眠'], date:'2026/02/08', avatar:'👱' },
-  { name:'藤田 莉子', job:'カメラ女子', status:'フォロー中', tags:['新規','資料請求'], date:'2026/02/05', avatar:'🧕' },
-  { name:'前田 陽翔', job:'コンサルタント', status:'フォロー中', tags:['HOTリード','VIP','購入済み'], date:'2026/02/01', avatar:'🤓' },
-  { name:'石井 七海', job:'看護師', status:'フォロー中', tags:['セミナー参加'], date:'2026/01/28', avatar:'😊' },
-  { name:'橋本 颯太', job:'デザイナー', status:'フォロー中', tags:['新規'], date:'2026/01/25', avatar:'😎' },
-  { name:'山本 彩音', job:'教師', status:'フォロー中', tags:['HOTリード','セミナー参加'], date:'2026/01/22', avatar:'👩' },
-  { name:'田中 優斗', job:'営業マン', status:'フォロー中', tags:['購入済み'], date:'2026/01/18', avatar:'🧑‍💼' },
-];
+// ==================== HELPERS ====================
+const $ = id => document.getElementById(id);
+function toast(msg){const t=$('toast');$('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+function openMo(id){$(id).classList.add('op')}
+function closeMo(id){$(id).classList.remove('op')}
+document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('op')}));
 
-let cvPoints = [
-  { name:'無料トライアル', type:'signup', amount:0, date:'2026/2/1', count:6 },
-  { name:'商品購入', type:'purchase', amount:9800, date:'2026/1/15', count:9 },
-  { name:'セミナー申込', type:'form_submit', amount:0, date:'2026/1/1', count:5 },
-  { name:'資料請求完了', type:'form_submit', amount:0, date:'2025/12/1', count:6 },
-];
+function tagBadge(t,i){const idx=TAG_LIST.indexOf(t)%8;return`<span class="badge tc-${idx>=0?idx:0}" style="font-size:11px;padding:2px 8px;margin:1px">${t}</span>`}
+function evBadge(type){const m={purchase:'b-pink',form_submit:'b-blue',signup:'b-green',click:'b-cyan'};return`<span class="badge ${m[type]||'b-gray'}">${type}</span>`}
+function fmtDate(d){const x=new Date(d);return isNaN(x)?d:`${x.getFullYear()}/${x.getMonth()+1}/${x.getDate()}`}
 
-let scoreRules = [
-  { name:'友だち追加', score:10, active:true },
-  { name:'メッセージ送信', score:5, active:true },
-  { name:'リンククリック', score:3, active:true },
-  { name:'フォーム送信', score:15, active:true },
-  { name:'商品購入', score:50, active:true },
-];
-
-let automations = [
-  { name:'友だち追加 → ウェルカムメッセージ', desc:'友だち追加トリガー → シナリオ開始', icon:'🎉', color:'qi-green', active:true },
-  { name:'タグ: HOTリード → 営業通知', desc:'タグ付与トリガー → Webhook送信', icon:'🔥', color:'qi-red', active:true },
-  { name:'フォーム送信 → 資料配信', desc:'フォーム送信トリガー → メッセージ送信', icon:'📄', color:'qi-blue', active:true },
-  { name:'30日未返信 → 休眠タグ', desc:'非アクティブ検知 → タグ付与', icon:'😴', color:'qi-yellow', active:false },
-  { name:'購入完了 → サンクスシナリオ', desc:'購入イベント → シナリオ開始', icon:'🛒', color:'qi-purple', active:true },
-];
-
-let scenarios = [
-  { name:'友だち追加フォローシナリオ', trigger:'友だち追加', steps:5, sent:28, active:true },
-  { name:'セミナー参加者フォロー', trigger:'タグ付与（セミナー参加）', steps:3, sent:12, active:true },
-  { name:'購入後サンクスシナリオ', trigger:'購入イベント', steps:4, sent:9, active:true },
-  { name:'資料請求ナーチャリング', trigger:'フォーム送信', steps:7, sent:6, active:false },
-];
-
-// ===== RENDER =====
-function tagBadge(t) {
-  return `<span class="tag-badge ${TAG_CLASSES[t]||'tag-new'}">${t}</span>`;
+// ==================== NAV ====================
+function nav(pg){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('act'));
+  $(`pg-${pg}`).classList.add('act');
+  document.querySelectorAll('.ni').forEach(n=>{if(n.dataset.pg===pg)n.classList.add('act')});
+  renders[pg]&&renders[pg]();
 }
-function evBadge(type) {
-  const cl = type==='purchase'?'ev-purchase':type==='signup'?'ev-signup':'ev-submit';
-  return `<span class="ev-badge ${cl}">${type}</span>`;
+document.querySelectorAll('.ni').forEach(n=>n.addEventListener('click',()=>nav(n.dataset.pg)));
+
+// ==================== DASHBOARD ====================
+function renderDash(){
+  const fs=D.friends.filter(f=>f.status==='フォロー中').length;
+  const stats=[
+    {n:fs,l:'友だち数',s:'フォロー中の友だち',cls:'sc-g',ico:'👥',pg:'friends'},
+    {n:D.scenarios.filter(s=>s.active).length,l:'アクティブシナリオ',s:'稼働中のシナリオ',cls:'sc-b',ico:'📋',pg:'scenario'},
+    {n:D.broadcasts.length,l:'配信数',s:'累計ブロードキャスト',cls:'sc-p',ico:'📢',pg:'broadcast'},
+    {n:D.templates.length,l:'テンプレート',s:'再利用可能',cls:'sc-y',ico:'📄',pg:'template'},
+    {n:D.automations.filter(a=>a.active).length,l:'オートメーション',s:'稼働中の自動化',cls:'sc-r',ico:'⚡',pg:'automation'},
+    {n:D.scoreRules.length,l:'スコアリング',s:'リードスコアルール',cls:'sc-t',ico:'⭐',pg:'scoring'},
+  ];
+  $('dash-stats').innerHTML=stats.map(s=>`
+    <div class="sc ${s.cls}" onclick="nav('${s.pg}')">
+      <div class="sc-ico">${s.ico}</div>
+      <div><div class="sc-n">${s.n}</div><div class="sc-l">${s.l}</div><div class="sc-s">${s.s}</div></div>
+      <div class="sc-arr">›</div>
+    </div>`).join('');
+  $('dash-activity').innerHTML=D.activity.slice(0,5).map(a=>`
+    <div class="act-item">
+      <div class="act-ico ${a.color}">${a.icon}</div>
+      <div class="act-tx"><strong>${a.text}</strong><span>${a.type==='cv'?'コンバージョン':a.type==='friend'?'友だち管理':a.type==='auto'?'自動化':'チャット'}</span></div>
+      <div class="act-time">${a.time}</div>
+    </div>`).join('');
+  $('act-time').textContent=new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})+'更新';
 }
 
-function renderFriends(list) {
-  const el = document.getElementById('friendsList');
-  el.innerHTML = list.map((f,i) => `
-    <div class="friend-row">
-      <div class="friend-info">
-        <div class="avatar">${f.avatar}</div>
-        <div>
-          <div class="friend-name">${f.name}</div>
-          <div class="friend-sub">${f.job}</div>
+// ==================== FRIENDS ====================
+let expandedFriend = null;
+function renderFriends(){
+  const tagF=$('tagFilter').value;
+  const search=$('friendSearch').value.toLowerCase();
+  let list=D.friends.filter(f=>{
+    if(tagF && !f.tags.includes(tagF)) return false;
+    if(search && !f.name.toLowerCase().includes(search) && !f.job.toLowerCase().includes(search)) return false;
+    return true;
+  });
+  $('friendCount').textContent=list.length+' 件';
+  $('friendsList').innerHTML=list.map((f,i)=>`
+    <div>
+      <div class="fr-row tbl-r" onclick="toggleFriendDetail('fd-${f.id}')">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="av">${f.av}</div>
+          <div><div class="fn">${f.name}</div><div class="fj">${f.job}</div></div>
+        </div>
+        <div><span class="badge ${f.status==='フォロー中'?'b-green':'b-gray'}">${f.status}</span></div>
+        <div class="tags">${f.tags.map(tagBadge).join('')}</div>
+        <div style="font-size:12.5px;color:var(--ts)">${f.date}</div>
+        <div style="display:flex;gap:5px">
+          <button class="btn-e" onclick="editFriend(${f.id},event)">編集</button>
+          <button class="btn-d" onclick="delFriend(${f.id},event)">削除</button>
         </div>
       </div>
-      <div><span class="status-badge ${f.status==='フォロー中'?'status-follow':'status-block'}">${f.status}</span></div>
-      <div class="tags-cell">${f.tags.map(tagBadge).join('')}</div>
-      <div class="date-cell">${f.date}</div>
-      <div><button class="expand-btn">⌄</button></div>
-    </div>
-  `).join('');
-  document.getElementById('friendCount').textContent = list.length + ' 件';
-}
-
-function filterFriends() {
-  const tag = document.getElementById('tagFilter').value;
-  const filtered = tag==='すべて' ? friends : friends.filter(f=>f.tags.includes(tag));
-  renderFriends(filtered);
-}
-
-function renderCV() {
-  // cards
-  const cards = document.getElementById('cvCards');
-  cards.innerHTML = cvPoints.map(cv => {
-    const salesHtml = cv.amount>0 ? `<span class="cv-sales">¥${(cv.amount*cv.count).toLocaleString()}</span>` : '';
-    return `<div class="cv-card">
-      <div class="cv-card-top">
-        <div class="cv-card-name">${cv.name}</div>
-        ${evBadge(cv.type)}
-      </div>
-      <div class="cv-card-row">
-        <div>
-          <div class="cv-card-number">${cv.count}</div>
-          <div class="cv-card-sub">CV数</div>
+      <div class="fr-detail ${expandedFriend===f.id?'open':''}" id="fd-${f.id}">
+        <div class="fd-grid">
+          <div class="fd-item"><label>スコア</label><span style="color:var(--green);font-weight:700">${f.score}pt</span></div>
+          <div class="fd-item"><label>登録日</label><span>${f.date}</span></div>
+          <div class="fd-item"><label>メッセージ数</label><span>${f.msgs?f.msgs.length:0}件</span></div>
+          <div class="fd-item"><label>アバター</label><span style="font-size:20px">${f.av}</span></div>
         </div>
-        ${salesHtml ? `<div><div class="cv-sales">${salesHtml}</div><div class="cv-card-sub">売上</div></div>` : ''}
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn btn-g" style="font-size:12px;padding:7px 14px" onclick="chatWith(${f.id})">💬 チャット</button>
+          <button class="btn btn-s" style="font-size:12px;padding:7px 14px" onclick="addScore2Friend(${f.id})">⭐ スコア+10</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function toggleFriendDetail(id){
+  const fid=parseInt(id.split('-')[1]);
+  expandedFriend = expandedFriend===fid?null:fid;
+  renderFriends();
+}
+function editFriend(id,e){
+  e.stopPropagation();
+  const f=D.friends.find(x=>x.id===id);
+  if(!f)return;
+  $('ef-id').value=id;
+  $('ef-name').value=f.name;
+  $('ef-job').value=f.job;
+  $('ef-status').value=f.status;
+  $('ef-score').value=f.score;
+  renderTagCheckboxes('ef-tags-sel',f.tags);
+  openMo('mo-editFriend');
+}
+function saveEditFriend(){
+  const id=parseInt($('ef-id').value);
+  const f=D.friends.find(x=>x.id===id);
+  if(!f)return;
+  f.name=$('ef-name').value.trim()||f.name;
+  f.job=$('ef-job').value.trim();
+  f.status=$('ef-status').value;
+  f.score=parseInt($('ef-score').value)||0;
+  f.tags=getCheckedTags('ef-tags-sel');
+  save();renderFriends();closeMo('mo-editFriend');toast('友だち情報を更新しました ✏️');
+}
+function delFriend(id,e){
+  e.stopPropagation();
+  if(!confirm('この友だちを削除しますか？'))return;
+  D.friends=D.friends.filter(f=>f.id!==id);
+  save();renderFriends();toast('削除しました');
+}
+function addFriend(){
+  const name=$('fn-name').value.trim();
+  if(!name){alert('名前を入力してください');return;}
+  const f={id:nid(),name,job:$('fn-job').value.trim()||'未設定',status:$('fn-status').value,tags:getCheckedTags('fn-tags-sel'),date:new Date().toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'}),score:parseInt($('fn-score').value)||0,av:AVATARS[Math.floor(Math.random()*AVATARS.length)],msgs:[]};
+  D.friends.unshift(f);
+  D.activity.unshift({type:'friend',icon:'👤',text:`${name}さんが友だち追加`,time:'たった今',color:'qi-g'});
+  save();renderFriends();renderDash();closeMo('mo-addFriend');
+  $('fn-name').value='';$('fn-job').value='';$('fn-score').value='0';
+  toast(`${name}さんを追加しました 👥`);
+}
+function addScore2Friend(id){
+  const f=D.friends.find(x=>x.id===id);
+  if(!f)return;
+  f.score+=10;save();renderFriends();toast(`${f.name}さんのスコア +10pt ⭐`);
+}
+function renderTagCheckboxes(elId, selected=[]){
+  $(elId).innerHTML=TAG_LIST.map(t=>{
+    const idx=TAG_LIST.indexOf(t)%8;
+    const chk=selected.includes(t);
+    return`<label style="display:flex;align-items:center;gap:4px;cursor:pointer;padding:4px 9px;border-radius:20px;border:1.5px solid ${chk?'var(--green)':'#e5e7eb'};background:${chk?'#e8faf0':'#fff'};font-size:12px;transition:all .15s">
+      <input type="checkbox" value="${t}" style="display:none" ${chk?'checked':''} onchange="updateTagLabel(this)">${t}</label>`;
+  }).join('');
+}
+function updateTagLabel(cb){
+  const lbl=cb.parentElement;
+  if(cb.checked){lbl.style.borderColor='var(--green)';lbl.style.background='#e8faf0';}
+  else{lbl.style.borderColor='#e5e7eb';lbl.style.background='#fff';}
+}
+function getCheckedTags(elId){return Array.from($(elId).querySelectorAll('input[type=checkbox]:checked')).map(c=>c.value)}
+
+// ==================== CHAT ====================
+let chatFriendId = null;
+function renderChat(){
+  $('chatList').innerHTML=D.friends.filter(f=>f.status==='フォロー中').map(f=>{
+    const last=f.msgs&&f.msgs.length?f.msgs[f.msgs.length-1]:{text:'メッセージなし',time:''};
+    return`<div class="cl-item ${chatFriendId===f.id?'sel':''}" onclick="selectChat(${f.id})">
+      <div class="av" style="width:34px;height:34px;font-size:18px">${f.av}</div>
+      <div style="flex:1;min-width:0">
+        <div class="cl-name">${f.name}</div>
+        <div class="cl-msg">${last.text||'メッセージなし'}</div>
+      </div>
+      <div class="cl-time">${last.time||''}</div>
+    </div>`;
+  }).join('');
+}
+function selectChat(id){
+  chatFriendId=id;
+  const f=D.friends.find(x=>x.id===id);
+  if(!f)return;
+  $('chatAv').textContent=f.av;
+  $('chatName').textContent=f.name;
+  $('chatJob').textContent=f.job;
+  $('chatTags').innerHTML=f.tags.map(t=>tagBadge(t)).join('');
+  renderMsgs(f);
+  renderChat();
+}
+function renderMsgs(f){
+  if(!f.msgs||!f.msgs.length){
+    $('chatMsgs').innerHTML='<div style="text-align:center;color:var(--ts);font-size:13px;margin-top:40px">まだメッセージはありません</div>';
+    return;
+  }
+  $('chatMsgs').innerHTML=f.msgs.map(m=>`
+    <div class="msg ${m.from==='me'?'mine':'them'}">
+      <div class="msg-bub">${m.text}</div>
+      <div class="msg-time">${m.time}</div>
+    </div>`).join('');
+  $('chatMsgs').scrollTop=99999;
+}
+function sendMsg(){
+  const txt=$('chatInput').value.trim();
+  if(!txt||!chatFriendId)return;
+  const f=D.friends.find(x=>x.id===chatFriendId);
+  if(!f)return;
+  if(!f.msgs)f.msgs=[];
+  const t=new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});
+  f.msgs.push({from:'me',text:txt,time:t});
+  D.activity.unshift({type:'msg',icon:'💬',text:`${f.name}さんへメッセージ送信`,time:'たった今',color:'qi-b'});
+  save();renderMsgs(f);renderChat();$('chatInput').value='';
+  // simulate reply
+  setTimeout(()=>{
+    const replies=['ありがとうございます！','了解です😊','はい、確認しました！','ご連絡ありがとうございます','少々お待ちください'];
+    f.msgs.push({from:'them',text:replies[Math.floor(Math.random()*replies.length)],time:new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})});
+    save();if(chatFriendId===f.id)renderMsgs(f);renderChat();
+  },1200);
+}
+function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg()}}
+function chatWith(id){nav('chat');setTimeout(()=>selectChat(id),50)}
+
+// ==================== SCENARIO ====================
+function renderScenario(){
+  $('scenarioList').innerHTML=D.scenarios.map(s=>`
+    <div class="sc-card ${s.active?'':'inactive'}" onclick="toggleScSteps('ss-${s.id}')">
+      <div class="sc-head">
+        <div class="sc-nm">${s.name}</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="badge ${s.active?'b-green':'b-gray'}">${s.active?'● 稼働中':'○ 停止中'}</span>
+          <button class="btn-e" onclick="toggleScenario(${s.id},event)">切替</button>
+          <button class="btn-d" onclick="delScenario(${s.id},event)">削除</button>
+        </div>
+      </div>
+      <div class="sc-meta">
+        <div class="sc-mi">トリガー: <strong>${s.trigger}</strong></div>
+        <div class="sc-mi">ステップ数: <strong>${s.steps.length}</strong></div>
+        <div class="sc-mi">送信数: <strong>${s.sent}件</strong></div>
+        <div class="sc-mi">${s.desc}</div>
+      </div>
+      <div class="sc-steps" id="ss-${s.id}">
+        ${s.steps.map((st,i)=>`
+        <div class="step-item">
+          <div class="step-num">${i+1}</div>
+          <div class="step-tx"><strong>STEP${i+1} — ${st.delay}</strong><span>${st.msg}</span></div>
+        </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function toggleScSteps(id){const el=$(id);el.classList.toggle('open')}
+function toggleScenario(id,e){
+  e.stopPropagation();
+  const s=D.scenarios.find(x=>x.id===id);
+  if(s){s.active=!s.active;save();renderScenario();toast(s.active?'シナリオを有効化しました ✅':'シナリオを停止しました')}
+}
+function delScenario(id,e){
+  e.stopPropagation();
+  if(!confirm('削除しますか？'))return;
+  D.scenarios=D.scenarios.filter(x=>x.id!==id);save();renderScenario();toast('削除しました');
+}
+function addScenario(){
+  const name=$('sn-name').value.trim();
+  if(!name)return;
+  const steps=[];
+  const s1=$('sn-s1').value.trim();const s2=$('sn-s2').value.trim();const s3=$('sn-s3').value.trim();
+  if(s1)steps.push({delay:'即時',msg:s1});
+  if(s2)steps.push({delay:'1日後',msg:s2});
+  if(s3)steps.push({delay:'3日後',msg:s3});
+  if(!steps.length)steps.push({delay:'即時',msg:'こんにちは{{name}}さん！'});
+  D.scenarios.push({id:nid(),name,trigger:$('sn-trigger').value,desc:$('sn-desc').value,steps,sent:0,active:true});
+  save();renderScenario();closeMo('mo-addScenario');
+  ['sn-name','sn-desc','sn-s1','sn-s2','sn-s3'].forEach(i=>$(i).value='');
+  toast('シナリオを作成しました 📋');
+}
+
+// ==================== BROADCAST ====================
+$('bc-target').addEventListener('change',function(){$('bc-tag-wrap').style.display=this.value==='tag'?'block':'none'});
+function renderBroadcast(){
+  $('broadcastList').innerHTML=D.broadcasts.map(b=>{
+    const statusBadge=b.status==='sent'?'b-green':b.status==='scheduled'?'b-blue':'b-gray';
+    const statusTxt=b.status==='sent'?'✓ 送信済み':b.status==='scheduled'?'⏰ 予約済み':'下書き';
+    return`<div class="bc-card">
+      <div class="bc-ico ${b.status==='sent'?'qi-g':b.status==='scheduled'?'qi-b':'qi-y'}">📢</div>
+      <div class="bc-info">
+        <div class="bc-name">${b.name}</div>
+        <div class="bc-meta">📅 ${b.scheduledAt} &nbsp;|&nbsp; 👥 ${b.targetLabel} &nbsp;|&nbsp; 📨 ${b.sent}件送信</div>
+        <div style="margin-top:6px;font-size:12.5px;color:#6b7280;background:#f8fafc;padding:6px 10px;border-radius:6px">${b.msg}</div>
+      </div>
+      <div class="bc-actions">
+        <span class="badge ${statusBadge}">${statusTxt}</span>
+        <button class="btn-d" onclick="delBroadcast(${b.id})">削除</button>
       </div>
     </div>`;
   }).join('');
+}
+function delBroadcast(id){if(!confirm('削除しますか？'))return;D.broadcasts=D.broadcasts.filter(x=>x.id!==id);save();renderBroadcast();toast('削除しました')}
+function addBroadcast(){
+  const name=$('bc-name').value.trim();const msg=$('bc-msg').value.trim();
+  if(!name||!msg)return;
+  const tgt=$('bc-target').value;
+  const tagSel=$('bc-tag').value;
+  const targetLabel=tgt==='all'?`全員（${D.friends.length}名）`:tgt==='tag'?`${tagSel}（${D.friends.filter(f=>f.tags.includes(tagSel)).length}名）`:`フォロー中（${D.friends.filter(f=>f.status==='フォロー中').length}名）`;
+  const timeV=$('bc-time').value;
+  const b={id:nid(),name,target:tgt,targetLabel,msg,scheduledAt:timeV?new Date(timeV).toLocaleString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):new Date().toLocaleString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}),status:timeV?'scheduled':'sent',sent:timeV?0:parseInt(targetLabel.match(/\d+/)[0])||0};
+  D.broadcasts.unshift(b);
+  D.activity.unshift({type:'msg',icon:'📢',text:`一斉配信「${name}」${timeV?'を予約':'を送信'}`,time:'たった今',color:'qi-p'});
+  save();renderBroadcast();renderDash();closeMo('mo-addBroadcast');
+  ['bc-name','bc-msg','bc-time'].forEach(i=>$(i).value='');
+  toast(`配信「${name}」を${timeV?'予約':'送信'}しました 📢`);
+}
 
-  // table
-  const list = document.getElementById('cvList');
-  list.innerHTML = cvPoints.map((cv,i) => `
-    <div class="cv-table-row">
-      <div class="cv-name">${cv.name}</div>
+// ==================== TEMPLATE ====================
+$('tp-body')&&$('tp-body').addEventListener('input',previewTemplate);
+$('tp-prev-name')&&$('tp-prev-name').addEventListener('input',previewTemplate);
+function previewTemplate(){
+  const body=$('tp-body').value;
+  const name=$('tp-prev-name').value||'山田 太郎';
+  if(!body){$('tp-preview').style.display='none';return;}
+  const preview=body.replace(/\{\{name\}\}/g,name).replace(/\{\{job\}\}/g,'エンジニア').replace(/\{\{date\}\}/g,'2026/3/25');
+  $('tp-preview').style.display='block';
+  $('tp-preview').textContent=preview;
+}
+function renderTemplate(){
+  $('templateList').innerHTML=D.templates.map(t=>`
+    <div class="tp-card">
+      <div class="tp-head">
+        <div>
+          <div class="tp-name">${t.name}</div>
+          <span class="badge b-gray" style="margin-top:4px">${t.cat}</span>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn-e" onclick="copyTemplate(${t.id})">コピー</button>
+          <button class="btn-d" onclick="delTemplate(${t.id})">削除</button>
+        </div>
+      </div>
+      <div class="tp-body" style="white-space:pre-wrap">${t.body}</div>
+      <div class="tp-vars">${t.vars.map(v=>`<span class="tp-var">{{${v}}}</span>`).join('')}</div>
+    </div>`).join('');
+}
+function copyTemplate(id){
+  const t=D.templates.find(x=>x.id===id);
+  if(t){navigator.clipboard.writeText(t.body).then(()=>toast('クリップボードにコピーしました 📋')).catch(()=>toast('コピーしました 📋'))}
+}
+function delTemplate(id){if(!confirm('削除しますか？'))return;D.templates=D.templates.filter(x=>x.id!==id);save();renderTemplate();toast('削除しました')}
+function addTemplate(){
+  const name=$('tp-name').value.trim();const body=$('tp-body').value.trim();
+  if(!name||!body)return;
+  const vars=[...(body.match(/\{\{(\w+)\}\}/g)||[])].map(v=>v.replace(/[{}]/g,''));
+  D.templates.push({id:nid(),name,cat:$('tp-cat').value,body,vars:[...new Set(vars)]});
+  save();renderTemplate();closeMo('mo-addTemplate');
+  ['tp-name','tp-body','tp-prev-name'].forEach(i=>$(i).value='');
+  $('tp-preview').style.display='none';
+  toast('テンプレートを作成しました 📄');
+}
+
+// ==================== REMINDER ====================
+function renderReminder(){
+  $('reminderList').innerHTML=D.reminders.map(r=>{
+    const d=new Date(r.time);
+    const day=isNaN(d)?'--':d.getDate();
+    const mon=isNaN(d)?'--':(d.getMonth()+1)+'月';
+    return`<div class="rm-card">
+      <div class="rm-date"><div class="rd-d">${day}</div><div class="rd-m">${mon}</div></div>
+      <div class="rm-info">
+        <div class="rm-nm">${r.name}</div>
+        <div class="rm-meta">📅 ${fmtDate(r.time)} ${isNaN(d)?'':d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')} &nbsp;|&nbsp; 👥 ${r.target==='all'?'全員':r.target}</div>
+        <div style="margin-top:5px;font-size:12.5px;color:#6b7280">${r.msg}</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="badge ${r.status==='scheduled'?'b-blue':'b-green'}">${r.status==='scheduled'?'⏰ 予約中':'✓ 完了'}</span>
+        <button class="btn-d" onclick="delReminder(${r.id})">削除</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function delReminder(id){if(!confirm('削除しますか？'))return;D.reminders=D.reminders.filter(x=>x.id!==id);save();renderReminder();toast('削除しました')}
+function addReminder(){
+  const name=$('rm-name').value.trim();const time=$('rm-time').value;const msg=$('rm-msg').value.trim();
+  if(!name||!time||!msg)return;
+  D.reminders.push({id:nid(),name,time,target:$('rm-target').value,msg,status:'scheduled'});
+  save();renderReminder();closeMo('mo-addReminder');
+  ['rm-name','rm-time','rm-msg'].forEach(i=>$(i).value='');
+  toast('リマインダを作成しました ⏰');
+}
+
+// ==================== TRAFFIC ====================
+function renderTraffic(){
+  const total=D.traffic.reduce((a,t)=>a+t.clicks,0);
+  const totalCV=D.traffic.reduce((a,t)=>a+t.cvs,0);
+  const avgCVR=total>0?((totalCV/total)*100).toFixed(1):0;
+  $('trafficStats').innerHTML=`
+    <div class="tr-card"><div class="tr-n">${total.toLocaleString()}</div><div class="tr-l">総クリック数</div></div>
+    <div class="tr-card"><div class="tr-n">${totalCV}</div><div class="tr-l">総CV数</div></div>
+    <div class="tr-card"><div class="tr-n">${avgCVR}%</div><div class="tr-l">平均CVR</div></div>
+    <div class="tr-card"><div class="tr-n">${D.traffic.length}</div><div class="tr-l">リンク数</div></div>`;
+  const maxClicks=Math.max(...D.traffic.map(t=>t.clicks),1);
+  $('trafficList').innerHTML=D.traffic.map(t=>`
+    <div class="tbl-r lk-row">
+      <div><div style="font-size:13.5px;font-weight:500">${t.name}</div><div class="lk-url">${t.url}</div>
+        <div class="tr-bar"><div class="tr-fill" style="width:${(t.clicks/maxClicks*100)}%"></div></div>
+      </div>
+      <div style="font-size:14px;font-weight:600">${t.clicks.toLocaleString()}</div>
+      <div style="font-size:14px;font-weight:600;color:var(--green)">${t.cvs}</div>
+      <div style="font-size:13px">${((t.cvs/t.clicks)*100).toFixed(1)}%</div>
+      <div style="display:flex;gap:5px">
+        <button class="btn-e" onclick="clickSim(${t.id})">+クリック</button>
+        <button class="btn-d" onclick="delTraffic(${t.id})">削除</button>
+      </div>
+    </div>`).join('');
+}
+function clickSim(id){const t=D.traffic.find(x=>x.id===id);if(t){t.clicks++;save();renderTraffic();toast('クリックを記録しました 🔀')}}
+function delTraffic(id){if(!confirm('削除しますか？'))return;D.traffic=D.traffic.filter(x=>x.id!==id);save();renderTraffic();toast('削除しました')}
+function addTraffic(){
+  const name=$('tr-name').value.trim();if(!name)return;
+  const shortId='xxx'+String(nid()).slice(-3);
+  D.traffic.push({id:nid(),name,url:`https://lin.ee/${shortId}`,source:$('tr-source').value||'direct',clicks:0,cvs:0,tag:$('tr-tag').value});
+  save();renderTraffic();closeMo('mo-addTraffic');
+  ['tr-name','tr-url','tr-source'].forEach(i=>$(i).value='');
+  toast('トラッキングリンクを作成しました 🔗');
+}
+
+// ==================== CV ====================
+function renderCV(){
+  $('cvCards').innerHTML=D.cvPoints.map(cv=>{
+    const sales=cv.amount*cv.count;
+    return`<div class="cv-card2">
+      <div class="cv-top"><div class="cv-nm">${cv.name}</div>${evBadge(cv.type)}</div>
+      <div class="cv-row">
+        <div><div class="cv-n">${cv.count}</div><div style="font-size:11px;color:var(--ts);margin-top:2px">CV数</div></div>
+        ${sales>0?`<div><div class="cv-sales">¥${sales.toLocaleString()}</div><div style="font-size:11px;color:var(--ts);margin-top:2px">売上</div></div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  $('cvList').innerHTML=D.cvPoints.map(cv=>`
+    <div class="tbl-r" style="grid-template-columns:2fr 1.5fr 1fr 1.2fr 80px">
+      <div style="font-size:14px;font-weight:500">${cv.name}</div>
       <div>${evBadge(cv.type)}</div>
-      <div class="cv-amount">¥${cv.amount.toLocaleString()}</div>
-      <div class="cv-date">${cv.date}</div>
-      <div><button style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:13px;" onclick="deleteCV(${i})">削除</button></div>
-    </div>
-  `).join('');
-}
-
-function renderScoring() {
-  const el = document.getElementById('scoreList');
-  el.innerHTML = scoreRules.map((r,i) => `
-    <div class="score-table-row">
-      <div style="font-size:14px;font-weight:500;">${r.name}</div>
-      <div class="score-val">+${r.score}pt</div>
-      <div><span class="status-badge ${r.active?'status-follow':'status-block'}">${r.active?'有効':'無効'}</span></div>
-      <div><button style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:13px;" onclick="deleteScore(${i})">削除</button></div>
-    </div>
-  `).join('');
-}
-
-function renderAutomation() {
-  const el = document.getElementById('autoList');
-  el.innerHTML = automations.map((a,i) => `
-    <div class="auto-card">
-      <div class="quick-item-icon ${a.color}" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;">${a.icon}</div>
-      <div class="auto-info">
-        <div class="auto-name">${a.name}</div>
-        <div class="auto-desc">${a.desc}</div>
+      <div style="font-size:13.5px;font-weight:500">¥${cv.amount.toLocaleString()}</div>
+      <div style="font-size:12.5px;color:var(--ts)">${cv.date}</div>
+      <div style="display:flex;gap:5px">
+        <button class="btn-e" onclick="cvFire(${cv.id})">+1</button>
+        <button class="btn-d" onclick="delCV(${cv.id})">削除</button>
       </div>
-      <div class="auto-toggle ${a.active?'':'off'}" onclick="toggleAuto(${i})"></div>
-    </div>
-  `).join('');
+    </div>`).join('');
+}
+function cvFire(id){
+  const cv=D.cvPoints.find(x=>x.id===id);
+  if(cv){cv.count++;D.activity.unshift({type:'cv',icon:'💰',text:`CVポイント「${cv.name}」が発生`,time:'たった今',color:'qi-r'});save();renderCV();toast(`CV「${cv.name}」を記録しました 📊`)}
+}
+function delCV(id){if(!confirm('削除しますか？'))return;D.cvPoints=D.cvPoints.filter(x=>x.id!==id);save();renderCV();toast('削除しました')}
+function addCV(){
+  const name=$('cv-name').value.trim();if(!name)return;
+  const d=new Date();
+  D.cvPoints.push({id:nid(),name,type:$('cv-type').value,amount:parseInt($('cv-amount').value)||0,date:`${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`,count:0});
+  save();renderCV();closeMo('mo-addCV');$('cv-name').value='';$('cv-amount').value='0';
+  toast('CVポイントを作成しました 📊');
 }
 
-function renderScenarios() {
-  const el = document.getElementById('scenarioList');
-  el.innerHTML = scenarios.map((s,i) => `
-    <div class="scenario-card" style="border-left-color:${s.active?'var(--green)':'#d1d5db'}">
-      <div class="scenario-head">
-        <div class="scenario-name">${s.name}</div>
-        <span class="scenario-status" style="${s.active?'':'background:#f3f4f6;color:#6b7280;'}">
-          ${s.active?'● 稼働中':'○ 停止中'}
-        </span>
+// ==================== SCORING ====================
+function renderScoring(){
+  const maxScore=Math.max(...D.friends.map(f=>f.score),1);
+  const avgScore=D.friends.length?Math.round(D.friends.reduce((a,f)=>a+f.score,0)/D.friends.length):0;
+  const topScore=Math.max(...D.friends.map(f=>f.score));
+  $('scoreStats').innerHTML=`
+    <div class="card" style="text-align:center"><div style="font-size:30px;font-weight:700;color:var(--green)">${D.friends.length}</div><div style="font-size:12px;color:var(--ts);margin-top:4px">リード総数</div></div>
+    <div class="card" style="text-align:center"><div style="font-size:30px;font-weight:700;color:var(--green)">${avgScore}pt</div><div style="font-size:12px;color:var(--ts);margin-top:4px">平均スコア</div></div>
+    <div class="card" style="text-align:center"><div style="font-size:30px;font-weight:700;color:var(--green)">${topScore}pt</div><div style="font-size:12px;color:var(--ts);margin-top:4px">最高スコア</div></div>`;
+  $('scoreList').innerHTML=D.scoreRules.map(r=>`
+    <div class="tbl-r" style="grid-template-columns:2fr 1fr 1fr 70px">
+      <div style="font-size:13.5px;font-weight:500">${r.name}</div>
+      <div style="font-size:14px;font-weight:700;color:var(--green)">+${r.score}pt</div>
+      <div><span class="badge ${r.active?'b-green':'b-gray'}">${r.active?'有効':'無効'}</span></div>
+      <div style="display:flex;gap:4px">
+        <button class="btn-e" onclick="toggleScore(${r.id})" style="font-size:11px">切替</button>
+        <button class="btn-d" onclick="delScore(${r.id})">削除</button>
       </div>
-      <div class="scenario-meta">
-        <div class="scenario-meta-item">トリガー: <strong>${s.trigger}</strong></div>
-        <div class="scenario-meta-item">ステップ数: <strong>${s.steps}</strong></div>
-        <div class="scenario-meta-item">送信数: <strong>${s.sent}件</strong></div>
+    </div>`).join('');
+  const sorted=[...D.friends].sort((a,b)=>b.score-a.score);
+  $('leaderboard').innerHTML=sorted.map((f,i)=>`
+    <div class="tbl-r lb-row">
+      <div class="lb-rank ${i<3?'top':#}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="av" style="width:28px;height:28px;font-size:15px">${f.av}</div>
+        <div style="font-size:13px;font-weight:500">${f.name}</div>
       </div>
-    </div>
-  `).join('');
+      <div><div style="font-size:14px;font-weight:700;color:var(--green)">${f.score}pt</div>
+        <div class="score-bar"><div class="score-fill" style="width:${(f.score/maxScore)*100}%"></div></div></div>
+      <div class="tags" style="max-width:120px">${f.tags.slice(0,2).map(tagBadge).join('')}</div>
+      <div style="font-size:12px;color:var(--ts)">${f.date}</div>
+    </div>`).join('');
+}
+function toggleScore(id){const r=D.scoreRules.find(x=>x.id===id);if(r){r.active=!r.active;save();renderScoring();toast(r.active?'有効化しました ✅':'無効化しました')}}
+function delScore(id){if(!confirm('削除しますか？'))return;D.scoreRules=D.scoreRules.filter(x=>x.id!==id);save();renderScoring();toast('削除しました')}
+function addScore(){
+  const name=$('sc-name').value.trim();if(!name)return;
+  D.scoreRules.push({id:nid(),name,score:parseInt($('sc-val').value)||10,trigger:$('sc-trigger').value,active:true});
+  save();renderScoring();closeMo('mo-addScore');$('sc-name').value='';$('sc-val').value='10';
+  toast('スコアリングルールを追加しました ⭐');
 }
 
-// ===== NAVIGATION =====
-function navigate(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => {
-    if(n.textContent.trim().includes(getNavName(page))) n.classList.add('active');
-  });
+// ==================== AUTOMATION ====================
+function renderAuto(){
+  $('autoList').innerHTML=D.automations.map(a=>`
+    <div class="au-card">
+      <div class="au-ico ${a.color}">${a.icon}</div>
+      <div class="au-info">
+        <div class="au-nm">${a.name}</div>
+        <div class="au-desc">IF: ${a.trigger} → THEN: ${a.action} &nbsp;|&nbsp; ${a.desc}</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn-d" onclick="delAuto(${a.id})">削除</button>
+        <div class="tgl ${a.active?'':'off'}" onclick="toggleAuto(${a.id})" title="${a.active?'無効化':'有効化'}"></div>
+      </div>
+    </div>`).join('');
+}
+function toggleAuto(id){const a=D.automations.find(x=>x.id===id);if(a){a.active=!a.active;save();renderAuto();toast(a.active?`「${a.name}」を有効化しました ✅`:`「${a.name}」を無効化しました`)}}
+function delAuto(id){if(!confirm('削除しますか？'))return;D.automations=D.automations.filter(x=>x.id!==id);save();renderAuto();toast('削除しました')}
+function addAuto(){
+  const name=$('au-name').value.trim();if(!name)return;
+  const i=Math.floor(Math.random()*ICONS_AUTO.length);
+  D.automations.push({id:nid(),name,trigger:$('au-trigger').value,action:$('au-action').value,desc:$('au-desc').value||`${$('au-trigger').value} → ${$('au-action').value}`,icon:ICONS_AUTO[i],color:COLORS_AUTO[i],active:true});
+  save();renderAuto();closeMo('mo-addAuto');$('au-name').value='';$('au-desc').value='';
+  toast('オートメーションを追加しました ⚡');
 }
 
-function getNavName(page) {
-  const map = {
-    dashboard:'ダッシュボード', friends:'友だち管理', chat:'個別チャット',
-    scenario:'シナリオ配信', broadcast:'一斉配信', template:'テンプレート',
-    reminder:'リマインダ', traffic:'流入経路', cv:'CV計測',
-    scoring:'スコアリング', automation:'オートメーション', webhook:'Webhook',
-    notify:'通知', settings:'LINEアカウント'
-  };
-  return map[page]||page;
+// ==================== WEBHOOK ====================
+function renderWebhook(){
+  $('webhookList').innerHTML=D.webhooks.map(w=>`
+    <div class="wh-card">
+      <div class="au-ico ${w.active?'qi-g':'qi-y'}" style="width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px">🔗</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:14px;font-weight:600">${w.name}</div>
+        <div class="wh-url">${w.url}</div>
+        <div style="font-size:12px;color:var(--ts);margin-top:3px">イベント: ${w.event} &nbsp;|&nbsp; 送信: ${w.calls}件</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="badge ${w.active?'b-green':'b-gray'}">${w.active?'有効':'無効'}</span>
+        <button class="btn-e" onclick="testWebhook(${w.id})">テスト</button>
+        <button class="btn-d" onclick="delWebhook(${w.id})">削除</button>
+        <div class="tgl ${w.active?'':'off'}" onclick="toggleWebhook(${w.id})"></div>
+      </div>
+    </div>`).join('');
+}
+function toggleWebhook(id){const w=D.webhooks.find(x=>x.id===id);if(w){w.active=!w.active;save();renderWebhook();toast(w.active?'有効化しました':'無効化しました')}}
+function testWebhook(id){const w=D.webhooks.find(x=>x.id===id);if(w){w.calls++;save();renderWebhook();toast(`「${w.name}」にテスト送信しました ✅`)}}
+function delWebhook(id){if(!confirm('削除しますか？'))return;D.webhooks=D.webhooks.filter(x=>x.id!==id);save();renderWebhook();toast('削除しました')}
+function addWebhook(){
+  const name=$('wh-name').value.trim();const url=$('wh-url').value.trim();
+  if(!name||!url)return;
+  D.webhooks.push({id:nid(),name,url,event:$('wh-event').value,active:true,calls:0});
+  save();renderWebhook();closeMo('mo-addWebhook');$('wh-name').value='';$('wh-url').value='';
+  toast('Webhookを追加しました 🔗');
 }
 
-// ===== MODAL =====
-function openModal(id) {
-  document.getElementById('modal-'+id).classList.add('open');
+// ==================== NOTIFY ====================
+function renderNotify(){
+  $('notifyList').innerHTML=D.notify.map(n=>`
+    <div class="nf-row">
+      <div><div style="font-size:13.5px;font-weight:500">${n.name}</div><div style="font-size:11.5px;color:var(--ts);margin-top:2px">${n.desc}</div></div>
+      <div class="tgl ${n.active?'':'off'}" onclick="toggleNotify(${n.id})"></div>
+    </div>`).join('');
 }
-function closeModal(id) {
-  document.getElementById('modal-'+id).classList.remove('open');
-}
-document.querySelectorAll('.modal-overlay').forEach(m => {
-  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); });
-});
+function toggleNotify(id){const n=D.notify.find(x=>x.id===id);if(n){n.active=!n.active;save();renderNotify();toast(n.active?'通知をONにしました 🔔':'通知をOFFにしました')}}
 
-// ===== TOAST =====
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  document.getElementById('toastMsg').textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+// ==================== SETTINGS ====================
+function renderSettings(){
+  $('settingsContent').innerHTML=`
+    <div class="set-title">LINEアカウント接続</div>
+    <div class="set-row"><div><label>チャンネルID</label><span>LINE公式アカウントのチャンネルID</span></div><div class="set-val">1234567890</div></div>
+    <div class="set-row"><div><label>チャンネルシークレット</label><span>APIシークレットキー</span></div><div class="set-val">••••••••••••••••</div></div>
+    <div class="set-row"><div><label>アクセストークン</label><span>LINE Messaging API トークン</span></div>
+      <button class="btn btn-s" style="font-size:12px;padding:6px 12px" onclick="toast('トークンを再発行しました 🔑')">再発行</button></div>
+    <div class="set-row"><div><label>Webhook URL</label><span>LINEからのイベント受信URL</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><div class="set-val" style="font-family:monospace;font-size:11.5px">https://linedar.app/webhook/xxx</div>
+      <button class="btn btn-s" style="font-size:12px;padding:6px 12px" onclick="copyWebhookUrl()">コピー</button></div></div>
+    <div class="set-row"><div><label>接続状態</label><span>LINEとの接続を確認</span></div>
+      <span class="badge b-green">● 接続済み</span></div>
+    <div class="set-title" style="margin-top:0;border-top:1px solid var(--br)">プラン情報</div>
+    <div class="set-row"><div><label>プラン</label></div><div><span class="badge b-green">FREE</span></div></div>
+    <div class="set-row"><div><label>友だち数上限</label></div><div class="set-val">∞ 無制限</div></div>
+    <div class="set-row"><div><label>月間メッセージ数</label></div><div class="set-val">∞ 無制限</div></div>
+    <div class="set-row"><div><label>バージョン</label></div><div class="set-val">ラインダー v1.0.0</div></div>`;
 }
+function copyWebhookUrl(){navigator.clipboard.writeText('https://linedar.app/webhook/xxx').catch(()=>{});toast('Webhook URLをコピーしました 🔗')}
 
-// ===== ACTIONS =====
-function addFriend() {
-  const name = document.getElementById('newFriendName').value.trim();
-  if(!name) return;
-  const tag = document.getElementById('newFriendTag').value;
-  const job = document.getElementById('newFriendJob').value.trim()||'未設定';
-  friends.unshift({ name, job, status:'フォロー中', tags:[tag], date:new Date().toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'/'), avatar:AVATARS[Math.floor(Math.random()*AVATARS.length)] });
-  filterFriends();
-  closeModal('addFriend');
-  document.getElementById('newFriendName').value='';
-  document.getElementById('newFriendJob').value='';
-  showToast('友だちを追加しました');
-}
+// ==================== RENDERS MAP ====================
+const renders={
+  dashboard:renderDash,
+  friends:()=>{renderTagCheckboxes('fn-tags-sel',[]);renderFriends()},
+  chat:renderChat,
+  scenario:renderScenario,
+  broadcast:renderBroadcast,
+  template:renderTemplate,
+  reminder:renderReminder,
+  traffic:renderTraffic,
+  cv:renderCV,
+  scoring:renderScoring,
+  automation:renderAuto,
+  webhook:renderWebhook,
+  notify:renderNotify,
+  settings:renderSettings,
+};
 
-function addCV() {
-  const name = document.getElementById('newCVName').value.trim();
-  if(!name) return;
-  const type = document.getElementById('newCVType').value;
-  const amount = parseInt(document.getElementById('newCVAmount').value)||0;
-  const d = new Date();
-  cvPoints.unshift({ name, type, amount, date:`${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`, count:0 });
-  renderCV();
-  closeModal('addCV');
-  document.getElementById('newCVName').value='';
-  showToast('CVポイントを作成しました');
-}
-
-function deleteCV(i) {
-  if(!confirm(`「${cvPoints[i].name}」を削除しますか？`)) return;
-  cvPoints.splice(i,1);
-  renderCV();
-  showToast('削除しました');
-}
-
-function addScore() {
-  const name = document.getElementById('newScoreName').value.trim();
-  const score = parseInt(document.getElementById('newScoreVal').value)||0;
-  if(!name) return;
-  scoreRules.push({ name, score, active:true });
-  renderScoring();
-  closeModal('addScore');
-  document.getElementById('newScoreName').value='';
-  showToast('ルールを追加しました');
-}
-
-function deleteScore(i) {
-  scoreRules.splice(i,1);
-  renderScoring();
-  showToast('削除しました');
-}
-
-function addAuto() {
-  const name = document.getElementById('newAutoName').value.trim();
-  if(!name) return;
-  const trigger = document.getElementById('newAutoTrigger').value;
-  const action = document.getElementById('newAutoAction').value;
-  automations.push({ name, desc:`${trigger} → ${action}`, icon:'⚡', color:'qi-green', active:true });
-  renderAutomation();
-  closeModal('addAuto');
-  document.getElementById('newAutoName').value='';
-  showToast('オートメーションを追加しました');
-}
-
-function toggleAuto(i) {
-  automations[i].active = !automations[i].active;
-  renderAutomation();
-  showToast(automations[i].active ? '有効化しました' : '無効化しました');
-}
-
-function addScenario() {
-  const name = document.getElementById('newScenarioName').value.trim();
-  if(!name) return;
-  const trigger = document.getElementById('newScenarioTrigger').value;
-  const steps = parseInt(document.getElementById('newScenarioSteps').value)||1;
-  scenarios.push({ name, trigger, steps, sent:0, active:true });
-  renderScenarios();
-  closeModal('addScenario');
-  document.getElementById('newScenarioName').value='';
-  showToast('シナリオを作成しました');
-}
-
-// ===== INIT =====
-renderFriends(friends);
-renderCV();
-renderScoring();
-renderAutomation();
-renderScenarios();
+// ==================== INIT ====================
+renderDash();
+renderTagCheckboxes('fn-tags-sel',[]);
+renderFriends();
+renderTagCheckboxes('ef-tags-sel',[]);
 </script>
 </body>
 </html>
