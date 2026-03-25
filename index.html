@@ -143,7 +143,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 .fd-item span{font-size:13px;font-weight:500}
 
 /* ===CHAT=== */
-.chat-wrap{display:grid;grid-template-columns:260px 1fr;height:calc(100vh - 56px);background:var(--wh);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.chat-wrap{display:grid;grid-template-columns:260px 1fr;height:calc(100vh - 132px);background:var(--wh);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
 .chat-list{border-right:1px solid var(--br);overflow-y:auto}
 .chat-list::-webkit-scrollbar{width:4px}.chat-list::-webkit-scrollbar-thumb{background:#e5e7eb;border-radius:2px}
 .cl-item{padding:12px 14px;border-bottom:1px solid #f5f5f5;cursor:pointer;transition:background .1s;display:flex;align-items:center;gap:10px}
@@ -755,7 +755,13 @@ function save(){Object.keys(D).forEach(k=>ss(k,D[k]))}
 // ==================== HELPERS ====================
 const $ = id => document.getElementById(id);
 function toast(msg){const t=$('toast');$('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
-function openMo(id){$(id).classList.add('op')}
+function openMo(id){
+  // reset modals when opening
+  if(id==='mo-addFriend'){renderTagCheckboxes('fn-tags-sel',[]);}
+  if(id==='mo-editFriend'){} // handled in editFriend
+  if(id==='mo-addBroadcast'){$('bc-tag-wrap').style.display='none';$('bc-target').value='all';}
+  $(id).classList.add('op');
+}
 function closeMo(id){$(id).classList.remove('op')}
 document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('op')}));
 
@@ -806,28 +812,29 @@ function renderFriends(){
   const search=$('friendSearch').value.toLowerCase();
   let list=D.friends.filter(f=>{
     if(tagF && !f.tags.includes(tagF)) return false;
-    if(search && !f.name.toLowerCase().includes(search) && !f.job.toLowerCase().includes(search)) return false;
+    if(search && !f.name.toLowerCase().includes(search) && !(f.job||'').toLowerCase().includes(search)) return false;
     return true;
   });
   $('friendCount').textContent=list.length+' 件';
+  if(!list.length){$('friendsList').innerHTML='<div style="text-align:center;padding:32px;color:var(--ts);font-size:13px">該当する友だちが見つかりません</div>';return;}
   $('friendsList').innerHTML=list.map((f,i)=>`
     <div>
-      <div class="fr-row tbl-r" onclick="toggleFriendDetail('fd-${f.id}')">
+      <div class="fr-row tbl-r" onclick="toggleFriendDetail(${f.id})">
         <div style="display:flex;align-items:center;gap:10px">
           <div class="av">${f.av}</div>
-          <div><div class="fn">${f.name}</div><div class="fj">${f.job}</div></div>
+          <div><div class="fn">${f.name}</div><div class="fj">${f.job||''}</div></div>
         </div>
         <div><span class="badge ${f.status==='フォロー中'?'b-green':'b-gray'}">${f.status}</span></div>
-        <div class="tags">${f.tags.map(tagBadge).join('')}</div>
+        <div class="tags">${(f.tags||[]).map(tagBadge).join('')}</div>
         <div style="font-size:12.5px;color:var(--ts)">${f.date}</div>
-        <div style="display:flex;gap:5px">
-          <button class="btn-e" onclick="editFriend(${f.id},event)">編集</button>
-          <button class="btn-d" onclick="delFriend(${f.id},event)">削除</button>
+        <div style="display:flex;gap:5px" onclick="event.stopPropagation()">
+          <button class="btn-e" onclick="editFriend(${f.id})">編集</button>
+          <button class="btn-d" onclick="delFriend(${f.id})">削除</button>
         </div>
       </div>
       <div class="fr-detail ${expandedFriend===f.id?'open':''}" id="fd-${f.id}">
         <div class="fd-grid">
-          <div class="fd-item"><label>スコア</label><span style="color:var(--green);font-weight:700">${f.score}pt</span></div>
+          <div class="fd-item"><label>スコア</label><span style="color:var(--green);font-weight:700">${f.score||0}pt</span></div>
           <div class="fd-item"><label>登録日</label><span>${f.date}</span></div>
           <div class="fd-item"><label>メッセージ数</label><span>${f.msgs?f.msgs.length:0}件</span></div>
           <div class="fd-item"><label>アバター</label><span style="font-size:20px">${f.av}</span></div>
@@ -839,21 +846,19 @@ function renderFriends(){
       </div>
     </div>`).join('');
 }
-function toggleFriendDetail(id){
-  const fid=parseInt(id.split('-')[1]);
+function toggleFriendDetail(fid){
   expandedFriend = expandedFriend===fid?null:fid;
   renderFriends();
 }
-function editFriend(id,e){
-  e.stopPropagation();
+function editFriend(id){
   const f=D.friends.find(x=>x.id===id);
   if(!f)return;
   $('ef-id').value=id;
   $('ef-name').value=f.name;
-  $('ef-job').value=f.job;
+  $('ef-job').value=f.job||'';
   $('ef-status').value=f.status;
-  $('ef-score').value=f.score;
-  renderTagCheckboxes('ef-tags-sel',f.tags);
+  $('ef-score').value=f.score||0;
+  renderTagCheckboxes('ef-tags-sel',f.tags||[]);
   openMo('mo-editFriend');
 }
 function saveEditFriend(){
@@ -867,10 +872,10 @@ function saveEditFriend(){
   f.tags=getCheckedTags('ef-tags-sel');
   save();renderFriends();closeMo('mo-editFriend');toast('友だち情報を更新しました ✏️');
 }
-function delFriend(id,e){
-  e.stopPropagation();
+function delFriend(id){
   if(!confirm('この友だちを削除しますか？'))return;
   D.friends=D.friends.filter(f=>f.id!==id);
+  if(expandedFriend===id)expandedFriend=null;
   save();renderFriends();toast('削除しました');
 }
 function addFriend(){
@@ -881,6 +886,7 @@ function addFriend(){
   D.activity.unshift({type:'friend',icon:'👤',text:`${name}さんが友だち追加`,time:'たった今',color:'qi-g'});
   save();renderFriends();renderDash();closeMo('mo-addFriend');
   $('fn-name').value='';$('fn-job').value='';$('fn-score').value='0';
+  renderTagCheckboxes('fn-tags-sel',[]);
   toast(`${name}さんを追加しました 👥`);
 }
 function addScore2Friend(id){
@@ -962,9 +968,10 @@ function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg(
 function chatWith(id){nav('chat');setTimeout(()=>selectChat(id),50)}
 
 // ==================== SCENARIO ====================
+let openSteps = new Set();
 function renderScenario(){
   $('scenarioList').innerHTML=D.scenarios.map(s=>`
-    <div class="sc-card ${s.active?'':'inactive'}" onclick="toggleScSteps('ss-${s.id}')">
+    <div class="sc-card ${s.active?'':'inactive'}" onclick="toggleScSteps(${s.id})">
       <div class="sc-head">
         <div class="sc-nm">${s.name}</div>
         <div style="display:flex;align-items:center;gap:8px">
@@ -979,7 +986,7 @@ function renderScenario(){
         <div class="sc-mi">送信数: <strong>${s.sent}件</strong></div>
         <div class="sc-mi">${s.desc}</div>
       </div>
-      <div class="sc-steps" id="ss-${s.id}">
+      <div class="sc-steps ${openSteps.has(s.id)?'open':''}" id="ss-${s.id}">
         ${s.steps.map((st,i)=>`
         <div class="step-item">
           <div class="step-num">${i+1}</div>
@@ -988,7 +995,7 @@ function renderScenario(){
       </div>
     </div>`).join('');
 }
-function toggleScSteps(id){const el=$(id);el.classList.toggle('open')}
+function toggleScSteps(id){openSteps.has(id)?openSteps.delete(id):openSteps.add(id);renderScenario();}
 function toggleScenario(id,e){
   e.stopPropagation();
   const s=D.scenarios.find(x=>x.id===id);
@@ -1015,7 +1022,11 @@ function addScenario(){
 }
 
 // ==================== BROADCAST ====================
-$('bc-target').addEventListener('change',function(){$('bc-tag-wrap').style.display=this.value==='tag'?'block':'none'});
+document.addEventListener('DOMContentLoaded',function(){
+  $('bc-target').addEventListener('change',function(){$('bc-tag-wrap').style.display=this.value==='tag'?'block':'none'});
+  $('tp-body').addEventListener('input',previewTemplate);
+  $('tp-prev-name').addEventListener('input',previewTemplate);
+});
 function renderBroadcast(){
   $('broadcastList').innerHTML=D.broadcasts.map(b=>{
     const statusBadge=b.status==='sent'?'b-green':b.status==='scheduled'?'b-blue':'b-gray';
@@ -1051,8 +1062,6 @@ function addBroadcast(){
 }
 
 // ==================== TEMPLATE ====================
-$('tp-body')&&$('tp-body').addEventListener('input',previewTemplate);
-$('tp-prev-name')&&$('tp-prev-name').addEventListener('input',previewTemplate);
 function previewTemplate(){
   const body=$('tp-body').value;
   const name=$('tp-prev-name').value||'山田 太郎';
@@ -1138,11 +1147,11 @@ function renderTraffic(){
   $('trafficList').innerHTML=D.traffic.map(t=>`
     <div class="tbl-r lk-row">
       <div><div style="font-size:13.5px;font-weight:500">${t.name}</div><div class="lk-url">${t.url}</div>
-        <div class="tr-bar"><div class="tr-fill" style="width:${(t.clicks/maxClicks*100)}%"></div></div>
+        <div class="tr-bar"><div class="tr-fill" style="width:${(t.clicks/maxClicks*100).toFixed(1)}%"></div></div>
       </div>
       <div style="font-size:14px;font-weight:600">${t.clicks.toLocaleString()}</div>
       <div style="font-size:14px;font-weight:600;color:var(--green)">${t.cvs}</div>
-      <div style="font-size:13px">${((t.cvs/t.clicks)*100).toFixed(1)}%</div>
+      <div style="font-size:13px">${t.clicks>0?((t.cvs/t.clicks)*100).toFixed(1):'0.0'}%</div>
       <div style="display:flex;gap:5px">
         <button class="btn-e" onclick="clickSim(${t.id})">+クリック</button>
         <button class="btn-d" onclick="delTraffic(${t.id})">削除</button>
@@ -1219,7 +1228,7 @@ function renderScoring(){
   const sorted=[...D.friends].sort((a,b)=>b.score-a.score);
   $('leaderboard').innerHTML=sorted.map((f,i)=>`
     <div class="tbl-r lb-row">
-      <div class="lb-rank ${i<3?'top':#}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</div>
+      <div class="lb-rank ${i<3?'top':''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</div>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="av" style="width:28px;height:28px;font-size:15px">${f.av}</div>
         <div style="font-size:13px;font-weight:500">${f.name}</div>
