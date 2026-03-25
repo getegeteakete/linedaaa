@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>ラインダー - LINE CRM</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -11,15 +12,50 @@
   --sb:#1a1f2e;--sb2:#252b3d;--bg:#f0f2f8;--green:#06c755;--gd:#05a847;--gl:#e8faf0;
   --tx:#1a1f2e;--ts:#6b7280;--br:#e5e7eb;--wh:#fff;
   --sh:0 1px 3px rgba(0,0,0,.08);--shm:0 4px 16px rgba(0,0,0,.1);--r:12px;--r2:8px;
+  --danger:#ef4444;
 }
 body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);display:flex;min-height:100vh;font-size:14px}
-/* SIDEBAR */
+
+/* ===LOGIN SCREEN=== */
+#loginScreen{position:fixed;inset:0;background:linear-gradient(135deg,#1a1f2e 0%,#252b3d 50%,#1a2e1f 100%);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:0}
+#loginScreen.hidden{display:none}
+.login-wrap{width:420px;max-width:95vw}
+.login-logo{text-align:center;margin-bottom:32px}
+.login-logo .logo-big{width:56px;height:56px;background:var(--green);border-radius:16px;display:inline-flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;margin-bottom:12px}
+.login-logo h1{font-size:26px;font-weight:700;color:#fff;letter-spacing:0.5px}
+.login-logo p{font-size:12.5px;color:#6b7280;margin-top:4px}
+.login-card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:32px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.login-tabs{display:flex;background:rgba(0,0,0,.3);border-radius:10px;padding:4px;margin-bottom:24px;gap:4px}
+.login-tab{flex:1;text-align:center;padding:8px;border-radius:7px;cursor:pointer;color:#9ca3af;font-size:13.5px;font-weight:500;transition:all .2s}
+.login-tab.act{background:var(--green);color:#fff}
+.login-fg{margin-bottom:14px}
+.login-fl{display:block;font-size:12px;font-weight:500;color:#9ca3af;margin-bottom:6px}
+.login-fi{width:100%;padding:11px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:9px;font-size:13.5px;font-family:inherit;color:#fff;transition:border-color .15s}
+.login-fi::placeholder{color:#6b7280}
+.login-fi:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(6,199,85,.15)}
+.login-btn{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;margin-top:6px}
+.login-btn:hover{background:var(--gd)}
+.login-err{color:#f87171;font-size:12.5px;margin-top:8px;min-height:18px}
+.login-demo{margin-top:16px;text-align:center}
+.login-demo button{background:none;border:1px solid rgba(255,255,255,.15);color:#9ca3af;padding:7px 16px;border-radius:7px;cursor:pointer;font-size:12px;font-family:inherit;transition:all .15s}
+.login-demo button:hover{border-color:var(--green);color:var(--green)}
+.login-security{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:20px;color:#4b5563;font-size:11px}
+
+/* ===SIDEBAR=== */
 .sb{width:228px;min-width:228px;background:var(--sb);display:flex;flex-direction:column;height:100vh;overflow-y:auto;position:fixed;left:0;top:0;z-index:100}
 .sb::-webkit-scrollbar{width:0}
-.sb-logo{padding:16px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-logo{padding:14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;transition:background .15s}
+.sb-logo:hover{background:rgba(255,255,255,.04)}
 .logo-ico{width:34px;height:34px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;flex-shrink:0}
-.logo-tx h1{font-size:15px;font-weight:700;color:#fff;letter-spacing:.3px}
+.logo-tx h1{font-size:14px;font-weight:700;color:#fff;letter-spacing:.3px}
 .logo-tx p{font-size:10px;color:#6b7280;margin-top:1px}
+.sb-account{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.07)}
+.acct-label{font-size:9px;color:#4b5563;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:600}
+.acct-selector{display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.06);border-radius:8px;cursor:pointer;transition:background .15s}
+.acct-selector:hover{background:rgba(255,255,255,.1)}
+.acct-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2s infinite}
+.acct-name{font-size:12.5px;color:#e5e7eb;font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acct-arr{font-size:10px;color:#6b7280}
 .sb-nav{padding:10px 8px;flex:1}
 .nl{font-size:9px;font-weight:600;color:#4b5563;text-transform:uppercase;letter-spacing:1.2px;padding:10px 10px 3px}
 .ni{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;cursor:pointer;color:#9ca3af;font-size:13px;transition:all .15s;position:relative;user-select:none;margin-bottom:1px}
@@ -27,7 +63,15 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 .ni.act{background:rgba(6,199,85,.14);color:var(--green);font-weight:500}
 .ni.act::after{content:'';position:absolute;right:10px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:var(--green)}
 .ni-ico{font-size:14px;width:17px;text-align:center;flex-shrink:0}
-/* MAIN */
+.sb-user{padding:12px 14px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px}
+.sb-av{width:32px;height:32px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.sb-user-info{flex:1;min-width:0}
+.sb-user-name{font-size:12.5px;font-weight:600;color:#e5e7eb;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-user-email{font-size:10.5px;color:#6b7280;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-logout{background:none;border:none;color:#6b7280;cursor:pointer;font-size:16px;padding:4px;border-radius:5px;transition:color .15s}
+.sb-logout:hover{color:#ef4444}
+
+/* ===MAIN=== */
 .main{margin-left:228px;flex:1;height:100vh;overflow-y:auto}
 .pg{display:none;padding:28px 32px;min-height:100vh;animation:fadeIn .2s ease}
 .pg.act{display:block}
@@ -35,33 +79,27 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 .ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
 .pt h2{font-size:22px;font-weight:700}
 .pt p{font-size:12px;color:var(--ts);margin-top:2px}
-/* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:5px;padding:9px 16px;border-radius:var(--r2);font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .15s}
 .btn-g{background:var(--green);color:#fff}.btn-g:hover{background:var(--gd);transform:translateY(-1px)}
 .btn-s{background:#f3f4f6;color:var(--tx)}.btn-s:hover{background:#e5e7eb}
-.btn-d{background:none;color:#ef4444;border:none;cursor:pointer;font-family:inherit;font-size:12px;padding:4px 8px;border-radius:5px}.btn-d:hover{background:#fef2f2}
+.btn-d{background:none;color:var(--danger);border:none;cursor:pointer;font-family:inherit;font-size:12px;padding:4px 8px;border-radius:5px}.btn-d:hover{background:#fef2f2}
 .btn-e{background:none;color:#6b7280;border:none;cursor:pointer;font-family:inherit;font-size:12px;padding:4px 8px;border-radius:5px;border:1px solid var(--br)}.btn-e:hover{border-color:var(--green);color:var(--green)}
-/* CARD */
 .card{background:var(--wh);border-radius:var(--r);box-shadow:var(--sh);padding:20px 22px}
-/* BADGES */
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
 .b-green{background:#d1fae5;color:#065f46}.b-gray{background:#f3f4f6;color:#6b7280}
 .b-pink{background:#fce7f3;color:#be185d}.b-blue{background:#dbeafe;color:#1d4ed8}
 .b-cyan{background:#cffafe;color:#0e7490}.b-purple{background:#ede9fe;color:#5b21b6}
 .b-orange{background:#ffedd5;color:#c2410c}.b-yellow{background:#fef9c3;color:#854d0e}
 .b-red{background:#fee2e2;color:#991b1b}
-/* TAG COLORS */
 .tc-0{background:#fed7aa;color:#c2410c}.tc-1{background:#bbf7d0;color:#15803d}
 .tc-2{background:#fde68a;color:#92400e}.tc-3{background:#c4b5fd;color:#5b21b6}
 .tc-4{background:#bfdbfe;color:#1d4ed8}.tc-5{background:#a5f3fc;color:#0e7490}
 .tc-6{background:#e9d5ff;color:#7c3aed}.tc-7{background:#e5e7eb;color:#374151}
-/* TABLE */
 .tbl{background:var(--wh);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
 .tbl-h{display:grid;padding:10px 18px;border-bottom:1px solid var(--br);font-size:11px;font-weight:600;color:var(--ts);background:#fafafa}
 .tbl-r{display:grid;padding:13px 18px;border-bottom:1px solid #f3f4f6;align-items:center;transition:background .1s;cursor:pointer}
 .tbl-r:last-child{border-bottom:none}
 .tbl-r:hover{background:#fafbfc}
-/* MODAL */
 .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;align-items:center;justify-content:center}
 .mo.op{display:flex}
 .mo-box{background:var(--wh);border-radius:16px;padding:26px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18);animation:moin .2s ease}
@@ -69,7 +107,6 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 .mo-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .mo-t{font-size:16px;font-weight:700}
 .mo-x{background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af;line-height:1}
-/* FORM */
 .fg{margin-bottom:14px}
 .fl{display:block;font-size:12.5px;font-weight:500;margin-bottom:5px;color:var(--ts)}
 .fi,.fs,.fta{width:100%;padding:9px 11px;border:1px solid var(--br);border-radius:var(--r2);font-size:13px;font-family:inherit;color:var(--tx);transition:border-color .15s;background:var(--wh)}
@@ -77,17 +114,28 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 .fs{appearance:none;cursor:pointer}
 .fta{resize:vertical;min-height:80px}
 .mf{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
-/* TOAST */
-.toast{position:fixed;bottom:22px;right:22px;background:#1a1f2e;color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:999;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.toast{position:fixed;bottom:22px;right:22px;background:#1a1f2e;color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:999;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
-/* SEARCH */
 .srch{position:relative;flex:1;max-width:300px}
 .srch input{width:100%;padding:8px 12px 8px 34px;border:1px solid var(--br);border-radius:var(--r2);font-size:13px;font-family:inherit;background:var(--wh)}
 .srch input:focus{outline:none;border-color:var(--green)}
 .srch::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px}
-/* STATUS DOT */
 .sdot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(6,199,85,.4)}50%{box-shadow:0 0 0 5px rgba(6,199,85,0)}}
+
+/* ===SECURITY BADGE=== */
+.sec-banner{background:linear-gradient(90deg,#fef9c3,#fef3c7);border:1px solid #fbbf24;border-radius:10px;padding:10px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:12.5px;color:#92400e}
+
+/* ===ACCOUNT SWITCHER MODAL=== */
+.acct-list-mo{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.acct-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid var(--br);border-radius:10px;cursor:pointer;transition:all .15s}
+.acct-item:hover{border-color:var(--green);background:#f8fffe}
+.acct-item.current{border-color:var(--green);background:var(--gl)}
+.acct-item-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.acct-item-info{flex:1;min-width:0}
+.acct-item-name{font-size:13.5px;font-weight:600}
+.acct-item-meta{font-size:11.5px;color:var(--ts);margin-top:2px}
+.acct-item-line{font-size:11px;color:#059669;margin-top:2px;font-family:monospace}
 
 /* ===DASHBOARD=== */
 .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
@@ -95,48 +143,37 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 .sc:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.16)}
 .sc::before{content:'';position:absolute;right:-15px;top:-15px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.12)}
 .sc::after{content:'';position:absolute;right:25px;top:35px;width:55px;height:55px;border-radius:50%;background:rgba(255,255,255,.07)}
-.sc-g{background:linear-gradient(135deg,#06c755,#04a845)}
-.sc-b{background:linear-gradient(135deg,#6096f8,#4475e8)}
-.sc-p{background:linear-gradient(135deg,#a78bfa,#7c5def)}
-.sc-y{background:linear-gradient(135deg,#fbbf24,#f59e0b)}
-.sc-r{background:linear-gradient(135deg,#f87171,#ef4444)}
-.sc-t{background:linear-gradient(135deg,#34d399,#10b981)}
+.sc-g{background:linear-gradient(135deg,#06c755,#04a845)}.sc-b{background:linear-gradient(135deg,#6096f8,#4475e8)}
+.sc-p{background:linear-gradient(135deg,#a78bfa,#7c5def)}.sc-y{background:linear-gradient(135deg,#fbbf24,#f59e0b)}
+.sc-r{background:linear-gradient(135deg,#f87171,#ef4444)}.sc-t{background:linear-gradient(135deg,#34d399,#10b981)}
 .sc-ico{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:17px}
-.sc-n{font-size:38px;font-weight:700;line-height:1;margin-top:6px}
-.sc-l{font-size:12.5px;opacity:.9}
-.sc-s{font-size:10.5px;opacity:.65;margin-top:2px}
+.sc-n{font-size:38px;font-weight:700;line-height:1;margin-top:6px}.sc-l{font-size:12.5px;opacity:.9}.sc-s{font-size:10.5px;opacity:.65;margin-top:2px}
 .sc-arr{position:absolute;right:14px;bottom:14px;font-size:18px;opacity:.4}
-/* ACTIVITY */
 .act-list{display:flex;flex-direction:column;gap:0}
 .act-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #f3f4f6}
 .act-item:last-child{border-bottom:none}
 .act-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.act-tx{flex:1}
-.act-tx strong{font-size:13px;font-weight:500}
-.act-tx span{font-size:11.5px;color:var(--ts);display:block;margin-top:1px}
+.act-tx{flex:1}.act-tx strong{font-size:13px;font-weight:500}.act-tx span{font-size:11.5px;color:var(--ts);display:block;margin-top:1px}
 .act-time{font-size:11px;color:var(--ts)}
-/* QUICK */
 .qg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .qi{background:var(--wh);border-radius:10px;padding:13px 15px;display:flex;align-items:center;gap:11px;cursor:pointer;border:1px solid var(--br);transition:all .15s}
 .qi:hover{border-color:var(--green);box-shadow:0 2px 10px rgba(6,199,85,.1)}
 .qi-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .qi-g{background:#e8faf0}.qi-b{background:#eff6ff}.qi-p{background:#f5f3ff}.qi-r{background:#fef2f2}.qi-y{background:#fffbeb}.qi-t{background:#f0fdf4}
-.qi-tx h4{font-size:13px;font-weight:600}
-.qi-tx p{font-size:11px;color:var(--ts);margin-top:1px}
+.qi-tx h4{font-size:13px;font-weight:600}.qi-tx p{font-size:11px;color:var(--ts);margin-top:1px}
 .qi-arr{margin-left:auto;color:#d1d5db;font-size:14px}
+.sec-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sec-h h3{font-size:15px;font-weight:600}.sec-h span{font-size:12px;color:var(--ts)}
 
 /* ===FRIENDS=== */
 .fb{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
 .fs2{appearance:none;background:var(--wh);border:1px solid var(--br);border-radius:var(--r2);padding:7px 28px 7px 11px;font-size:12.5px;font-family:inherit;color:var(--tx);cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center}
 .fr-row{display:grid;grid-template-columns:2.2fr 1fr 2fr 1.1fr 70px;padding:12px 18px;border-bottom:1px solid #f3f4f6;align-items:center;transition:background .1s}
-.fr-row:last-child{border-bottom:none}
 .fr-row:hover{background:#fafbfc}
 .av{width:37px;height:37px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;background:#f3f4f6;flex-shrink:0}
-.fn{font-size:13.5px;font-weight:500}
-.fj{font-size:11px;color:var(--ts);margin-top:1px}
+.fn{font-size:13.5px;font-weight:500}.fj{font-size:11px;color:var(--ts);margin-top:1px}
 .tags{display:flex;flex-wrap:wrap;gap:3px}
-/* DETAIL PANEL */
-.fr-detail{display:none;grid-column:1/-1;padding:14px 18px 16px;background:#fafbfd;border-top:1px solid #f3f4f6;border-bottom:1px solid #f3f4f6}
+.fr-detail{display:none;padding:14px 18px 16px;background:#fafbfd;border-top:1px solid #f3f4f6;border-bottom:1px solid #f3f4f6}
 .fr-detail.open{display:block}
 .fd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .fd-item label{font-size:10.5px;color:var(--ts);display:block;margin-bottom:3px}
@@ -157,9 +194,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 .chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f7f8fc}
 .chat-msgs::-webkit-scrollbar{width:4px}.chat-msgs::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
 .msg{max-width:70%;display:flex;flex-direction:column;gap:3px}
-.msg.mine{align-self:flex-end;align-items:flex-end}
-.msg.them{align-self:flex-start;align-items:flex-start}
-.msg-bub{padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.5}
+.msg.mine{align-self:flex-end;align-items:flex-end}.msg.them{align-self:flex-start;align-items:flex-start}
+.msg-bub{padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.5;word-break:break-word}
 .msg.mine .msg-bub{background:var(--green);color:#fff;border-bottom-right-radius:3px}
 .msg.them .msg-bub{background:#fff;color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.08);border-bottom-left-radius:3px}
 .msg-time{font-size:10px;color:var(--ts)}
@@ -171,26 +207,21 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 
 /* ===SCENARIO=== */
 .sc-card{background:var(--wh);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);border-left:4px solid var(--green);margin-bottom:10px;cursor:pointer;transition:box-shadow .15s}
-.sc-card:hover{box-shadow:var(--shm)}
-.sc-card.inactive{border-left-color:#d1d5db}
+.sc-card:hover{box-shadow:var(--shm)}.sc-card.inactive{border-left-color:#d1d5db}
 .sc-head{display:flex;justify-content:space-between;align-items:center}
 .sc-nm{font-size:15px;font-weight:600}
-.sc-meta{display:flex;gap:18px;margin-top:10px}
-.sc-mi{font-size:12px;color:var(--ts)}
-.sc-mi strong{color:var(--tx);font-weight:600}
+.sc-meta{display:flex;gap:18px;margin-top:10px;flex-wrap:wrap}
+.sc-mi{font-size:12px;color:var(--ts)}.sc-mi strong{color:var(--tx);font-weight:600}
 .sc-steps{margin-top:14px;padding-top:14px;border-top:1px solid var(--br);display:none}
 .sc-steps.open{display:block}
 .step-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;padding:10px 14px;background:#fafafa;border-radius:8px}
 .step-num{width:24px;height:24px;background:var(--green);border-radius:50%;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.step-tx strong{font-size:13px}
-.step-tx span{font-size:11.5px;color:var(--ts);display:block;margin-top:2px}
+.step-tx strong{font-size:13px}.step-tx span{font-size:11.5px;color:var(--ts);display:block;margin-top:2px}
 
 /* ===BROADCAST=== */
 .bc-card{background:var(--wh);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);margin-bottom:10px;display:flex;align-items:center;gap:14px}
 .bc-ico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.bc-info{flex:1}
-.bc-name{font-size:14px;font-weight:600}
-.bc-meta{font-size:12px;color:var(--ts);margin-top:3px}
+.bc-info{flex:1}.bc-name{font-size:14px;font-weight:600}.bc-meta{font-size:12px;color:var(--ts);margin-top:3px}
 .bc-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
 
 /* ===TEMPLATE=== */
@@ -206,18 +237,14 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 .rm-date{text-align:center;background:#f0fdf4;border-radius:8px;padding:8px 12px;flex-shrink:0;min-width:56px}
 .rm-date .rd-d{font-size:22px;font-weight:700;color:var(--green);line-height:1}
 .rm-date .rd-m{font-size:10px;color:#059669}
-.rm-info{flex:1}
-.rm-nm{font-size:14px;font-weight:600}
-.rm-meta{font-size:12px;color:var(--ts);margin-top:3px}
+.rm-info{flex:1}.rm-nm{font-size:14px;font-weight:600}.rm-meta{font-size:12px;color:var(--ts);margin-top:3px}
 
 /* ===TRAFFIC=== */
 .tr-stat{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
 .tr-card{background:var(--wh);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);text-align:center}
-.tr-n{font-size:32px;font-weight:700;color:var(--tx)}
-.tr-l{font-size:12px;color:var(--ts);margin-top:4px}
+.tr-n{font-size:32px;font-weight:700;color:var(--tx)}.tr-l{font-size:12px;color:var(--ts);margin-top:4px}
 .tr-bar{height:5px;background:#f3f4f6;border-radius:3px;margin-top:12px;overflow:hidden}
 .tr-fill{height:100%;background:var(--green);border-radius:3px;transition:width .6s ease}
-/* LINK ROW */
 .lk-row{grid-template-columns:2fr 1fr 1fr 1fr 80px}
 .lk-url{font-family:monospace;font-size:12px;color:#6b7280;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
@@ -225,16 +252,13 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 .cv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
 .cv-card2{background:var(--wh);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);border:1px solid var(--br)}
 .cv-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
-.cv-nm{font-size:13.5px;font-weight:500}
-.cv-n{font-size:34px;font-weight:700;line-height:1}
-.cv-row{display:flex;align-items:baseline;gap:12px;margin-top:4px}
-.cv-sales{font-size:16px;font-weight:600;color:#059669}
+.cv-nm{font-size:13.5px;font-weight:500}.cv-n{font-size:34px;font-weight:700;line-height:1}
+.cv-row{display:flex;align-items:baseline;gap:12px;margin-top:4px}.cv-sales{font-size:16px;font-weight:600;color:#059669}
 
 /* ===SCORING=== */
 .sc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
 .lb-row{grid-template-columns:40px 2fr 1fr 1fr 1fr}
-.lb-rank{font-size:15px;font-weight:700;color:var(--ts)}
-.lb-rank.top{color:var(--green)}
+.lb-rank{font-size:15px;font-weight:700;color:var(--ts)}.lb-rank.top{color:var(--green)}
 .score-bar{height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden;margin-top:4px;width:80px}
 .score-fill{height:100%;background:linear-gradient(90deg,var(--green),#34d399);border-radius:3px}
 
@@ -242,45 +266,104 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
 .au-card{background:var(--wh);border-radius:var(--r);padding:16px 20px;box-shadow:var(--sh);margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:box-shadow .15s}
 .au-card:hover{box-shadow:var(--shm)}
 .au-ico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
-.au-info{flex:1}
-.au-nm{font-size:14px;font-weight:600}
-.au-desc{font-size:12px;color:var(--ts);margin-top:2px}
+.au-info{flex:1}.au-nm{font-size:14px;font-weight:600}.au-desc{font-size:12px;color:var(--ts);margin-top:2px}
 .tgl{width:42px;height:23px;border-radius:12px;background:var(--green);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
 .tgl::after{content:'';position:absolute;width:19px;height:19px;border-radius:50%;background:#fff;top:2px;right:2px;transition:right .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.tgl.off{background:#d1d5db}
-.tgl.off::after{right:21px}
+.tgl.off{background:#d1d5db}.tgl.off::after{right:21px}
 
 /* ===WEBHOOK=== */
 .wh-card{background:var(--wh);border-radius:var(--r);padding:16px 20px;box-shadow:var(--sh);margin-bottom:10px;display:flex;align-items:center;gap:14px}
 .wh-url{font-family:monospace;font-size:12px;color:#6b7280;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.wh-status{display:flex;align-items:center;gap:5px;font-size:12px}
 
 /* ===SETTINGS=== */
 .set-section{background:var(--wh);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:18px}
 .set-title{padding:14px 20px;border-bottom:1px solid var(--br);font-size:14px;font-weight:600;background:#fafafa}
 .set-row{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #f3f4f6}
 .set-row:last-child{border-bottom:none}
-.set-row label{font-size:13.5px;font-weight:500}
-.set-row span{font-size:12px;color:var(--ts);margin-top:2px;display:block}
+.set-row label{font-size:13.5px;font-weight:500}.set-row span{font-size:12px;color:var(--ts);margin-top:2px;display:block}
 .set-val{font-size:13px;color:var(--ts)}
-
-/* ===NOTIFY=== */
+.set-input{padding:6px 10px;border:1px solid var(--br);border-radius:6px;font-size:12.5px;font-family:inherit;width:220px}
+.set-input:focus{outline:none;border-color:var(--green)}
 .nf-row{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #f3f4f6}
 .nf-row:last-child{border-bottom:none}
 
-/* SECTION HDR */
-.sec-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.sec-h h3{font-size:15px;font-weight:600}
-.sec-h span{font-size:12px;color:var(--ts)}
+/* ===LINE ACCOUNT STATUS=== */
+.line-connected{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0}
+.line-disconnected{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#fef9c3;border-radius:8px;border:1px solid #fde68a}
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
-<nav class="sb">
-  <div class="sb-logo">
+<!-- ====LOGIN SCREEN==== -->
+<div id="loginScreen">
+  <div class="login-wrap">
+    <div class="login-logo">
+      <div class="logo-big">ラ</div>
+      <h1>ラインダー</h1>
+      <p>LINE公式アカウント CRM管理システム</p>
+    </div>
+    <div class="login-card">
+      <div class="login-tabs">
+        <div class="login-tab act" id="tabLogin" onclick="switchTab('login')">ログイン</div>
+        <div class="login-tab" id="tabReg" onclick="switchTab('register')">新規登録</div>
+      </div>
+      <!-- LOGIN -->
+      <div id="formLogin">
+        <div class="login-fg">
+          <label class="login-fl">メールアドレス</label>
+          <input class="login-fi" id="lEmail" type="email" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="login-fg">
+          <label class="login-fl">パスワード</label>
+          <input class="login-fi" id="lPass" type="password" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <div class="login-err" id="loginErr"></div>
+        <button class="login-btn" onclick="doLogin()">ログイン</button>
+        <div class="login-demo">
+          <button onclick="demoLogin()">🎮 デモアカウントで試す</button>
+        </div>
+      </div>
+      <!-- REGISTER -->
+      <div id="formReg" style="display:none">
+        <div class="login-fg">
+          <label class="login-fl">お名前</label>
+          <input class="login-fi" id="rName" type="text" placeholder="山田 太郎" autocomplete="name">
+        </div>
+        <div class="login-fg">
+          <label class="login-fl">メールアドレス</label>
+          <input class="login-fi" id="rEmail" type="email" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="login-fg">
+          <label class="login-fl">パスワード（8文字以上）</label>
+          <input class="login-fi" id="rPass" type="password" placeholder="••••••••" autocomplete="new-password">
+        </div>
+        <div class="login-fg">
+          <label class="login-fl">パスワード確認</label>
+          <input class="login-fi" id="rPass2" type="password" placeholder="••••••••" autocomplete="new-password">
+        </div>
+        <div class="login-err" id="regErr"></div>
+        <button class="login-btn" onclick="doRegister()">アカウント作成</button>
+      </div>
+    </div>
+    <div class="login-security">
+      🔒 データはブラウザに安全に保存されます &nbsp;|&nbsp; アカウントごとに完全分離
+    </div>
+  </div>
+</div>
+
+<!-- ===APP (shown after login)=== -->
+<nav class="sb" id="appSidebar" style="display:none">
+  <div class="sb-logo" onclick="openMo('mo-acctSwitch')" title="アカウント切替">
     <div class="logo-ico">ラ</div>
     <div class="logo-tx"><h1>ラインダー</h1><p>LINE CRM Dashboard</p></div>
+  </div>
+  <div class="sb-account">
+    <div class="acct-label">LINEアカウント</div>
+    <div class="acct-selector" onclick="openMo('mo-acctSwitch')">
+      <div class="acct-dot"></div>
+      <div class="acct-name" id="sb-acct-name">---</div>
+      <div class="acct-arr">⌄</div>
+    </div>
   </div>
   <div class="sb-nav">
     <div class="ni act" data-pg="dashboard"><span class="ni-ico">🏠</span>ダッシュボード</div>
@@ -300,13 +383,20 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
     <div class="ni" data-pg="webhook"><span class="ni-ico">🔗</span>Webhook</div>
     <div class="ni" data-pg="notify"><span class="ni-ico">🔔</span>通知</div>
     <div class="nl">設定</div>
-    <div class="ni" data-pg="settings"><span class="ni-ico">⚙️</span>LINEアカウント</div>
+    <div class="ni" data-pg="settings"><span class="ni-ico">⚙️</span>LINEアカウント設定</div>
+  </div>
+  <div class="sb-user">
+    <div class="sb-av" id="sb-user-av">？</div>
+    <div class="sb-user-info">
+      <div class="sb-user-name" id="sb-user-name">---</div>
+      <div class="sb-user-email" id="sb-user-email">---</div>
+    </div>
+    <button class="sb-logout" onclick="doLogout()" title="ログアウト">⏻</button>
   </div>
 </nav>
 
-<main class="main">
+<main class="main" id="appMain" style="display:none">
 
-<!-- ====DASHBOARD==== -->
 <div class="pg act" id="pg-dashboard">
   <div class="ph">
     <div class="pt"><h2>ダッシュボード</h2><p>LINE公式アカウント CRM 管理画面</p></div>
@@ -334,505 +424,508 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--tx);
   </div>
 </div>
 
-<!-- ====FRIENDS==== -->
 <div class="pg" id="pg-friends">
-  <div class="ph">
-    <div class="pt"><h2>友だち管理</h2></div>
-    <button class="btn btn-g" onclick="openMo('mo-addFriend')">＋ 友だち追加</button>
-  </div>
+  <div class="ph"><div class="pt"><h2>友だち管理</h2></div><button class="btn btn-g" onclick="openMo('mo-addFriend')">＋ 友だち追加</button></div>
   <div class="fb">
     <label style="font-size:13px;color:var(--ts)">タグで絞り込み:</label>
-    <select class="fs2" id="tagFilter" onchange="renderFriends()">
-      <option value="">すべて</option>
-      <option>トライアル</option><option>新規</option><option>HOTリード</option>
-      <option>VIP</option><option>購入済み</option><option>セミナー参加</option>
-      <option>資料請求</option><option>休眠</option>
-    </select>
+    <select class="fs2" id="tagFilter" onchange="renderFriends()"><option value="">すべて</option><option>トライアル</option><option>新規</option><option>HOTリード</option><option>VIP</option><option>購入済み</option><option>セミナー参加</option><option>資料請求</option><option>休眠</option></select>
     <div class="srch"><input id="friendSearch" placeholder="名前・職業で検索…" oninput="renderFriends()"></div>
     <span id="friendCount" style="font-size:13px;color:var(--ts)"></span>
   </div>
-  <div class="tbl">
-    <div class="tbl-h fr-row" style="cursor:default">
-      <div>アイコン / 表示名</div><div>ステータス</div><div>タグ</div><div>登録日</div><div>操作</div>
-    </div>
-    <div id="friendsList"></div>
-  </div>
+  <div class="tbl"><div class="tbl-h fr-row" style="cursor:default"><div>アイコン / 表示名</div><div>ステータス</div><div>タグ</div><div>登録日</div><div>操作</div></div><div id="friendsList"></div></div>
 </div>
 
-<!-- ====CHAT==== -->
 <div class="pg" id="pg-chat">
   <div class="ph"><div class="pt"><h2>個別チャット</h2></div></div>
   <div class="chat-wrap">
     <div class="chat-list" id="chatList"></div>
     <div class="chat-main">
-      <div class="chat-header" id="chatHeader">
+      <div class="chat-header">
         <div class="av" id="chatAv" style="width:38px;height:38px;font-size:20px">👥</div>
         <div><div style="font-size:14px;font-weight:600" id="chatName">友だちを選択</div><div style="font-size:11.5px;color:var(--ts)" id="chatJob"></div></div>
         <div style="margin-left:auto;display:flex;gap:8px" id="chatTags"></div>
       </div>
-      <div class="chat-msgs" id="chatMsgs">
-        <div style="text-align:center;color:var(--ts);font-size:13px;margin-top:40px">左のリストから友だちを選択してください</div>
-      </div>
+      <div class="chat-msgs" id="chatMsgs"><div style="text-align:center;color:var(--ts);font-size:13px;margin-top:40px">左のリストから友だちを選択してください</div></div>
       <div class="chat-input-area">
-        <textarea class="chat-input" id="chatInput" placeholder="メッセージを入力…" rows="1" onkeydown="chatKey(event)"></textarea>
+        <textarea class="chat-input" id="chatInput" placeholder="メッセージを入力… (Enter送信 / Shift+Enterで改行)" rows="1" onkeydown="chatKey(event)"></textarea>
         <button class="chat-send" onclick="sendMsg()">➤</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ====SCENARIO==== -->
-<div class="pg" id="pg-scenario">
-  <div class="ph">
-    <div class="pt"><h2>シナリオ配信</h2><p>自動配信シナリオの管理</p></div>
-    <button class="btn btn-g" onclick="openMo('mo-addScenario')">＋ シナリオ作成</button>
-  </div>
-  <div id="scenarioList"></div>
-</div>
-
-<!-- ====BROADCAST==== -->
-<div class="pg" id="pg-broadcast">
-  <div class="ph">
-    <div class="pt"><h2>一斉配信</h2><p>全員または特定グループへメッセージ送信</p></div>
-    <button class="btn btn-g" onclick="openMo('mo-addBroadcast')">＋ 配信作成</button>
-  </div>
-  <div id="broadcastList"></div>
-</div>
-
-<!-- ====TEMPLATE==== -->
-<div class="pg" id="pg-template">
-  <div class="ph">
-    <div class="pt"><h2>テンプレート</h2><p>変数付きメッセージ雛形</p></div>
-    <button class="btn btn-g" onclick="openMo('mo-addTemplate')">＋ テンプレート作成</button>
-  </div>
-  <div id="templateList"></div>
-</div>
-
-<!-- ====REMINDER==== -->
-<div class="pg" id="pg-reminder">
-  <div class="ph">
-    <div class="pt"><h2>リマインダ</h2><p>日時指定カウントダウン配信</p></div>
-    <button class="btn btn-g" onclick="openMo('mo-addReminder')">＋ リマインダ作成</button>
-  </div>
-  <div id="reminderList"></div>
-</div>
-
-<!-- ====TRAFFIC==== -->
-<div class="pg" id="pg-traffic">
-  <div class="ph">
-    <div class="pt"><h2>流入経路</h2><p>トラッキングリンク管理・クリック計測</p></div>
-    <button class="btn btn-g" onclick="openMo('mo-addTraffic')">＋ リンク作成</button>
-  </div>
-  <div class="tr-stat" id="trafficStats"></div>
-  <div class="tbl">
-    <div class="tbl-h lk-row" style="cursor:default">
-      <div>リンク名</div><div>クリック数</div><div>CV数</div><div>CVR</div><div>操作</div>
-    </div>
-    <div id="trafficList"></div>
-  </div>
-</div>
-
-<!-- ====CV==== -->
-<div class="pg" id="pg-cv">
-  <div class="ph">
-    <div class="pt"><h2>コンバージョン計測</h2><p>CVポイント定義 &amp; レポート</p></div>
-    <button class="btn btn-g" onclick="openMo('mo-addCV')">＋ CVポイント作成</button>
-  </div>
-  <div class="cv-grid" id="cvCards"></div>
-  <div class="tbl">
-    <div class="tbl-h" style="grid-template-columns:2fr 1.5fr 1fr 1.2fr 80px;cursor:default">
-      <div>CV名</div><div>イベントタイプ</div><div>金額</div><div>作成日</div><div>操作</div>
-    </div>
-    <div id="cvList"></div>
-  </div>
-</div>
-
-<!-- ====SCORING==== -->
-<div class="pg" id="pg-scoring">
-  <div class="ph">
-    <div class="pt"><h2>スコアリング</h2><p>リードスコアリングルール設定</p></div>
-    <button class="btn btn-g" onclick="openMo('mo-addScore')">＋ ルール追加</button>
-  </div>
-  <div class="sc-stats" id="scoreStats"></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-    <div>
-      <div class="sec-h"><h3>スコアリングルール</h3></div>
-      <div class="tbl">
-        <div class="tbl-h" style="grid-template-columns:2fr 1fr 1fr 70px;cursor:default">
-          <div>アクション</div><div>スコア</div><div>状態</div><div>操作</div>
-        </div>
-        <div id="scoreList"></div>
-      </div>
-    </div>
-    <div>
-      <div class="sec-h"><h3>リードランキング</h3></div>
-      <div class="tbl">
-        <div class="tbl-h lb-row" style="cursor:default">
-          <div>#</div><div>名前</div><div>スコア</div><div>タグ</div><div>登録日</div>
-        </div>
-        <div id="leaderboard"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ====AUTOMATION==== -->
-<div class="pg" id="pg-automation">
-  <div class="ph">
-    <div class="pt"><h2>オートメーション</h2><p>IF-THENルールで自動化</p></div>
-    <button class="btn btn-g" onclick="openMo('mo-addAuto')">＋ ルール追加</button>
-  </div>
-  <div id="autoList"></div>
-</div>
-
-<!-- ====WEBHOOK==== -->
-<div class="pg" id="pg-webhook">
-  <div class="ph">
-    <div class="pt"><h2>Webhook</h2><p>外部サービスへのイベント通知</p></div>
-    <button class="btn btn-g" onclick="openMo('mo-addWebhook')">＋ Webhook追加</button>
-  </div>
-  <div id="webhookList"></div>
-</div>
-
-<!-- ====NOTIFY==== -->
-<div class="pg" id="pg-notify">
-  <div class="ph"><div class="pt"><h2>通知設定</h2><p>システム通知の管理</p></div></div>
-  <div class="set-section">
-    <div class="set-title">通知チャンネル</div>
-    <div id="notifyList"></div>
-  </div>
-</div>
-
-<!-- ====SETTINGS==== -->
-<div class="pg" id="pg-settings">
-  <div class="ph"><div class="pt"><h2>LINEアカウント設定</h2><p>接続・API設定</p></div></div>
-  <div class="set-section" id="settingsContent"></div>
-</div>
+<div class="pg" id="pg-scenario"><div class="ph"><div class="pt"><h2>シナリオ配信</h2><p>自動配信シナリオの管理</p></div><button class="btn btn-g" onclick="openMo('mo-addScenario')">＋ シナリオ作成</button></div><div id="scenarioList"></div></div>
+<div class="pg" id="pg-broadcast"><div class="ph"><div class="pt"><h2>一斉配信</h2></div><button class="btn btn-g" onclick="openMo('mo-addBroadcast')">＋ 配信作成</button></div><div id="broadcastList"></div></div>
+<div class="pg" id="pg-template"><div class="ph"><div class="pt"><h2>テンプレート</h2><p>変数付きメッセージ雛形</p></div><button class="btn btn-g" onclick="openMo('mo-addTemplate')">＋ テンプレート作成</button></div><div id="templateList"></div></div>
+<div class="pg" id="pg-reminder"><div class="ph"><div class="pt"><h2>リマインダ</h2></div><button class="btn btn-g" onclick="openMo('mo-addReminder')">＋ リマインダ作成</button></div><div id="reminderList"></div></div>
+<div class="pg" id="pg-traffic"><div class="ph"><div class="pt"><h2>流入経路</h2></div><button class="btn btn-g" onclick="openMo('mo-addTraffic')">＋ リンク作成</button></div><div class="tr-stat" id="trafficStats"></div><div class="tbl"><div class="tbl-h lk-row" style="cursor:default"><div>リンク名</div><div>クリック数</div><div>CV数</div><div>CVR</div><div>操作</div></div><div id="trafficList"></div></div></div>
+<div class="pg" id="pg-cv"><div class="ph"><div class="pt"><h2>コンバージョン計測</h2><p>CVポイント定義 &amp; レポート</p></div><button class="btn btn-g" onclick="openMo('mo-addCV')">＋ CVポイント作成</button></div><div class="cv-grid" id="cvCards"></div><div class="tbl"><div class="tbl-h" style="grid-template-columns:2fr 1.5fr 1fr 1.2fr 80px;cursor:default"><div>CV名</div><div>イベントタイプ</div><div>金額</div><div>作成日</div><div>操作</div></div><div id="cvList"></div></div></div>
+<div class="pg" id="pg-scoring"><div class="ph"><div class="pt"><h2>スコアリング</h2></div><button class="btn btn-g" onclick="openMo('mo-addScore')">＋ ルール追加</button></div><div class="sc-stats" id="scoreStats"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div><div class="sec-h"><h3>スコアリングルール</h3></div><div class="tbl"><div class="tbl-h" style="grid-template-columns:2fr 1fr 1fr 70px;cursor:default"><div>アクション</div><div>スコア</div><div>状態</div><div>操作</div></div><div id="scoreList"></div></div></div><div><div class="sec-h"><h3>リードランキング</h3></div><div class="tbl"><div class="tbl-h lb-row" style="cursor:default"><div>#</div><div>名前</div><div>スコア</div><div>タグ</div><div>登録日</div></div><div id="leaderboard"></div></div></div></div></div>
+<div class="pg" id="pg-automation"><div class="ph"><div class="pt"><h2>オートメーション</h2><p>IF-THENルールで自動化</p></div><button class="btn btn-g" onclick="openMo('mo-addAuto')">＋ ルール追加</button></div><div id="autoList"></div></div>
+<div class="pg" id="pg-webhook"><div class="ph"><div class="pt"><h2>Webhook</h2></div><button class="btn btn-g" onclick="openMo('mo-addWebhook')">＋ Webhook追加</button></div><div id="webhookList"></div></div>
+<div class="pg" id="pg-notify"><div class="ph"><div class="pt"><h2>通知設定</h2></div></div><div class="set-section"><div class="set-title">通知チャンネル</div><div id="notifyList"></div></div></div>
+<div class="pg" id="pg-settings"><div class="ph"><div class="pt"><h2>LINEアカウント設定</h2><p>接続・API設定</p></div></div><div id="settingsContent"></div></div>
 
 </main>
 
 <!-- ====MODALS==== -->
+<!-- ACCOUNT SWITCHER -->
+<div class="mo" id="mo-acctSwitch">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">LINEアカウント切替</div><button class="mo-x" onclick="closeMo('mo-acctSwitch')">×</button></div>
+  <div class="acct-list-mo" id="acctList"></div>
+  <button class="btn btn-g" style="width:100%" onclick="openMo('mo-addAcct');closeMo('mo-acctSwitch')">＋ LINEアカウントを追加</button>
+</div></div>
+
+<!-- ADD LINE ACCOUNT -->
+<div class="mo" id="mo-addAcct">
+<div class="mo-box">
+  <div class="mo-h"><div class="mo-t">LINEアカウントを追加</div><button class="mo-x" onclick="closeMo('mo-addAcct')">×</button></div>
+  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;font-size:12.5px;color:#065f46;margin-bottom:16px">
+    💡 LINE Developers コンソールから情報を取得してください
+  </div>
+  <div class="fg"><label class="fl">アカウント名 *</label><input class="fi" id="na-name" placeholder="例: 株式会社○○ 公式LINE"></div>
+  <div class="fg"><label class="fl">チャンネルID</label><input class="fi" id="na-cid" placeholder="1234567890"></div>
+  <div class="fg"><label class="fl">チャンネルシークレット</label><input class="fi" id="na-secret" type="password" placeholder="••••••••••••••••••••••••••••••••"></div>
+  <div class="fg"><label class="fl">アクセストークン（長期）</label><textarea class="fta" id="na-token" placeholder="長期アクセストークンを貼り付け" style="min-height:60px;font-family:monospace;font-size:11px"></textarea></div>
+  <div class="fg"><label class="fl">説明（任意）</label><input class="fi" id="na-desc" placeholder="例: 主力商品用アカウント"></div>
+  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addAcct')">キャンセル</button><button class="btn btn-g" onclick="addLineAccount()">追加する</button></div>
+</div></div>
 
 <!-- ADD FRIEND -->
-<div class="mo" id="mo-addFriend">
-<div class="mo-box">
-  <div class="mo-h"><div class="mo-t">友だちを追加</div><button class="mo-x" onclick="closeMo('mo-addFriend')">×</button></div>
-  <div class="fg"><label class="fl">表示名 *</label><input class="fi" id="fn-name" placeholder="例: 山田 太郎"></div>
-  <div class="fg"><label class="fl">職業 / 備考</label><input class="fi" id="fn-job" placeholder="例: エンジニア"></div>
-  <div class="fg"><label class="fl">ステータス</label>
-    <select class="fs" id="fn-status"><option>フォロー中</option><option>ブロック/退会</option></select></div>
-  <div class="fg"><label class="fl">タグ（複数選択可）</label>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="fn-tags-sel"></div></div>
-  <div class="fg"><label class="fl">スコア（初期値）</label><input class="fi" id="fn-score" type="number" value="0"></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addFriend')">キャンセル</button><button class="btn btn-g" onclick="addFriend()">追加する</button></div>
-</div></div>
-
+<div class="mo" id="mo-addFriend"><div class="mo-box"><div class="mo-h"><div class="mo-t">友だちを追加</div><button class="mo-x" onclick="closeMo('mo-addFriend')">×</button></div><div class="fg"><label class="fl">表示名 *</label><input class="fi" id="fn-name" placeholder="例: 山田 太郎"></div><div class="fg"><label class="fl">職業 / 備考</label><input class="fi" id="fn-job" placeholder="例: エンジニア"></div><div class="fg"><label class="fl">ステータス</label><select class="fs" id="fn-status"><option>フォロー中</option><option>ブロック/退会</option></select></div><div class="fg"><label class="fl">タグ（複数選択可）</label><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="fn-tags-sel"></div></div><div class="fg"><label class="fl">スコア（初期値）</label><input class="fi" id="fn-score" type="number" value="0"></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addFriend')">キャンセル</button><button class="btn btn-g" onclick="addFriend()">追加する</button></div></div></div>
 <!-- EDIT FRIEND -->
-<div class="mo" id="mo-editFriend">
-<div class="mo-box">
-  <div class="mo-h"><div class="mo-t">友だち編集</div><button class="mo-x" onclick="closeMo('mo-editFriend')">×</button></div>
-  <input type="hidden" id="ef-id">
-  <div class="fg"><label class="fl">表示名</label><input class="fi" id="ef-name"></div>
-  <div class="fg"><label class="fl">職業 / 備考</label><input class="fi" id="ef-job"></div>
-  <div class="fg"><label class="fl">ステータス</label>
-    <select class="fs" id="ef-status"><option>フォロー中</option><option>ブロック/退会</option></select></div>
-  <div class="fg"><label class="fl">タグ</label><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="ef-tags-sel"></div></div>
-  <div class="fg"><label class="fl">スコア</label><input class="fi" id="ef-score" type="number"></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-editFriend')">キャンセル</button><button class="btn btn-g" onclick="saveEditFriend()">保存する</button></div>
-</div></div>
-
+<div class="mo" id="mo-editFriend"><div class="mo-box"><div class="mo-h"><div class="mo-t">友だち編集</div><button class="mo-x" onclick="closeMo('mo-editFriend')">×</button></div><input type="hidden" id="ef-id"><div class="fg"><label class="fl">表示名</label><input class="fi" id="ef-name"></div><div class="fg"><label class="fl">職業 / 備考</label><input class="fi" id="ef-job"></div><div class="fg"><label class="fl">ステータス</label><select class="fs" id="ef-status"><option>フォロー中</option><option>ブロック/退会</option></select></div><div class="fg"><label class="fl">タグ</label><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="ef-tags-sel"></div></div><div class="fg"><label class="fl">スコア</label><input class="fi" id="ef-score" type="number"></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-editFriend')">キャンセル</button><button class="btn btn-g" onclick="saveEditFriend()">保存する</button></div></div></div>
 <!-- ADD SCENARIO -->
-<div class="mo" id="mo-addScenario">
-<div class="mo-box" style="width:540px">
-  <div class="mo-h"><div class="mo-t">シナリオ作成</div><button class="mo-x" onclick="closeMo('mo-addScenario')">×</button></div>
-  <div class="fg"><label class="fl">シナリオ名 *</label><input class="fi" id="sn-name" placeholder="例: 友だち追加フォロー"></div>
-  <div class="fg"><label class="fl">トリガー</label>
-    <select class="fs" id="sn-trigger"><option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option><option>フォーム送信</option></select></div>
-  <div class="fg"><label class="fl">説明</label><input class="fi" id="sn-desc" placeholder="このシナリオの目的を入力"></div>
-  <div class="fg"><label class="fl">ステップ1 メッセージ</label><textarea class="fta" id="sn-s1" placeholder="こんにちは{{name}}さん！友だち追加ありがとうございます🎉"></textarea></div>
-  <div class="fg"><label class="fl">ステップ2（delay: 1日後）</label><textarea class="fta" id="sn-s2" placeholder="昨日はご連絡ありがとうございました！"></textarea></div>
-  <div class="fg"><label class="fl">ステップ3（delay: 3日後）</label><textarea class="fta" id="sn-s3" placeholder="お役立ち情報をお届けします📚"></textarea></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addScenario')">キャンセル</button><button class="btn btn-g" onclick="addScenario()">作成する</button></div>
-</div></div>
-
+<div class="mo" id="mo-addScenario"><div class="mo-box" style="width:540px"><div class="mo-h"><div class="mo-t">シナリオ作成</div><button class="mo-x" onclick="closeMo('mo-addScenario')">×</button></div><div class="fg"><label class="fl">シナリオ名 *</label><input class="fi" id="sn-name" placeholder="例: 友だち追加フォロー"></div><div class="fg"><label class="fl">トリガー</label><select class="fs" id="sn-trigger"><option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option><option>フォーム送信</option></select></div><div class="fg"><label class="fl">説明</label><input class="fi" id="sn-desc" placeholder="このシナリオの目的を入力"></div><div class="fg"><label class="fl">ステップ1（即時）</label><textarea class="fta" id="sn-s1" placeholder="こんにちは{{name}}さん！ラインダーのご登録ありがとうございます🎉"></textarea></div><div class="fg"><label class="fl">ステップ2（1日後）</label><textarea class="fta" id="sn-s2" placeholder="昨日はいかがでしたか？"></textarea></div><div class="fg"><label class="fl">ステップ3（3日後）</label><textarea class="fta" id="sn-s3" placeholder="お役立ち情報をお届けします📚"></textarea></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addScenario')">キャンセル</button><button class="btn btn-g" onclick="addScenario()">作成する</button></div></div></div>
 <!-- ADD BROADCAST -->
-<div class="mo" id="mo-addBroadcast">
-<div class="mo-box">
-  <div class="mo-h"><div class="mo-t">配信作成</div><button class="mo-x" onclick="closeMo('mo-addBroadcast')">×</button></div>
-  <div class="fg"><label class="fl">配信名 *</label><input class="fi" id="bc-name" placeholder="例: 5月キャンペーン告知"></div>
-  <div class="fg"><label class="fl">ターゲット</label>
-    <select class="fs" id="bc-target"><option value="all">全員</option><option value="tag">タグ指定</option><option value="follow">フォロー中のみ</option></select></div>
-  <div class="fg" id="bc-tag-wrap" style="display:none"><label class="fl">対象タグ</label>
-    <select class="fs" id="bc-tag"><option>新規</option><option>HOTリード</option><option>VIP</option><option>セミナー参加</option><option>トライアル</option></select></div>
-  <div class="fg"><label class="fl">メッセージ *</label><textarea class="fta" id="bc-msg" placeholder="こんにちは{{name}}さん！お知らせがあります…" style="min-height:100px"></textarea></div>
-  <div class="fg"><label class="fl">配信日時（空欄=即時）</label><input class="fi" id="bc-time" type="datetime-local"></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addBroadcast')">キャンセル</button><button class="btn btn-g" onclick="addBroadcast()">作成する</button></div>
-</div></div>
-
+<div class="mo" id="mo-addBroadcast"><div class="mo-box"><div class="mo-h"><div class="mo-t">配信作成</div><button class="mo-x" onclick="closeMo('mo-addBroadcast')">×</button></div><div class="fg"><label class="fl">配信名 *</label><input class="fi" id="bc-name" placeholder="例: 5月キャンペーン告知"></div><div class="fg"><label class="fl">ターゲット</label><select class="fs" id="bc-target"><option value="all">全員</option><option value="tag">タグ指定</option><option value="follow">フォロー中のみ</option></select></div><div class="fg" id="bc-tag-wrap" style="display:none"><label class="fl">対象タグ</label><select class="fs" id="bc-tag"><option>新規</option><option>HOTリード</option><option>VIP</option><option>セミナー参加</option><option>トライアル</option></select></div><div class="fg"><label class="fl">メッセージ *</label><textarea class="fta" id="bc-msg" placeholder="こんにちは{{name}}さん！" style="min-height:100px"></textarea></div><div class="fg"><label class="fl">配信日時（空欄=即時）</label><input class="fi" id="bc-time" type="datetime-local"></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addBroadcast')">キャンセル</button><button class="btn btn-g" onclick="addBroadcast()">作成する</button></div></div></div>
 <!-- ADD TEMPLATE -->
-<div class="mo" id="mo-addTemplate">
-<div class="mo-box">
-  <div class="mo-h"><div class="mo-t">テンプレート作成</div><button class="mo-x" onclick="closeMo('mo-addTemplate')">×</button></div>
-  <div class="fg"><label class="fl">テンプレート名 *</label><input class="fi" id="tp-name" placeholder="例: ウェルカムメッセージ"></div>
-  <div class="fg"><label class="fl">カテゴリ</label>
-    <select class="fs" id="tp-cat"><option>ウェルカム</option><option>フォローアップ</option><option>プロモーション</option><option>リマインダ</option><option>その他</option></select></div>
-  <div class="fg"><label class="fl">本文（{{name}}{{job}}等の変数使用可）*</label><textarea class="fta" id="tp-body" style="min-height:120px" placeholder="こんにちは{{name}}さん！&#10;&#10;この度はご登録ありがとうございます😊&#10;&#10;{{job}}のお仕事されているんですね！"></textarea></div>
-  <div class="fg"><label class="fl">プレビュー名前</label><input class="fi" id="tp-prev-name" placeholder="山田 太郎" value="山田 太郎"></div>
-  <div id="tp-preview" style="display:none;margin-top:6px;padding:12px 14px;background:#f0fdf4;border-radius:8px;font-size:13px;border-left:3px solid var(--green);line-height:1.6;white-space:pre-wrap"></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addTemplate')">キャンセル</button><button class="btn btn-g" onclick="addTemplate()">作成する</button></div>
-</div></div>
-
+<div class="mo" id="mo-addTemplate"><div class="mo-box"><div class="mo-h"><div class="mo-t">テンプレート作成</div><button class="mo-x" onclick="closeMo('mo-addTemplate')">×</button></div><div class="fg"><label class="fl">テンプレート名 *</label><input class="fi" id="tp-name" placeholder="例: ウェルカムメッセージ"></div><div class="fg"><label class="fl">カテゴリ</label><select class="fs" id="tp-cat"><option>ウェルカム</option><option>フォローアップ</option><option>プロモーション</option><option>リマインダ</option><option>その他</option></select></div><div class="fg"><label class="fl">本文（{{name}}{{job}}変数使用可）*</label><textarea class="fta" id="tp-body" style="min-height:120px" placeholder="こんにちは{{name}}さん！"></textarea></div><div class="fg"><label class="fl">プレビュー名前</label><input class="fi" id="tp-prev-name" value="山田 太郎"></div><div id="tp-preview" style="display:none;margin-top:6px;padding:12px 14px;background:#f0fdf4;border-radius:8px;font-size:13px;border-left:3px solid var(--green);line-height:1.6;white-space:pre-wrap"></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addTemplate')">キャンセル</button><button class="btn btn-g" onclick="addTemplate()">作成する</button></div></div></div>
 <!-- ADD REMINDER -->
-<div class="mo" id="mo-addReminder">
-<div class="mo-box">
-  <div class="mo-h"><div class="mo-t">リマインダ作成</div><button class="mo-x" onclick="closeMo('mo-addReminder')">×</button></div>
-  <div class="fg"><label class="fl">リマインダ名 *</label><input class="fi" id="rm-name" placeholder="例: セミナー前日リマインダ"></div>
-  <div class="fg"><label class="fl">送信日時 *</label><input class="fi" id="rm-time" type="datetime-local"></div>
-  <div class="fg"><label class="fl">ターゲット</label>
-    <select class="fs" id="rm-target"><option value="all">全員</option><option value="tag">タグ指定</option></select></div>
-  <div class="fg"><label class="fl">メッセージ *</label><textarea class="fta" id="rm-msg" placeholder="{{name}}さん、明日のセミナーはお忘れなく！"></textarea></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addReminder')">キャンセル</button><button class="btn btn-g" onclick="addReminder()">作成する</button></div>
-</div></div>
-
+<div class="mo" id="mo-addReminder"><div class="mo-box"><div class="mo-h"><div class="mo-t">リマインダ作成</div><button class="mo-x" onclick="closeMo('mo-addReminder')">×</button></div><div class="fg"><label class="fl">リマインダ名 *</label><input class="fi" id="rm-name" placeholder="例: セミナー前日リマインダ"></div><div class="fg"><label class="fl">送信日時 *</label><input class="fi" id="rm-time" type="datetime-local"></div><div class="fg"><label class="fl">ターゲット</label><select class="fs" id="rm-target"><option value="all">全員</option><option value="tag">タグ指定</option></select></div><div class="fg"><label class="fl">メッセージ *</label><textarea class="fta" id="rm-msg" placeholder="{{name}}さん、明日のセミナーはお忘れなく！"></textarea></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addReminder')">キャンセル</button><button class="btn btn-g" onclick="addReminder()">作成する</button></div></div></div>
 <!-- ADD TRAFFIC -->
-<div class="mo" id="mo-addTraffic">
-<div class="mo-box">
-  <div class="mo-h"><div class="mo-t">トラッキングリンク作成</div><button class="mo-x" onclick="closeMo('mo-addTraffic')">×</button></div>
-  <div class="fg"><label class="fl">リンク名 *</label><input class="fi" id="tr-name" placeholder="例: Instagram プロフィール"></div>
-  <div class="fg"><label class="fl">リダイレクト先URL</label><input class="fi" id="tr-url" placeholder="https://example.com/landing"></div>
-  <div class="fg"><label class="fl">UTMソース</label><input class="fi" id="tr-source" placeholder="instagram"></div>
-  <div class="fg"><label class="fl">タグ自動付与（クリック時）</label>
-    <select class="fs" id="tr-tag"><option value="">なし</option><option>新規</option><option>HOTリード</option><option>セミナー参加</option></select></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addTraffic')">キャンセル</button><button class="btn btn-g" onclick="addTraffic()">作成する</button></div>
-</div></div>
-
+<div class="mo" id="mo-addTraffic"><div class="mo-box"><div class="mo-h"><div class="mo-t">トラッキングリンク作成</div><button class="mo-x" onclick="closeMo('mo-addTraffic')">×</button></div><div class="fg"><label class="fl">リンク名 *</label><input class="fi" id="tr-name" placeholder="例: Instagram プロフィール"></div><div class="fg"><label class="fl">リダイレクト先URL</label><input class="fi" id="tr-url" placeholder="https://example.com/landing"></div><div class="fg"><label class="fl">UTMソース</label><input class="fi" id="tr-source" placeholder="instagram"></div><div class="fg"><label class="fl">タグ自動付与（クリック時）</label><select class="fs" id="tr-tag"><option value="">なし</option><option>新規</option><option>HOTリード</option><option>セミナー参加</option></select></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addTraffic')">キャンセル</button><button class="btn btn-g" onclick="addTraffic()">作成する</button></div></div></div>
 <!-- ADD CV -->
-<div class="mo" id="mo-addCV">
-<div class="mo-box">
-  <div class="mo-h"><div class="mo-t">CVポイント作成</div><button class="mo-x" onclick="closeMo('mo-addCV')">×</button></div>
-  <div class="fg"><label class="fl">CV名 *</label><input class="fi" id="cv-name" placeholder="例: 資料請求完了"></div>
-  <div class="fg"><label class="fl">イベントタイプ</label>
-    <select class="fs" id="cv-type"><option value="purchase">purchase（購入）</option><option value="form_submit">form_submit（フォーム）</option><option value="signup">signup（登録）</option><option value="click">click（クリック）</option></select></div>
-  <div class="fg"><label class="fl">金額（¥）0=無料</label><input class="fi" id="cv-amount" type="number" value="0"></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addCV')">キャンセル</button><button class="btn btn-g" onclick="addCV()">作成する</button></div>
-</div></div>
-
+<div class="mo" id="mo-addCV"><div class="mo-box"><div class="mo-h"><div class="mo-t">CVポイント作成</div><button class="mo-x" onclick="closeMo('mo-addCV')">×</button></div><div class="fg"><label class="fl">CV名 *</label><input class="fi" id="cv-name" placeholder="例: 資料請求完了"></div><div class="fg"><label class="fl">イベントタイプ</label><select class="fs" id="cv-type"><option value="purchase">purchase（購入）</option><option value="form_submit">form_submit（フォーム）</option><option value="signup">signup（登録）</option><option value="click">click（クリック）</option></select></div><div class="fg"><label class="fl">金額（¥）0=無料</label><input class="fi" id="cv-amount" type="number" value="0"></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addCV')">キャンセル</button><button class="btn btn-g" onclick="addCV()">作成する</button></div></div></div>
 <!-- ADD SCORE -->
-<div class="mo" id="mo-addScore">
-<div class="mo-box">
-  <div class="mo-h"><div class="mo-t">スコアリングルール追加</div><button class="mo-x" onclick="closeMo('mo-addScore')">×</button></div>
-  <div class="fg"><label class="fl">アクション名 *</label><input class="fi" id="sc-name" placeholder="例: セミナー参加"></div>
-  <div class="fg"><label class="fl">スコア（ポイント）</label><input class="fi" id="sc-val" type="number" placeholder="10" value="10"></div>
-  <div class="fg"><label class="fl">トリガー</label>
-    <select class="fs" id="sc-trigger"><option>手動</option><option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option><option>CV達成</option><option>リンククリック</option></select></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addScore')">キャンセル</button><button class="btn btn-g" onclick="addScore()">追加する</button></div>
-</div></div>
-
+<div class="mo" id="mo-addScore"><div class="mo-box"><div class="mo-h"><div class="mo-t">スコアリングルール追加</div><button class="mo-x" onclick="closeMo('mo-addScore')">×</button></div><div class="fg"><label class="fl">アクション名 *</label><input class="fi" id="sc-name" placeholder="例: セミナー参加"></div><div class="fg"><label class="fl">スコア（ポイント）</label><input class="fi" id="sc-val" type="number" value="10"></div><div class="fg"><label class="fl">トリガー</label><select class="fs" id="sc-trigger"><option>手動</option><option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option><option>CV達成</option><option>リンククリック</option></select></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addScore')">キャンセル</button><button class="btn btn-g" onclick="addScore()">追加する</button></div></div></div>
 <!-- ADD AUTO -->
-<div class="mo" id="mo-addAuto">
-<div class="mo-box">
-  <div class="mo-h"><div class="mo-t">オートメーション追加</div><button class="mo-x" onclick="closeMo('mo-addAuto')">×</button></div>
-  <div class="fg"><label class="fl">ルール名 *</label><input class="fi" id="au-name" placeholder="例: 友だち追加時にウェルカムメッセージ"></div>
-  <div class="fg"><label class="fl">IF（トリガー）</label>
-    <select class="fs" id="au-trigger"><option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option><option>フォーム送信</option><option>リンククリック</option><option>スコア到達</option></select></div>
-  <div class="fg"><label class="fl">THEN（アクション）</label>
-    <select class="fs" id="au-action"><option>メッセージ送信</option><option>シナリオ開始</option><option>タグ付与</option><option>Webhook送信</option><option>スコア加算</option></select></div>
-  <div class="fg"><label class="fl">説明</label><input class="fi" id="au-desc" placeholder="このルールの説明"></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addAuto')">キャンセル</button><button class="btn btn-g" onclick="addAuto()">作成する</button></div>
-</div></div>
-
+<div class="mo" id="mo-addAuto"><div class="mo-box"><div class="mo-h"><div class="mo-t">オートメーション追加</div><button class="mo-x" onclick="closeMo('mo-addAuto')">×</button></div><div class="fg"><label class="fl">ルール名 *</label><input class="fi" id="au-name" placeholder="例: 友だち追加時にウェルカムメッセージ"></div><div class="fg"><label class="fl">IF（トリガー）</label><select class="fs" id="au-trigger"><option>友だち追加</option><option>タグ付与</option><option>メッセージ受信</option><option>フォーム送信</option><option>リンククリック</option><option>スコア到達</option></select></div><div class="fg"><label class="fl">THEN（アクション）</label><select class="fs" id="au-action"><option>メッセージ送信</option><option>シナリオ開始</option><option>タグ付与</option><option>Webhook送信</option><option>スコア加算</option></select></div><div class="fg"><label class="fl">説明</label><input class="fi" id="au-desc" placeholder="このルールの説明"></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addAuto')">キャンセル</button><button class="btn btn-g" onclick="addAuto()">作成する</button></div></div></div>
 <!-- ADD WEBHOOK -->
-<div class="mo" id="mo-addWebhook">
-<div class="mo-box">
-  <div class="mo-h"><div class="mo-t">Webhook追加</div><button class="mo-x" onclick="closeMo('mo-addWebhook')">×</button></div>
-  <div class="fg"><label class="fl">名前 *</label><input class="fi" id="wh-name" placeholder="例: Slack通知"></div>
-  <div class="fg"><label class="fl">URL *</label><input class="fi" id="wh-url" placeholder="https://hooks.slack.com/services/..."></div>
-  <div class="fg"><label class="fl">イベント</label>
-    <select class="fs" id="wh-event"><option>友だち追加</option><option>CV達成</option><option>フォーム送信</option><option>購入完了</option><option>全イベント</option></select></div>
-  <div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addWebhook')">キャンセル</button><button class="btn btn-g" onclick="addWebhook()">追加する</button></div>
-</div></div>
+<div class="mo" id="mo-addWebhook"><div class="mo-box"><div class="mo-h"><div class="mo-t">Webhook追加</div><button class="mo-x" onclick="closeMo('mo-addWebhook')">×</button></div><div class="fg"><label class="fl">名前 *</label><input class="fi" id="wh-name" placeholder="例: Slack通知"></div><div class="fg"><label class="fl">URL *</label><input class="fi" id="wh-url" placeholder="https://hooks.slack.com/..."></div><div class="fg"><label class="fl">イベント</label><select class="fs" id="wh-event"><option>友だち追加</option><option>CV達成</option><option>フォーム送信</option><option>購入完了</option><option>全イベント</option></select></div><div class="mf"><button class="btn btn-s" onclick="closeMo('mo-addWebhook')">キャンセル</button><button class="btn btn-g" onclick="addWebhook()">追加する</button></div></div></div>
 
-<!-- TOAST -->
-<div class="toast" id="toast"><span id="toastMsg">保存しました ✅</span></div>
+<div class="toast" id="toast"><span id="toastMsg">✅</span></div>
 
 <script>
-// ==================== DATA ====================
-const TAG_LIST = ['トライアル','新規','HOTリード','VIP','購入済み','セミナー参加','資料請求','休眠'];
-const AVATARS = ['🧑','👩','👨','🧕','👴','🧔','👱','🙍','😊','🥰','😎','🤓','🧑‍💼','👩‍💼','🧑‍🎨','👨‍🏫'];
-const ICONS_AUTO = ['🎉','🔥','📄','😴','🛒','📧','⭐','🎯'];
-const COLORS_AUTO = ['qi-g','qi-r','qi-b','qi-y','qi-p','qi-t','qi-g','qi-r'];
+// ============================================================
+// SECURITY UTILITIES
+// ============================================================
+// XSS prevention: always escape user-generated content
+function esc(s){
+  if(s==null)return'';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+// Simple hash (for demo - production would use bcrypt on server)
+async function hashPass(pass){
+  const enc=new TextEncoder().encode(pass+'ラインダー_salt_2026');
+  const buf=await crypto.subtle.digest('SHA-256',enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+// Generate unique ID
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 
-function ls(k,d){try{const v=localStorage.getItem('ld_'+k);return v?JSON.parse(v):d}catch(e){return d}}
-function ss(k,v){try{localStorage.setItem('ld_'+k,JSON.stringify(v))}catch(e){}}
+// ============================================================
+// STORAGE (user-namespaced)
+// ============================================================
+function ukey(k){return`ld_${SESSION.userId}_${k}`}
+function gls(k,d){try{const v=localStorage.getItem(ukey(k));return v?JSON.parse(v):d}catch(e){return d}}
+function sls(k,v){try{localStorage.setItem(ukey(k),JSON.stringify(v))}catch(e){}}
+// Global (not user-scoped) storage
+function gglob(k,d){try{const v=localStorage.getItem('ldg_'+k);return v?JSON.parse(v):d}catch(e){return d}}
+function sglob(k,v){try{localStorage.setItem('ldg_'+k,JSON.stringify(v))}catch(e){}}
 
-let D = {
-  friends: ls('friends', [
-    {id:1,name:'坂本 ひなた',job:'パティシエ',status:'フォロー中',tags:['トライアル','新規'],date:'2026/02/20',score:45,av:'🧑',msgs:[]},
-    {id:2,name:'近藤 大和',job:'投資家',status:'フォロー中',tags:['HOTリード','VIP','購入済み'],date:'2026/02/18',score:180,av:'👨',msgs:[]},
-    {id:3,name:'村上 桃花',job:'アロマセラピスト',status:'フォロー中',tags:['トライアル'],date:'2026/02/15',score:60,av:'👩',msgs:[]},
-    {id:4,name:'長谷川 悠',job:'建築家',status:'フォロー中',tags:['セミナー参加','資料請求'],date:'2026/02/13',score:90,av:'🧔',msgs:[]},
-    {id:5,name:'後藤 萌',job:'ライター',status:'フォロー中',tags:['HOTリード','購入済み'],date:'2026/02/10',score:130,av:'🙍',msgs:[]},
-    {id:6,name:'岡田 蒼空',job:'サーファー',status:'ブロック/退会',tags:['休眠'],date:'2026/02/08',score:10,av:'👱',msgs:[]},
-    {id:7,name:'藤田 莉子',job:'カメラウーマン',status:'フォロー中',tags:['新規','資料請求'],date:'2026/02/05',score:35,av:'🧕',msgs:[]},
-    {id:8,name:'前田 陽翔',job:'コンサルタント',status:'フォロー中',tags:['HOTリード','VIP','購入済み'],date:'2026/02/01',score:220,av:'🤓',msgs:[]},
-    {id:9,name:'石井 七海',job:'看護師',status:'フォロー中',tags:['セミナー参加'],date:'2026/01/28',score:75,av:'😊',msgs:[]},
-    {id:10,name:'橋本 颯太',job:'デザイナー',status:'フォロー中',tags:['新規'],date:'2026/01/25',score:20,av:'😎',msgs:[]},
-    {id:11,name:'山本 彩音',job:'教師',status:'フォロー中',tags:['HOTリード','セミナー参加'],date:'2026/01/22',score:110,av:'👩',msgs:[]},
-    {id:12,name:'田中 優斗',job:'営業マン',status:'フォロー中',tags:['購入済み'],date:'2026/01/18',score:95,av:'🧑‍💼',msgs:[]},
-  ]),
-  scenarios: ls('scenarios', [
-    {id:1,name:'友だち追加フォローシナリオ',trigger:'友だち追加',desc:'友だち追加後に3ステップでウォームアップ',steps:[{delay:'即時',msg:'こんにちは{{name}}さん！ラインダーのご登録ありがとうございます🎉'},{delay:'1日後',msg:'{{name}}さん、昨日はいかがでしたか？何かご質問あればお気軽に😊'},{delay:'3日後',msg:'お役立ち情報をお届けします📚 本日のテーマは…'}],sent:28,active:true},
-    {id:2,name:'セミナー参加者フォロー',trigger:'タグ付与（セミナー参加）',desc:'セミナー後のフォローアップシナリオ',steps:[{delay:'即時',msg:'本日のセミナーご参加ありがとうございました！'},{delay:'2日後',msg:'セミナーの資料をお送りします📎'},{delay:'7日後',msg:'ご感想はいかがでしたか？'}],sent:12,active:true},
-    {id:3,name:'購入後サンクスシナリオ',trigger:'購入イベント',desc:'購入完了後のサンクスとフォロー',steps:[{delay:'即時',msg:'ご購入ありがとうございます！🛒'},{delay:'3日後',msg:'商品はお手元に届きましたか？'},{delay:'14日後',msg:'使用感はいかがですか？レビューをお待ちしています⭐'},{delay:'30日後',msg:'1ヶ月が経ちました。継続してご利用いただいていますか？'}],sent:9,active:true},
-    {id:4,name:'資料請求ナーチャリング',trigger:'フォーム送信',desc:'資料請求後のリード育成シナリオ',steps:[{delay:'即時',msg:'資料をお送りします📄 5分で読めます！'},{delay:'2日後',msg:'資料はご覧いただけましたか？'},{delay:'5日後',msg:'よくある質問をまとめました💡'},{delay:'10日後',msg:'実際のケーススタディをご紹介します'},{delay:'21日後',msg:'そろそろご検討はいかがですか？'}],sent:6,active:false},
-  ]),
-  broadcasts: ls('broadcasts', [
-    {id:1,name:'3月キャンペーン告知',target:'all',targetLabel:'全員（30名）',msg:'{{name}}さん、春のキャンペーンのお知らせです🌸',scheduledAt:'2026/03/01 10:00',status:'sent',sent:30},
-    {id:2,name:'VIP向け特別オファー',target:'tag',targetLabel:'VIP（3名）',msg:'VIPの{{name}}さんへ特別なご案内です✨',scheduledAt:'2026/02/20 09:00',status:'sent',sent:3},
-    {id:3,name:'セミナー案内メール',target:'tag',targetLabel:'HOTリード（4名）',msg:'{{name}}さん、3/15のウェビナーにご参加いただけますか？',scheduledAt:'2026/03/10 11:00',status:'scheduled',sent:0},
-  ]),
-  templates: ls('templates', [
-    {id:1,name:'ウェルカムメッセージ',cat:'ウェルカム',body:'こんにちは{{name}}さん！\n\nご登録ありがとうございます🎉\n{{job}}されているんですね！\n\nまずはお気軽にご質問ください😊',vars:['name','job']},
-    {id:2,name:'フォローアップ（3日後）',cat:'フォローアップ',body:'{{name}}さん、ご登録から3日が経ちました！\n\n何かご不明な点はございますか？\nサポートはいつでも対応しています💪',vars:['name']},
-    {id:3,name:'プロモーション配信',cat:'プロモーション',body:'【期間限定】{{name}}さんだけへの特別オファーです🎁\n\n今月末まで30%OFF！\n詳しくはこちら→ https://example.com',vars:['name']},
-    {id:4,name:'セミナーリマインダ',cat:'リマインダ',body:'{{name}}さん、明日のセミナーはお忘れなく！\n\n📅 日時: 明日 14:00〜\n📍 場所: Zoom（URLは後日お送りします）',vars:['name']},
-  ]),
-  reminders: ls('reminders', [
-    {id:1,name:'セミナー前日通知',time:'2026-03-14T09:00',target:'all',msg:'{{name}}さん、明日14時からセミナーです！',status:'scheduled'},
-    {id:2,name:'月次レポート配信',time:'2026-03-31T10:00',target:'all',msg:'{{name}}さん、3月のご利用レポートをお送りします📊',status:'scheduled'},
-  ]),
-  traffic: ls('traffic', [
-    {id:1,name:'Instagram プロフィール',url:'https://lin.ee/xxx001',source:'instagram',clicks:342,cvs:28,tag:'新規'},
-    {id:2,name:'Twitter/X bio',url:'https://lin.ee/xxx002',source:'twitter',clicks:189,cvs:15,tag:'新規'},
-    {id:3,name:'メルマガ フッター',url:'https://lin.ee/xxx003',source:'email',clicks:521,cvs:47,tag:'HOTリード'},
-    {id:4,name:'LP ボタン',url:'https://lin.ee/xxx004',source:'lp',clicks:876,cvs:89,tag:'トライアル'},
-  ]),
-  cvPoints: ls('cvPoints', [
-    {id:1,name:'無料トライアル',type:'signup',amount:0,date:'2026/2/1',count:6},
-    {id:2,name:'商品購入',type:'purchase',amount:9800,date:'2026/1/15',count:9},
-    {id:3,name:'セミナー申込',type:'form_submit',amount:0,date:'2026/1/1',count:5},
-    {id:4,name:'資料請求完了',type:'form_submit',amount:0,date:'2025/12/1',count:6},
-  ]),
-  scoreRules: ls('scoreRules', [
-    {id:1,name:'友だち追加',score:10,trigger:'友だち追加',active:true},
-    {id:2,name:'メッセージ送信',score:5,trigger:'メッセージ受信',active:true},
-    {id:3,name:'リンククリック',score:3,trigger:'リンククリック',active:true},
-    {id:4,name:'フォーム送信',score:15,trigger:'CV達成',active:true},
-    {id:5,name:'商品購入',score:50,trigger:'CV達成',active:true},
-  ]),
-  automations: ls('automations', [
-    {id:1,name:'友だち追加 → ウェルカムメッセージ',trigger:'友だち追加',action:'シナリオ開始',desc:'友だち追加フォローシナリオを自動開始',icon:'🎉',color:'qi-g',active:true},
-    {id:2,name:'HOTリード → Slack通知',trigger:'タグ付与',action:'Webhook送信',desc:'HOTリードタグ付与時にSlackへ通知',icon:'🔥',color:'qi-r',active:true},
-    {id:3,name:'フォーム送信 → 資料配信',trigger:'フォーム送信',action:'メッセージ送信',desc:'資料請求フォーム送信時に自動返信',icon:'📄',color:'qi-b',active:true},
-    {id:4,name:'30日未返信 → 休眠タグ',trigger:'メッセージ受信',action:'タグ付与',desc:'30日間未アクション時に休眠タグを付与',icon:'😴',color:'qi-y',active:false},
-    {id:5,name:'購入完了 → サンクスシナリオ',trigger:'CV達成',action:'シナリオ開始',desc:'商品購入完了後にサンクスシナリオ開始',icon:'🛒',color:'qi-p',active:true},
-  ]),
-  webhooks: ls('webhooks', [
-    {id:1,name:'Slack 友だち通知',url:'https://hooks.slack.com/services/T00/B00/xxx',event:'友だち追加',active:true,calls:142},
-    {id:2,name:'Zapier CV連携',url:'https://hooks.zapier.com/hooks/catch/xxx',event:'CV達成',active:true,calls:67},
-    {id:3,name:'CRM同期',url:'https://api.mycrm.com/webhook/line',event:'全イベント',active:false,calls:0},
-  ]),
-  notify: ls('notify', [
-    {id:1,name:'友だち追加通知',desc:'新しい友だちが追加された時',active:true},
-    {id:2,name:'ブロック/退会通知',desc:'ユーザーがブロック・退会した時',active:true},
-    {id:3,name:'CV達成通知',desc:'コンバージョンが発生した時',active:true},
-    {id:4,name:'シナリオエラー通知',desc:'シナリオ配信でエラーが発生した時',active:false},
-    {id:5,name:'Webhookエラー通知',desc:'Webhook送信に失敗した時',active:true},
-  ]),
-  activity: ls('activity', [
-    {type:'friend',icon:'👤',text:'坂本 ひなたさんが友だち追加',time:'5分前',color:'qi-g'},
-    {type:'cv',icon:'💰',text:'田中 優斗さんが商品購入 ¥9,800',time:'23分前',color:'qi-r'},
-    {type:'msg',icon:'💬',text:'近藤 大和さんからメッセージ受信',time:'1時間前',color:'qi-b'},
-    {type:'auto',icon:'⚡',text:'自動化: 友だち追加 → シナリオ開始',time:'1時間前',color:'qi-y'},
-    {type:'cv',icon:'📊',text:'石井 七海さんがセミナー申込',time:'2時間前',color:'qi-p'},
-  ]),
-  chatActive: null,
-};
-let ID = ls('nextId',100);
-function nid(){ID++;ss('nextId',ID);return ID}
-function save(){Object.keys(D).forEach(k=>ss(k,D[k]))}
+// ============================================================
+// AUTH
+// ============================================================
+let SESSION = {userId:null,userEmail:null,userName:null,lineAccountId:null};
 
-// ==================== HELPERS ====================
-const $ = id => document.getElementById(id);
-function toast(msg){const t=$('toast');$('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
-function openMo(id){
-  // reset modals when opening
-  if(id==='mo-addFriend'){renderTagCheckboxes('fn-tags-sel',[]);}
-  if(id==='mo-addBroadcast'){$('bc-tag-wrap').style.display='none';$('bc-target').value='all';}
-  if(id==='mo-addTemplate'){
-    $('tp-name').value='';$('tp-body').value='';$('tp-prev-name').value='山田 太郎';
-    $('tp-preview').style.display='none';
+function getUsers(){return gglob('users',[])}
+function saveUsers(u){sglob('users',u)}
+
+async function doLogin(){
+  const email=$('lEmail').value.trim().toLowerCase();
+  const pass=$('lPass').value;
+  $('loginErr').textContent='';
+  if(!email||!pass){$('loginErr').textContent='メールとパスワードを入力してください';return;}
+  const users=getUsers();
+  const user=users.find(u=>u.email===email);
+  if(!user){$('loginErr').textContent='メールアドレスが見つかりません';return;}
+  const h=await hashPass(pass);
+  if(h!==user.passwordHash){$('loginErr').textContent='パスワードが違います';return;}
+  startSession(user);
+}
+
+async function doRegister(){
+  const name=$('rName').value.trim();
+  const email=$('rEmail').value.trim().toLowerCase();
+  const pass=$('rPass').value;
+  const pass2=$('rPass2').value;
+  $('regErr').textContent='';
+  if(!name||!email||!pass){$('regErr').textContent='全項目を入力してください';return;}
+  if(pass.length<8){$('regErr').textContent='パスワードは8文字以上にしてください';return;}
+  if(pass!==pass2){$('regErr').textContent='パスワードが一致しません';return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$('regErr').textContent='メールアドレスの形式が正しくありません';return;}
+  const users=getUsers();
+  if(users.find(u=>u.email===email)){$('regErr').textContent='このメールアドレスは既に登録されています';return;}
+  const h=await hashPass(pass);
+  const user={id:uid(),name,email,passwordHash:h,createdAt:new Date().toISOString()};
+  users.push(user);
+  saveUsers(users);
+  startSession(user);
+}
+
+async function demoLogin(){
+  const users=getUsers();
+  let demo=users.find(u=>u.email==='demo@linedar.app');
+  if(!demo){
+    const h=await hashPass('demo1234');
+    demo={id:'demo_user_001',name:'デモユーザー',email:'demo@linedar.app',passwordHash:h,createdAt:new Date().toISOString()};
+    users.push(demo);
+    saveUsers(users);
+    // seed demo data
+    SESSION.userId='demo_user_001';
+    seedDemoData();
+    SESSION.userId=null;
   }
-  if(id==='mo-addScenario'){['sn-name','sn-desc','sn-s1','sn-s2','sn-s3'].forEach(i=>$(i)&&($(i).value=''));}
-  if(id==='mo-addReminder'){['rm-name','rm-time','rm-msg'].forEach(i=>$(i)&&($(i).value=''));}
-  if(id==='mo-addTraffic'){['tr-name','tr-url','tr-source'].forEach(i=>$(i)&&($(i).value=''));}
+  startSession(demo);
+}
+
+function startSession(user){
+  SESSION.userId=user.id;
+  SESSION.userEmail=user.email;
+  SESSION.userName=user.name;
+  // Save session (sessionStorage = tab-scoped, clears on close)
+  sessionStorage.setItem('ld_session',JSON.stringify({userId:user.id,email:user.email,name:user.name}));
+  // Get or init line accounts for this user
+  const accounts=gls('lineAccounts',[]);
+  if(accounts.length===0){
+    // Create default account for new user
+    const defaultAcct={id:uid(),name:'メインLINEアカウント',channelId:'',channelSecret:'',accessToken:'',desc:'デフォルトアカウント',color:'#06c755',createdAt:new Date().toISOString()};
+    sls('lineAccounts',[defaultAcct]);
+    SESSION.lineAccountId=defaultAcct.id;
+  } else {
+    SESSION.lineAccountId=gls('activeLineAccount',accounts[0].id);
+  }
+  showApp();
+}
+
+function doLogout(){
+  if(!confirm('ログアウトしますか？'))return;
+  sessionStorage.removeItem('ld_session');
+  SESSION={userId:null,userEmail:null,userName:null,lineAccountId:null};
+  hideApp();
+}
+
+function checkSession(){
+  const s=sessionStorage.getItem('ld_session');
+  if(!s)return false;
+  try{
+    const sess=JSON.parse(s);
+    const users=getUsers();
+    const user=users.find(u=>u.id===sess.userId);
+    if(!user)return false;
+    SESSION.userId=sess.userId;SESSION.userEmail=sess.email;SESSION.userName=sess.name;
+    const accounts=gls('lineAccounts',[]);
+    SESSION.lineAccountId=gls('activeLineAccount',accounts[0]?.id||null);
+    return true;
+  }catch(e){return false;}
+}
+
+function showApp(){
+  $('loginScreen').classList.add('hidden');
+  $('appSidebar').style.display='flex';
+  $('appMain').style.display='block';
+  updateSidebarUser();
+  initData();
+  nav('dashboard');
+}
+
+function hideApp(){
+  $('loginScreen').classList.remove('hidden');
+  $('appSidebar').style.display='none';
+  $('appMain').style.display='none';
+  // Clear form
+  ['lEmail','lPass'].forEach(id=>{const el=$(id);if(el)el.value='';});
+  $('loginErr').textContent='';
+}
+
+function updateSidebarUser(){
+  const n=SESSION.userName||'';
+  $('sb-user-av').textContent=n.charAt(0)||'U';
+  $('sb-user-name').textContent=esc(n);
+  $('sb-user-email').textContent=esc(SESSION.userEmail||'');
+  const accounts=gls('lineAccounts',[]);
+  const acct=accounts.find(a=>a.id===SESSION.lineAccountId)||accounts[0];
+  $('sb-acct-name').textContent=acct?esc(acct.name):'アカウント未設定';
+}
+
+function switchTab(tab){
+  $('formLogin').style.display=tab==='login'?'block':'none';
+  $('formReg').style.display=tab==='register'?'block':'none';
+  $('tabLogin').classList.toggle('act',tab==='login');
+  $('tabReg').classList.toggle('act',tab==='register');
+  $('loginErr').textContent='';$('regErr').textContent='';
+}
+
+// Enter key support on login
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&!$('loginScreen').classList.contains('hidden')){
+    const tab=$('tabLogin').classList.contains('act')?'login':'register';
+    tab==='login'?doLogin():doRegister();
+  }
+});
+
+// ============================================================
+// LINE ACCOUNT MANAGEMENT
+// ============================================================
+function getLineAccounts(){return gls('lineAccounts',[])}
+
+function addLineAccount(){
+  const name=$('na-name').value.trim();
+  if(!name){alert('アカウント名を入力してください');return;}
+  const accounts=getLineAccounts();
+  const ACCOUNT_COLORS=['#06c755','#6096f8','#a78bfa','#fbbf24','#f87171','#34d399'];
+  const acct={
+    id:uid(),name,
+    channelId:$('na-cid').value.trim(),
+    channelSecret:$('na-secret').value.trim(),
+    accessToken:$('na-token').value.trim(),
+    desc:$('na-desc').value.trim(),
+    color:ACCOUNT_COLORS[accounts.length%ACCOUNT_COLORS.length],
+    createdAt:new Date().toISOString()
+  };
+  accounts.push(acct);
+  sls('lineAccounts',accounts);
+  closeMo('mo-addAcct');
+  ['na-name','na-cid','na-secret','na-token','na-desc'].forEach(id=>{const el=$(id);if(el)el.value='';});
+  toast(`「${esc(name)}」を追加しました 📱`);
+  openMo('mo-acctSwitch');
+}
+
+function switchLineAccount(acctId){
+  SESSION.lineAccountId=acctId;
+  sls('activeLineAccount',acctId);
+  initData();
+  updateSidebarUser();
+  closeMo('mo-acctSwitch');
+  nav('dashboard');
+  toast('アカウントを切り替えました 🔄');
+}
+
+function renderAcctList(){
+  const accounts=getLineAccounts();
+  $('acctList').innerHTML=accounts.map(a=>`
+    <div class="acct-item ${a.id===SESSION.lineAccountId?'current':''}" onclick="switchLineAccount('${esc(a.id)}')">
+      <div class="acct-item-dot" style="background:${esc(a.color)}"></div>
+      <div class="acct-item-info">
+        <div class="acct-item-name">${esc(a.name)}</div>
+        <div class="acct-item-meta">${esc(a.desc||'説明なし')}</div>
+        ${a.channelId?`<div class="acct-item-line">CH: ${esc(a.channelId)}</div>`:'<div class="acct-item-line" style="color:#f59e0b">⚠ チャンネル未設定</div>'}
+      </div>
+      ${a.id===SESSION.lineAccountId?'<span class="badge b-green">使用中</span>':''}
+    </div>`).join('');
+}
+
+// ============================================================
+// DATA (scoped by userId + lineAccountId)
+// ============================================================
+// Data key scoped to both user AND line account
+function dkey(k){return`${SESSION.lineAccountId||'default'}_${k}`}
+function dget(k,def){return gls(dkey(k),def)}
+function dset(k,v){sls(dkey(k),v)}
+
+const TAG_LIST=['トライアル','新規','HOTリード','VIP','購入済み','セミナー参加','資料請求','休眠'];
+const AVATARS=['🧑','👩','👨','🧕','👴','🧔','👱','🙍','😊','🥰','😎','🤓','🧑‍💼','👩‍💼','🧑‍🎨','👨‍🏫'];
+const ICONS_AUTO=['🎉','🔥','📄','😴','🛒','📧','⭐','🎯'];
+const COLORS_AUTO=['qi-g','qi-r','qi-b','qi-y','qi-p','qi-t','qi-g','qi-r'];
+
+let D={};
+let chatFriendId=null;
+let expandedFriend=null;
+let openSteps=new Set();
+let nextId=1000;
+
+function nid(){nextId++;dset('nextId',nextId);return nextId}
+
+function initData(){
+  nextId=dget('nextId',1000);
+  D={
+    friends:dget('friends',getDefaultFriends()),
+    scenarios:dget('scenarios',getDefaultScenarios()),
+    broadcasts:dget('broadcasts',getDefaultBroadcasts()),
+    templates:dget('templates',getDefaultTemplates()),
+    reminders:dget('reminders',getDefaultReminders()),
+    traffic:dget('traffic',getDefaultTraffic()),
+    cvPoints:dget('cvPoints',getDefaultCV()),
+    scoreRules:dget('scoreRules',getDefaultScoreRules()),
+    automations:dget('automations',getDefaultAutomations()),
+    webhooks:dget('webhooks',getDefaultWebhooks()),
+    notify:dget('notify',getDefaultNotify()),
+    activity:dget('activity',getDefaultActivity()),
+  };
+  chatFriendId=null;expandedFriend=null;openSteps=new Set();
+}
+
+function save(){Object.keys(D).forEach(k=>dset(k,D[k]))}
+
+// Default data factories
+function getDefaultFriends(){return[
+  {id:1,name:'坂本 ひなた',job:'パティシエ',status:'フォロー中',tags:['トライアル','新規'],date:'2026/02/20',score:45,av:'🧑',msgs:[]},
+  {id:2,name:'近藤 大和',job:'投資家',status:'フォロー中',tags:['HOTリード','VIP','購入済み'],date:'2026/02/18',score:180,av:'👨',msgs:[]},
+  {id:3,name:'村上 桃花',job:'アロマセラピスト',status:'フォロー中',tags:['トライアル'],date:'2026/02/15',score:60,av:'👩',msgs:[]},
+  {id:4,name:'長谷川 悠',job:'建築家',status:'フォロー中',tags:['セミナー参加','資料請求'],date:'2026/02/13',score:90,av:'🧔',msgs:[]},
+  {id:5,name:'後藤 萌',job:'ライター',status:'フォロー中',tags:['HOTリード','購入済み'],date:'2026/02/10',score:130,av:'🙍',msgs:[]},
+  {id:6,name:'岡田 蒼空',job:'サーファー',status:'ブロック/退会',tags:['休眠'],date:'2026/02/08',score:10,av:'👱',msgs:[]},
+]}
+function getDefaultScenarios(){return[
+  {id:1,name:'友だち追加フォローシナリオ',trigger:'友だち追加',desc:'友だち追加後のウォームアップ',steps:[{delay:'即時',msg:'こんにちは{{name}}さん！ラインダーのご登録ありがとうございます🎉'},{delay:'1日後',msg:'{{name}}さん、昨日はいかがでしたか？😊'},{delay:'3日後',msg:'お役立ち情報をお届けします📚'}],sent:28,active:true},
+  {id:2,name:'セミナー参加者フォロー',trigger:'タグ付与（セミナー参加）',desc:'セミナー後のフォロー',steps:[{delay:'即時',msg:'ご参加ありがとうございました！'},{delay:'2日後',msg:'資料をお送りします📎'}],sent:12,active:true},
+]}
+function getDefaultBroadcasts(){return[
+  {id:1,name:'3月キャンペーン告知',target:'all',targetLabel:'全員（6名）',msg:'{{name}}さん、春のキャンペーンです🌸',scheduledAt:'2026/03/01 10:00',status:'sent',sent:6},
+]}
+function getDefaultTemplates(){return[
+  {id:1,name:'ウェルカムメッセージ',cat:'ウェルカム',body:'こんにちは{{name}}さん！\n\nご登録ありがとうございます🎉\n{{job}}されているんですね！\n\nまずはお気軽にご質問ください😊',vars:['name','job']},
+  {id:2,name:'フォローアップ（3日後）',cat:'フォローアップ',body:'{{name}}さん、ご登録から3日が経ちました！\n何かご不明な点はございますか？💪',vars:['name']},
+]}
+function getDefaultReminders(){return[
+  {id:1,name:'セミナー前日通知',time:'2026-03-14T09:00',target:'all',msg:'{{name}}さん、明日14時からセミナーです！',status:'scheduled'},
+]}
+function getDefaultTraffic(){return[
+  {id:1,name:'Instagram プロフィール',url:'https://lin.ee/xxx001',source:'instagram',clicks:342,cvs:28,tag:'新規'},
+  {id:2,name:'LP ボタン',url:'https://lin.ee/xxx002',source:'lp',clicks:876,cvs:89,tag:'トライアル'},
+]}
+function getDefaultCV(){return[
+  {id:1,name:'無料トライアル',type:'signup',amount:0,date:'2026/2/1',count:6},
+  {id:2,name:'商品購入',type:'purchase',amount:9800,date:'2026/1/15',count:9},
+  {id:3,name:'セミナー申込',type:'form_submit',amount:0,date:'2026/1/1',count:5},
+  {id:4,name:'資料請求完了',type:'form_submit',amount:0,date:'2025/12/1',count:6},
+]}
+function getDefaultScoreRules(){return[
+  {id:1,name:'友だち追加',score:10,trigger:'友だち追加',active:true},
+  {id:2,name:'メッセージ送信',score:5,trigger:'メッセージ受信',active:true},
+  {id:3,name:'フォーム送信',score:15,trigger:'CV達成',active:true},
+  {id:4,name:'商品購入',score:50,trigger:'CV達成',active:true},
+]}
+function getDefaultAutomations(){return[
+  {id:1,name:'友だち追加 → ウェルカムメッセージ',trigger:'友だち追加',action:'シナリオ開始',desc:'友だち追加フォローシナリオを自動開始',icon:'🎉',color:'qi-g',active:true},
+  {id:2,name:'HOTリード → Slack通知',trigger:'タグ付与',action:'Webhook送信',desc:'HOTリードタグ付与時にSlackへ通知',icon:'🔥',color:'qi-r',active:true},
+  {id:3,name:'購入完了 → サンクスシナリオ',trigger:'CV達成',action:'シナリオ開始',desc:'商品購入完了後にサンクスシナリオ開始',icon:'🛒',color:'qi-p',active:true},
+]}
+function getDefaultWebhooks(){return[
+  {id:1,name:'Slack 友だち通知',url:'https://hooks.slack.com/services/T00/B00/xxx',event:'友だち追加',active:true,calls:42},
+]}
+function getDefaultNotify(){return[
+  {id:1,name:'友だち追加通知',desc:'新しい友だちが追加された時',active:true},
+  {id:2,name:'ブロック/退会通知',desc:'ユーザーがブロック・退会した時',active:true},
+  {id:3,name:'CV達成通知',desc:'コンバージョンが発生した時',active:true},
+  {id:4,name:'シナリオエラー通知',desc:'シナリオ配信でエラーが発生した時',active:false},
+  {id:5,name:'Webhookエラー通知',desc:'Webhook送信に失敗した時',active:true},
+]}
+function getDefaultActivity(){return[
+  {type:'friend',icon:'👤',text:'坂本 ひなたさんが友だち追加',time:'5分前',color:'qi-g'},
+  {type:'cv',icon:'💰',text:'近藤 大和さんが商品購入 ¥9,800',time:'23分前',color:'qi-r'},
+  {type:'msg',icon:'💬',text:'村上 桃花さんからメッセージ受信',time:'1時間前',color:'qi-b'},
+]}
+
+function seedDemoData(){
+  // Demo user gets the same data seeded
+  const demoAcctId='demo_acct_001';
+  sls('lineAccounts',[{id:demoAcctId,name:'デモ公式LINEアカウント',channelId:'9999999999',channelSecret:'demo_secret',accessToken:'demo_token',desc:'デモ用アカウント',color:'#06c755',createdAt:new Date().toISOString()}]);
+  sls('activeLineAccount',demoAcctId);
+  SESSION.lineAccountId=demoAcctId;
+  dset('friends',getDefaultFriends());
+  dset('scenarios',getDefaultScenarios());
+  dset('cvPoints',getDefaultCV());
+  dset('automations',getDefaultAutomations());
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+const $=id=>document.getElementById(id);
+function toast(msg){const t=$('toast');$('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
+
+function openMo(id){
+  if(id==='mo-addFriend')renderTagCheckboxes('fn-tags-sel',[]);
+  if(id==='mo-addBroadcast'){$('bc-tag-wrap').style.display='none';$('bc-target').value='all';}
+  if(id==='mo-addTemplate'){$('tp-name').value='';$('tp-body').value='';$('tp-prev-name').value='山田 太郎';$('tp-preview').style.display='none';}
+  if(id==='mo-acctSwitch')renderAcctList();
+  if(id==='mo-addScenario')['sn-name','sn-desc','sn-s1','sn-s2','sn-s3'].forEach(i=>$(i)&&($(i).value=''));
   $(id).classList.add('op');
 }
 function closeMo(id){$(id).classList.remove('op')}
 document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('op')}));
 
-function tagBadge(t,i){const idx=TAG_LIST.indexOf(t)%8;return`<span class="badge tc-${idx>=0?idx:0}" style="font-size:11px;padding:2px 8px;margin:1px">${t}</span>`}
-function evBadge(type){const m={purchase:'b-pink',form_submit:'b-blue',signup:'b-green',click:'b-cyan'};return`<span class="badge ${m[type]||'b-gray'}">${type}</span>`}
-function fmtDate(d){const x=new Date(d);return isNaN(x)?d:`${x.getFullYear()}/${x.getMonth()+1}/${x.getDate()}`}
+function tagBadge(t){const idx=TAG_LIST.indexOf(t)%8;return`<span class="badge tc-${idx>=0?idx:0}" style="font-size:11px;padding:2px 8px;margin:1px">${esc(t)}</span>`}
+function evBadge(type){const m={purchase:'b-pink',form_submit:'b-blue',signup:'b-green',click:'b-cyan'};return`<span class="badge ${m[type]||'b-gray'}">${esc(type)}</span>`}
+function fmtDate(d){const x=new Date(d);return isNaN(x)?esc(d):`${x.getFullYear()}/${x.getMonth()+1}/${x.getDate()}`}
 
-// ==================== NAV ====================
+// ============================================================
+// NAVIGATION
+// ============================================================
 function nav(pg){
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('act'));
   $(`pg-${pg}`).classList.add('act');
   document.querySelectorAll('.ni').forEach(n=>{if(n.dataset.pg===pg)n.classList.add('act')});
-  renders[pg]&&renders[pg]();
+  const r={dashboard:renderDash,friends:()=>{renderTagCheckboxes('fn-tags-sel',[]);renderFriends()},chat:renderChat,scenario:renderScenario,broadcast:renderBroadcast,template:renderTemplate,reminder:renderReminder,traffic:renderTraffic,cv:renderCV,scoring:renderScoring,automation:renderAuto,webhook:renderWebhook,notify:renderNotify,settings:renderSettings};
+  r[pg]&&r[pg]();
 }
 document.querySelectorAll('.ni').forEach(n=>n.addEventListener('click',()=>nav(n.dataset.pg)));
 
-// ==================== DASHBOARD ====================
+// ============================================================
+// DASHBOARD
+// ============================================================
 function renderDash(){
   const fs=D.friends.filter(f=>f.status==='フォロー中').length;
   const stats=[
-    {n:fs,l:'友だち数',s:'フォロー中の友だち',cls:'sc-g',ico:'👥',pg:'friends'},
-    {n:D.scenarios.filter(s=>s.active).length,l:'アクティブシナリオ',s:'稼働中のシナリオ',cls:'sc-b',ico:'📋',pg:'scenario'},
-    {n:D.broadcasts.length,l:'配信数',s:'累計ブロードキャスト',cls:'sc-p',ico:'📢',pg:'broadcast'},
+    {n:fs,l:'友だち数',s:'フォロー中',cls:'sc-g',ico:'👥',pg:'friends'},
+    {n:D.scenarios.filter(s=>s.active).length,l:'アクティブシナリオ',s:'稼働中',cls:'sc-b',ico:'📋',pg:'scenario'},
+    {n:D.broadcasts.length,l:'配信数',s:'累計',cls:'sc-p',ico:'📢',pg:'broadcast'},
     {n:D.templates.length,l:'テンプレート',s:'再利用可能',cls:'sc-y',ico:'📄',pg:'template'},
-    {n:D.automations.filter(a=>a.active).length,l:'オートメーション',s:'稼働中の自動化',cls:'sc-r',ico:'⚡',pg:'automation'},
-    {n:D.scoreRules.length,l:'スコアリング',s:'リードスコアルール',cls:'sc-t',ico:'⭐',pg:'scoring'},
+    {n:D.automations.filter(a=>a.active).length,l:'オートメーション',s:'稼働中',cls:'sc-r',ico:'⚡',pg:'automation'},
+    {n:D.scoreRules.length,l:'スコアリング',s:'ルール数',cls:'sc-t',ico:'⭐',pg:'scoring'},
   ];
-  $('dash-stats').innerHTML=stats.map(s=>`
-    <div class="sc ${s.cls}" onclick="nav('${s.pg}')">
-      <div class="sc-ico">${s.ico}</div>
-      <div><div class="sc-n">${s.n}</div><div class="sc-l">${s.l}</div><div class="sc-s">${s.s}</div></div>
-      <div class="sc-arr">›</div>
-    </div>`).join('');
-  $('dash-activity').innerHTML=D.activity.slice(0,5).map(a=>`
-    <div class="act-item">
-      <div class="act-ico ${a.color}">${a.icon}</div>
-      <div class="act-tx"><strong>${a.text}</strong><span>${a.type==='cv'?'コンバージョン':a.type==='friend'?'友だち管理':a.type==='auto'?'自動化':'チャット'}</span></div>
-      <div class="act-time">${a.time}</div>
-    </div>`).join('');
+  $('dash-stats').innerHTML=stats.map(s=>`<div class="sc ${s.cls}" onclick="nav('${s.pg}')"><div class="sc-ico">${s.ico}</div><div><div class="sc-n">${s.n}</div><div class="sc-l">${s.l}</div><div class="sc-s">${s.s}</div></div><div class="sc-arr">›</div></div>`).join('');
+  $('dash-activity').innerHTML=D.activity.slice(0,5).map(a=>`<div class="act-item"><div class="act-ico ${a.color}">${a.icon}</div><div class="act-tx"><strong>${esc(a.text)}</strong><span>${a.type==='cv'?'コンバージョン':a.type==='friend'?'友だち管理':a.type==='auto'?'自動化':'チャット'}</span></div><div class="act-time">${esc(a.time)}</div></div>`).join('');
   $('act-time').textContent=new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})+'更新';
 }
 
-// ==================== FRIENDS ====================
-let expandedFriend = null;
+// ============================================================
+// FRIENDS
+// ============================================================
 function renderFriends(){
   const tagF=$('tagFilter').value;
   const search=$('friendSearch').value.toLowerCase();
-  let list=D.friends.filter(f=>{
-    if(tagF && !f.tags.includes(tagF)) return false;
-    if(search && !f.name.toLowerCase().includes(search) && !(f.job||'').toLowerCase().includes(search)) return false;
+  const list=D.friends.filter(f=>{
+    if(tagF&&!(f.tags||[]).includes(tagF))return false;
+    if(search&&!f.name.toLowerCase().includes(search)&&!(f.job||'').toLowerCase().includes(search))return false;
     return true;
   });
   $('friendCount').textContent=list.length+' 件';
   if(!list.length){$('friendsList').innerHTML='<div style="text-align:center;padding:32px;color:var(--ts);font-size:13px">該当する友だちが見つかりません</div>';return;}
-  $('friendsList').innerHTML=list.map((f,i)=>`
+  $('friendsList').innerHTML=list.map(f=>`
     <div>
       <div class="fr-row tbl-r" onclick="toggleFriendDetail(${f.id})">
         <div style="display:flex;align-items:center;gap:10px">
           <div class="av">${f.av}</div>
-          <div><div class="fn">${f.name}</div><div class="fj">${f.job||''}</div></div>
+          <div><div class="fn">${esc(f.name)}</div><div class="fj">${esc(f.job||'')}</div></div>
         </div>
-        <div><span class="badge ${f.status==='フォロー中'?'b-green':'b-gray'}">${f.status}</span></div>
+        <div><span class="badge ${f.status==='フォロー中'?'b-green':'b-gray'}">${esc(f.status)}</span></div>
         <div class="tags">${(f.tags||[]).map(tagBadge).join('')}</div>
-        <div style="font-size:12.5px;color:var(--ts)">${f.date}</div>
+        <div style="font-size:12.5px;color:var(--ts)">${esc(f.date)}</div>
         <div style="display:flex;gap:5px" onclick="event.stopPropagation()">
           <button class="btn-e" onclick="editFriend(${f.id})">編集</button>
           <button class="btn-d" onclick="delFriend(${f.id})">削除</button>
@@ -841,7 +934,7 @@ function renderFriends(){
       <div class="fr-detail ${expandedFriend===f.id?'open':''}" id="fd-${f.id}">
         <div class="fd-grid">
           <div class="fd-item"><label>スコア</label><span style="color:var(--green);font-weight:700">${f.score||0}pt</span></div>
-          <div class="fd-item"><label>登録日</label><span>${f.date}</span></div>
+          <div class="fd-item"><label>登録日</label><span>${esc(f.date)}</span></div>
           <div class="fd-item"><label>メッセージ数</label><span>${f.msgs?f.msgs.length:0}件</span></div>
           <div class="fd-item"><label>アバター</label><span style="font-size:20px">${f.av}</span></div>
         </div>
@@ -852,29 +945,18 @@ function renderFriends(){
       </div>
     </div>`).join('');
 }
-function toggleFriendDetail(fid){
-  expandedFriend = expandedFriend===fid?null:fid;
-  renderFriends();
-}
+function toggleFriendDetail(fid){expandedFriend=expandedFriend===fid?null:fid;renderFriends()}
 function editFriend(id){
-  const f=D.friends.find(x=>x.id===id);
-  if(!f)return;
-  $('ef-id').value=id;
-  $('ef-name').value=f.name;
-  $('ef-job').value=f.job||'';
-  $('ef-status').value=f.status;
-  $('ef-score').value=f.score||0;
-  renderTagCheckboxes('ef-tags-sel',f.tags||[]);
-  openMo('mo-editFriend');
+  const f=D.friends.find(x=>x.id===id);if(!f)return;
+  $('ef-id').value=id;$('ef-name').value=f.name;$('ef-job').value=f.job||'';
+  $('ef-status').value=f.status;$('ef-score').value=f.score||0;
+  renderTagCheckboxes('ef-tags-sel',f.tags||[]);openMo('mo-editFriend');
 }
 function saveEditFriend(){
   const id=parseInt($('ef-id').value);
-  const f=D.friends.find(x=>x.id===id);
-  if(!f)return;
-  f.name=$('ef-name').value.trim()||f.name;
-  f.job=$('ef-job').value.trim();
-  f.status=$('ef-status').value;
-  f.score=parseInt($('ef-score').value)||0;
+  const f=D.friends.find(x=>x.id===id);if(!f)return;
+  f.name=$('ef-name').value.trim()||f.name;f.job=$('ef-job').value.trim();
+  f.status=$('ef-status').value;f.score=parseInt($('ef-score').value)||0;
   f.tags=getCheckedTags('ef-tags-sel');
   save();renderFriends();closeMo('mo-editFriend');toast('友だち情報を更新しました ✏️');
 }
@@ -885,85 +967,56 @@ function delFriend(id){
   save();renderFriends();toast('削除しました');
 }
 function addFriend(){
-  const name=$('fn-name').value.trim();
-  if(!name){alert('名前を入力してください');return;}
+  const name=$('fn-name').value.trim();if(!name){alert('名前を入力してください');return;}
   const f={id:nid(),name,job:$('fn-job').value.trim()||'未設定',status:$('fn-status').value,tags:getCheckedTags('fn-tags-sel'),date:new Date().toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'}),score:parseInt($('fn-score').value)||0,av:AVATARS[Math.floor(Math.random()*AVATARS.length)],msgs:[]};
   D.friends.unshift(f);
-  D.activity.unshift({type:'friend',icon:'👤',text:`${name}さんが友だち追加`,time:'たった今',color:'qi-g'});
+  D.activity.unshift({type:'friend',icon:'👤',text:`${f.name}さんが友だち追加`,time:'たった今',color:'qi-g'});
   save();renderFriends();renderDash();closeMo('mo-addFriend');
-  $('fn-name').value='';$('fn-job').value='';$('fn-score').value='0';
   renderTagCheckboxes('fn-tags-sel',[]);
-  toast(`${name}さんを追加しました 👥`);
+  toast(`${esc(f.name)}さんを追加しました 👥`);
 }
-function addScore2Friend(id){
-  const f=D.friends.find(x=>x.id===id);
-  if(!f)return;
-  f.score+=10;save();renderFriends();toast(`${f.name}さんのスコア +10pt ⭐`);
-}
-function renderTagCheckboxes(elId, selected=[]){
+function addScore2Friend(id){const f=D.friends.find(x=>x.id===id);if(!f)return;f.score+=10;save();renderFriends();toast(`${esc(f.name)}さんのスコア +10pt ⭐`)}
+function renderTagCheckboxes(elId,selected=[]){
   $(elId).innerHTML=TAG_LIST.map(t=>{
-    const idx=TAG_LIST.indexOf(t)%8;
     const chk=selected.includes(t);
-    return`<label style="display:flex;align-items:center;gap:4px;cursor:pointer;padding:4px 9px;border-radius:20px;border:1.5px solid ${chk?'var(--green)':'#e5e7eb'};background:${chk?'#e8faf0':'#fff'};font-size:12px;transition:all .15s">
-      <input type="checkbox" value="${t}" style="display:none" ${chk?'checked':''} onchange="updateTagLabel(this)">${t}</label>`;
+    return`<label style="display:flex;align-items:center;gap:4px;cursor:pointer;padding:4px 9px;border-radius:20px;border:1.5px solid ${chk?'var(--green)':'#e5e7eb'};background:${chk?'#e8faf0':'#fff'};font-size:12px;transition:all .15s"><input type="checkbox" value="${esc(t)}" style="display:none" ${chk?'checked':''} onchange="updateTagLabel(this)">${esc(t)}</label>`;
   }).join('');
 }
-function updateTagLabel(cb){
-  const lbl=cb.parentElement;
-  if(cb.checked){lbl.style.borderColor='var(--green)';lbl.style.background='#e8faf0';}
-  else{lbl.style.borderColor='#e5e7eb';lbl.style.background='#fff';}
-}
+function updateTagLabel(cb){const l=cb.parentElement;if(cb.checked){l.style.borderColor='var(--green)';l.style.background='#e8faf0';}else{l.style.borderColor='#e5e7eb';l.style.background='#fff';}}
 function getCheckedTags(elId){return Array.from($(elId).querySelectorAll('input[type=checkbox]:checked')).map(c=>c.value)}
 
-// ==================== CHAT ====================
-let chatFriendId = null;
+// ============================================================
+// CHAT
+// ============================================================
 function renderChat(){
   $('chatList').innerHTML=D.friends.filter(f=>f.status==='フォロー中').map(f=>{
     const last=f.msgs&&f.msgs.length?f.msgs[f.msgs.length-1]:{text:'メッセージなし',time:''};
     return`<div class="cl-item ${chatFriendId===f.id?'sel':''}" onclick="selectChat(${f.id})">
       <div class="av" style="width:34px;height:34px;font-size:18px">${f.av}</div>
-      <div style="flex:1;min-width:0">
-        <div class="cl-name">${f.name}</div>
-        <div class="cl-msg">${last.text||'メッセージなし'}</div>
-      </div>
-      <div class="cl-time">${last.time||''}</div>
+      <div style="flex:1;min-width:0"><div class="cl-name">${esc(f.name)}</div><div class="cl-msg">${esc(last.text||'メッセージなし')}</div></div>
+      <div class="cl-time">${esc(last.time||'')}</div>
     </div>`;
   }).join('');
 }
 function selectChat(id){
-  chatFriendId=id;
-  const f=D.friends.find(x=>x.id===id);
-  if(!f)return;
-  $('chatAv').textContent=f.av;
-  $('chatName').textContent=f.name;
-  $('chatJob').textContent=f.job;
-  $('chatTags').innerHTML=f.tags.map(t=>tagBadge(t)).join('');
-  renderMsgs(f);
-  renderChat();
+  chatFriendId=id;const f=D.friends.find(x=>x.id===id);if(!f)return;
+  $('chatAv').textContent=f.av;$('chatName').textContent=esc(f.name);$('chatJob').textContent=esc(f.job||'');
+  $('chatTags').innerHTML=(f.tags||[]).map(tagBadge).join('');
+  renderMsgs(f);renderChat();
 }
 function renderMsgs(f){
-  if(!f.msgs||!f.msgs.length){
-    $('chatMsgs').innerHTML='<div style="text-align:center;color:var(--ts);font-size:13px;margin-top:40px">まだメッセージはありません</div>';
-    return;
-  }
-  $('chatMsgs').innerHTML=f.msgs.map(m=>`
-    <div class="msg ${m.from==='me'?'mine':'them'}">
-      <div class="msg-bub">${m.text}</div>
-      <div class="msg-time">${m.time}</div>
-    </div>`).join('');
+  if(!f.msgs||!f.msgs.length){$('chatMsgs').innerHTML='<div style="text-align:center;color:var(--ts);font-size:13px;margin-top:40px">まだメッセージはありません</div>';return;}
+  $('chatMsgs').innerHTML=f.msgs.map(m=>`<div class="msg ${m.from==='me'?'mine':'them'}"><div class="msg-bub">${esc(m.text)}</div><div class="msg-time">${esc(m.time)}</div></div>`).join('');
   $('chatMsgs').scrollTop=99999;
 }
 function sendMsg(){
-  const txt=$('chatInput').value.trim();
-  if(!txt||!chatFriendId)return;
-  const f=D.friends.find(x=>x.id===chatFriendId);
-  if(!f)return;
+  const txt=$('chatInput').value.trim();if(!txt||!chatFriendId)return;
+  const f=D.friends.find(x=>x.id===chatFriendId);if(!f)return;
   if(!f.msgs)f.msgs=[];
   const t=new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});
   f.msgs.push({from:'me',text:txt,time:t});
   D.activity.unshift({type:'msg',icon:'💬',text:`${f.name}さんへメッセージ送信`,time:'たった今',color:'qi-b'});
   save();renderMsgs(f);renderChat();$('chatInput').value='';
-  // simulate reply
   setTimeout(()=>{
     const replies=['ありがとうございます！','了解です😊','はい、確認しました！','ご連絡ありがとうございます','少々お待ちください'];
     f.msgs.push({from:'them',text:replies[Math.floor(Math.random()*replies.length)],time:new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})});
@@ -973,13 +1026,14 @@ function sendMsg(){
 function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg()}}
 function chatWith(id){nav('chat');setTimeout(()=>selectChat(id),50)}
 
-// ==================== SCENARIO ====================
-let openSteps = new Set();
+// ============================================================
+// SCENARIO
+// ============================================================
 function renderScenario(){
   $('scenarioList').innerHTML=D.scenarios.map(s=>`
     <div class="sc-card ${s.active?'':'inactive'}" onclick="toggleScSteps(${s.id})">
       <div class="sc-head">
-        <div class="sc-nm">${s.name}</div>
+        <div class="sc-nm">${esc(s.name)}</div>
         <div style="display:flex;align-items:center;gap:8px">
           <span class="badge ${s.active?'b-green':'b-gray'}">${s.active?'● 稼働中':'○ 停止中'}</span>
           <button class="btn-e" onclick="scenarioSend(${s.id},event)">+送信</button>
@@ -988,188 +1042,100 @@ function renderScenario(){
         </div>
       </div>
       <div class="sc-meta">
-        <div class="sc-mi">トリガー: <strong>${s.trigger}</strong></div>
+        <div class="sc-mi">トリガー: <strong>${esc(s.trigger)}</strong></div>
         <div class="sc-mi">ステップ数: <strong>${s.steps.length}</strong></div>
         <div class="sc-mi">累計送信: <strong>${s.sent}件</strong></div>
-        <div class="sc-mi">${s.desc}</div>
+        <div class="sc-mi">${esc(s.desc||'')}</div>
       </div>
       <div class="sc-steps ${openSteps.has(s.id)?'open':''}" id="ss-${s.id}">
-        ${s.steps.map((st,i)=>`
-        <div class="step-item">
-          <div class="step-num">${i+1}</div>
-          <div class="step-tx"><strong>STEP${i+1} — ${st.delay}</strong><span>${st.msg}</span></div>
-        </div>`).join('')}
+        ${s.steps.map((st,i)=>`<div class="step-item"><div class="step-num">${i+1}</div><div class="step-tx"><strong>STEP${i+1} — ${esc(st.delay)}</strong><span>${esc(st.msg)}</span></div></div>`).join('')}
       </div>
     </div>`).join('');
 }
-function scenarioSend(id,e){
-  e.stopPropagation();
-  const s=D.scenarios.find(x=>x.id===id);
-  if(!s)return;
-  if(!s.active){toast('停止中のシナリオは送信できません');return;}
-  s.sent+=D.friends.filter(f=>f.status==='フォロー中').length;
-  D.activity.unshift({type:'auto',icon:'📋',text:`シナリオ「${s.name}」を送信`,time:'たった今',color:'qi-b'});
-  save();renderScenario();renderDash();toast(`シナリオ「${s.name}」を送信しました 📋`);
-}
-function toggleScSteps(id){openSteps.has(id)?openSteps.delete(id):openSteps.add(id);renderScenario();}
-function toggleScenario(id,e){
-  e.stopPropagation();
-  const s=D.scenarios.find(x=>x.id===id);
-  if(s){s.active=!s.active;save();renderScenario();toast(s.active?'シナリオを有効化しました ✅':'シナリオを停止しました')}
-}
-function delScenario(id,e){
-  e.stopPropagation();
-  if(!confirm('削除しますか？'))return;
-  D.scenarios=D.scenarios.filter(x=>x.id!==id);
-  openSteps.delete(id);
-  save();renderScenario();toast('削除しました');
-}
+function toggleScSteps(id){openSteps.has(id)?openSteps.delete(id):openSteps.add(id);renderScenario()}
+function scenarioSend(id,e){e.stopPropagation();const s=D.scenarios.find(x=>x.id===id);if(!s)return;if(!s.active){toast('停止中のシナリオは送信できません');return;}s.sent+=D.friends.filter(f=>f.status==='フォロー中').length;D.activity.unshift({type:'auto',icon:'📋',text:`シナリオ「${s.name}」を送信`,time:'たった今',color:'qi-b'});save();renderScenario();renderDash();toast(`シナリオを送信しました 📋`)}
+function toggleScenario(id,e){e.stopPropagation();const s=D.scenarios.find(x=>x.id===id);if(s){s.active=!s.active;save();renderScenario();toast(s.active?'有効化しました ✅':'停止しました')}}
+function delScenario(id,e){e.stopPropagation();if(!confirm('削除しますか？'))return;D.scenarios=D.scenarios.filter(x=>x.id!==id);openSteps.delete(id);save();renderScenario();toast('削除しました')}
 function addScenario(){
-  const name=$('sn-name').value.trim();
-  if(!name)return;
+  const name=$('sn-name').value.trim();if(!name)return;
   const steps=[];
-  const s1=$('sn-s1').value.trim();const s2=$('sn-s2').value.trim();const s3=$('sn-s3').value.trim();
-  if(s1)steps.push({delay:'即時',msg:s1});
-  if(s2)steps.push({delay:'1日後',msg:s2});
-  if(s3)steps.push({delay:'3日後',msg:s3});
+  const s1=$('sn-s1').value.trim(),s2=$('sn-s2').value.trim(),s3=$('sn-s3').value.trim();
+  if(s1)steps.push({delay:'即時',msg:s1});if(s2)steps.push({delay:'1日後',msg:s2});if(s3)steps.push({delay:'3日後',msg:s3});
   if(!steps.length)steps.push({delay:'即時',msg:'こんにちは{{name}}さん！'});
   D.scenarios.push({id:nid(),name,trigger:$('sn-trigger').value,desc:$('sn-desc').value,steps,sent:0,active:true});
-  save();renderScenario();closeMo('mo-addScenario');
-  ['sn-name','sn-desc','sn-s1','sn-s2','sn-s3'].forEach(i=>$(i).value='');
-  toast('シナリオを作成しました 📋');
+  save();renderScenario();closeMo('mo-addScenario');toast('シナリオを作成しました 📋');
 }
 
-// ==================== BROADCAST ====================
-// event listeners attached at INIT (DOM already ready at script bottom)
+// ============================================================
+// BROADCAST
+// ============================================================
 function renderBroadcast(){
   $('broadcastList').innerHTML=D.broadcasts.map(b=>{
-    const statusBadge=b.status==='sent'?'b-green':b.status==='scheduled'?'b-blue':'b-gray';
-    const statusTxt=b.status==='sent'?'✓ 送信済み':b.status==='scheduled'?'⏰ 予約済み':'下書き';
-    return`<div class="bc-card">
-      <div class="bc-ico ${b.status==='sent'?'qi-g':b.status==='scheduled'?'qi-b':'qi-y'}">📢</div>
-      <div class="bc-info">
-        <div class="bc-name">${b.name}</div>
-        <div class="bc-meta">📅 ${b.scheduledAt} &nbsp;|&nbsp; 👥 ${b.targetLabel} &nbsp;|&nbsp; 📨 ${b.sent}件送信</div>
-        <div style="margin-top:6px;font-size:12.5px;color:#6b7280;background:#f8fafc;padding:6px 10px;border-radius:6px">${b.msg}</div>
-      </div>
-      <div class="bc-actions">
-        <span class="badge ${statusBadge}">${statusTxt}</span>
-        <button class="btn-d" onclick="delBroadcast(${b.id})">削除</button>
-      </div>
-    </div>`;
+    const sb=b.status==='sent'?'b-green':b.status==='scheduled'?'b-blue':'b-gray';
+    const st=b.status==='sent'?'✓ 送信済み':b.status==='scheduled'?'⏰ 予約済み':'下書き';
+    return`<div class="bc-card"><div class="bc-ico ${b.status==='sent'?'qi-g':b.status==='scheduled'?'qi-b':'qi-y'}">📢</div><div class="bc-info"><div class="bc-name">${esc(b.name)}</div><div class="bc-meta">📅 ${esc(b.scheduledAt)} | 👥 ${esc(b.targetLabel)} | 📨 ${b.sent}件送信</div><div style="margin-top:6px;font-size:12.5px;color:#6b7280;background:#f8fafc;padding:6px 10px;border-radius:6px">${esc(b.msg)}</div></div><div class="bc-actions"><span class="badge ${sb}">${st}</span><button class="btn-d" onclick="delBroadcast(${b.id})">削除</button></div></div>`;
   }).join('');
 }
 function delBroadcast(id){if(!confirm('削除しますか？'))return;D.broadcasts=D.broadcasts.filter(x=>x.id!==id);save();renderBroadcast();toast('削除しました')}
 function addBroadcast(){
-  const name=$('bc-name').value.trim();const msg=$('bc-msg').value.trim();
-  if(!name||!msg)return;
-  const tgt=$('bc-target').value;
-  const tagSel=$('bc-tag').value;
-  const targetLabel=tgt==='all'?`全員（${D.friends.length}名）`:tgt==='tag'?`${tagSel}（${D.friends.filter(f=>f.tags.includes(tagSel)).length}名）`:`フォロー中（${D.friends.filter(f=>f.status==='フォロー中').length}名）`;
+  const name=$('bc-name').value.trim(),msg=$('bc-msg').value.trim();if(!name||!msg)return;
+  const tgt=$('bc-target').value,tagSel=$('bc-tag').value;
+  const targetLabel=tgt==='all'?`全員（${D.friends.length}名）`:tgt==='tag'?`${tagSel}（${D.friends.filter(f=>f.tags&&f.tags.includes(tagSel)).length}名）`:`フォロー中（${D.friends.filter(f=>f.status==='フォロー中').length}名）`;
   const timeV=$('bc-time').value;
-  const b={id:nid(),name,target:tgt,targetLabel,msg,scheduledAt:timeV?new Date(timeV).toLocaleString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):new Date().toLocaleString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}),status:timeV?'scheduled':'sent',sent:timeV?0:parseInt(targetLabel.match(/\d+/)[0])||0};
+  const b={id:nid(),name,target:tgt,targetLabel,msg,scheduledAt:timeV?new Date(timeV).toLocaleString('ja-JP'):new Date().toLocaleString('ja-JP'),status:timeV?'scheduled':'sent',sent:timeV?0:parseInt((targetLabel.match(/\d+/)||['0'])[0])};
   D.broadcasts.unshift(b);
   D.activity.unshift({type:'msg',icon:'📢',text:`一斉配信「${name}」${timeV?'を予約':'を送信'}`,time:'たった今',color:'qi-p'});
-  save();renderBroadcast();renderDash();closeMo('mo-addBroadcast');
-  ['bc-name','bc-msg','bc-time'].forEach(i=>$(i).value='');
-  toast(`配信「${name}」を${timeV?'予約':'送信'}しました 📢`);
+  save();renderBroadcast();renderDash();closeMo('mo-addBroadcast');toast(`配信「${esc(name)}」${timeV?'を予約':'を送信'}しました 📢`);
 }
 
-// ==================== TEMPLATE ====================
+// ============================================================
+// TEMPLATE
+// ============================================================
 function previewTemplate(){
-  const body=$('tp-body').value;
-  const name=$('tp-prev-name').value||'山田 太郎';
+  const body=$('tp-body').value;const name=$('tp-prev-name').value||'山田 太郎';
   if(!body){$('tp-preview').style.display='none';return;}
   const preview=body.replace(/\{\{name\}\}/g,name).replace(/\{\{job\}\}/g,'エンジニア').replace(/\{\{date\}\}/g,'2026/3/25');
-  $('tp-preview').style.display='block';
-  $('tp-preview').textContent=preview;
+  $('tp-preview').style.display='block';$('tp-preview').textContent=preview;
 }
 function renderTemplate(){
-  $('templateList').innerHTML=D.templates.map(t=>`
-    <div class="tp-card">
-      <div class="tp-head">
-        <div>
-          <div class="tp-name">${t.name}</div>
-          <span class="badge b-gray" style="margin-top:4px">${t.cat}</span>
-        </div>
-        <div style="display:flex;gap:6px">
-          <button class="btn-e" onclick="copyTemplate(${t.id})">コピー</button>
-          <button class="btn-d" onclick="delTemplate(${t.id})">削除</button>
-        </div>
-      </div>
-      <div class="tp-body" style="white-space:pre-wrap">${t.body}</div>
-      <div class="tp-vars">${t.vars.map(v=>`<span class="tp-var">{{${v}}}</span>`).join('')}</div>
-    </div>`).join('');
+  $('templateList').innerHTML=D.templates.map(t=>`<div class="tp-card"><div class="tp-head"><div><div class="tp-name">${esc(t.name)}</div><span class="badge b-gray" style="margin-top:4px">${esc(t.cat)}</span></div><div style="display:flex;gap:6px"><button class="btn-e" onclick="copyTemplate(${t.id})">コピー</button><button class="btn-d" onclick="delTemplate(${t.id})">削除</button></div></div><div class="tp-body" style="white-space:pre-wrap">${esc(t.body)}</div><div class="tp-vars">${(t.vars||[]).map(v=>`<span class="tp-var">{{${esc(v)}}}</span>`).join('')}</div></div>`).join('');
 }
-function copyTemplate(id){
-  const t=D.templates.find(x=>x.id===id);
-  if(t){navigator.clipboard.writeText(t.body).then(()=>toast('クリップボードにコピーしました 📋')).catch(()=>toast('コピーしました 📋'))}
-}
+function copyTemplate(id){const t=D.templates.find(x=>x.id===id);if(t){navigator.clipboard.writeText(t.body).then(()=>toast('クリップボードにコピー 📋')).catch(()=>toast('コピーしました 📋'))}}
 function delTemplate(id){if(!confirm('削除しますか？'))return;D.templates=D.templates.filter(x=>x.id!==id);save();renderTemplate();toast('削除しました')}
 function addTemplate(){
-  const name=$('tp-name').value.trim();const body=$('tp-body').value.trim();
-  if(!name){alert('テンプレート名を入力してください');return;}
-  if(!body){alert('本文を入力してください');return;}
+  const name=$('tp-name').value.trim(),body=$('tp-body').value.trim();
+  if(!name){alert('テンプレート名を入力してください');return;}if(!body){alert('本文を入力してください');return;}
   const vars=[...(body.match(/\{\{(\w+)\}\}/g)||[])].map(v=>v.replace(/[{}]/g,''));
   D.templates.push({id:nid(),name,cat:$('tp-cat').value,body,vars:[...new Set(vars)]});
-  save();renderTemplate();closeMo('mo-addTemplate');
-  toast('テンプレートを作成しました 📄');
+  save();renderTemplate();closeMo('mo-addTemplate');toast('テンプレートを作成しました 📄');
 }
 
-// ==================== REMINDER ====================
+// ============================================================
+// REMINDER
+// ============================================================
 function renderReminder(){
   $('reminderList').innerHTML=D.reminders.map(r=>{
-    const d=new Date(r.time);
-    const day=isNaN(d)?'--':d.getDate();
-    const mon=isNaN(d)?'--':(d.getMonth()+1)+'月';
-    return`<div class="rm-card">
-      <div class="rm-date"><div class="rd-d">${day}</div><div class="rd-m">${mon}</div></div>
-      <div class="rm-info">
-        <div class="rm-nm">${r.name}</div>
-        <div class="rm-meta">📅 ${fmtDate(r.time)} ${isNaN(d)?'':d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')} &nbsp;|&nbsp; 👥 ${r.target==='all'?'全員':r.target}</div>
-        <div style="margin-top:5px;font-size:12.5px;color:#6b7280">${r.msg}</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <span class="badge ${r.status==='scheduled'?'b-blue':'b-green'}">${r.status==='scheduled'?'⏰ 予約中':'✓ 完了'}</span>
-        <button class="btn-d" onclick="delReminder(${r.id})">削除</button>
-      </div>
-    </div>`;
+    const d=new Date(r.time);const day=isNaN(d)?'--':d.getDate();const mon=isNaN(d)?'--':(d.getMonth()+1)+'月';
+    return`<div class="rm-card"><div class="rm-date"><div class="rd-d">${day}</div><div class="rd-m">${mon}</div></div><div class="rm-info"><div class="rm-nm">${esc(r.name)}</div><div class="rm-meta">📅 ${fmtDate(r.time)} ${isNaN(d)?'':d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')} | 👥 ${r.target==='all'?'全員':esc(r.target)}</div><div style="margin-top:5px;font-size:12.5px;color:#6b7280">${esc(r.msg)}</div></div><div style="display:flex;gap:8px;align-items:center"><span class="badge ${r.status==='scheduled'?'b-blue':'b-green'}">${r.status==='scheduled'?'⏰ 予約中':'✓ 完了'}</span><button class="btn-d" onclick="delReminder(${r.id})">削除</button></div></div>`;
   }).join('');
 }
 function delReminder(id){if(!confirm('削除しますか？'))return;D.reminders=D.reminders.filter(x=>x.id!==id);save();renderReminder();toast('削除しました')}
 function addReminder(){
-  const name=$('rm-name').value.trim();const time=$('rm-time').value;const msg=$('rm-msg').value.trim();
-  if(!name||!time||!msg)return;
+  const name=$('rm-name').value.trim(),time=$('rm-time').value,msg=$('rm-msg').value.trim();
+  if(!name||!time||!msg){alert('全項目を入力してください');return;}
   D.reminders.push({id:nid(),name,time,target:$('rm-target').value,msg,status:'scheduled'});
-  save();renderReminder();closeMo('mo-addReminder');
-  ['rm-name','rm-time','rm-msg'].forEach(i=>$(i).value='');
-  toast('リマインダを作成しました ⏰');
+  save();renderReminder();closeMo('mo-addReminder');toast('リマインダを作成しました ⏰');
 }
 
-// ==================== TRAFFIC ====================
+// ============================================================
+// TRAFFIC
+// ============================================================
 function renderTraffic(){
-  const total=D.traffic.reduce((a,t)=>a+t.clicks,0);
-  const totalCV=D.traffic.reduce((a,t)=>a+t.cvs,0);
-  const avgCVR=total>0?((totalCV/total)*100).toFixed(1):0;
-  $('trafficStats').innerHTML=`
-    <div class="tr-card"><div class="tr-n">${total.toLocaleString()}</div><div class="tr-l">総クリック数</div></div>
-    <div class="tr-card"><div class="tr-n">${totalCV}</div><div class="tr-l">総CV数</div></div>
-    <div class="tr-card"><div class="tr-n">${avgCVR}%</div><div class="tr-l">平均CVR</div></div>
-    <div class="tr-card"><div class="tr-n">${D.traffic.length}</div><div class="tr-l">リンク数</div></div>`;
+  const total=D.traffic.reduce((a,t)=>a+t.clicks,0),totalCV=D.traffic.reduce((a,t)=>a+t.cvs,0);
+  const avgCVR=total>0?((totalCV/total)*100).toFixed(1):'0.0';
+  $('trafficStats').innerHTML=`<div class="tr-card"><div class="tr-n">${total.toLocaleString()}</div><div class="tr-l">総クリック数</div></div><div class="tr-card"><div class="tr-n">${totalCV}</div><div class="tr-l">総CV数</div></div><div class="tr-card"><div class="tr-n">${avgCVR}%</div><div class="tr-l">平均CVR</div></div><div class="tr-card"><div class="tr-n">${D.traffic.length}</div><div class="tr-l">リンク数</div></div>`;
   const maxClicks=Math.max(...D.traffic.map(t=>t.clicks),1);
-  $('trafficList').innerHTML=D.traffic.map(t=>`
-    <div class="tbl-r lk-row">
-      <div><div style="font-size:13.5px;font-weight:500">${t.name}</div><div class="lk-url">${t.url}</div>
-        <div class="tr-bar"><div class="tr-fill" style="width:${(t.clicks/maxClicks*100).toFixed(1)}%"></div></div>
-      </div>
-      <div style="font-size:14px;font-weight:600">${t.clicks.toLocaleString()}</div>
-      <div style="font-size:14px;font-weight:600;color:var(--green)">${t.cvs}</div>
-      <div style="font-size:13px">${t.clicks>0?((t.cvs/t.clicks)*100).toFixed(1):'0.0'}%</div>
-      <div style="display:flex;gap:5px">
-        <button class="btn-e" onclick="clickSim(${t.id})">+クリック</button>
-        <button class="btn-d" onclick="delTraffic(${t.id})">削除</button>
-      </div>
-    </div>`).join('');
+  $('trafficList').innerHTML=D.traffic.map(t=>`<div class="tbl-r lk-row"><div><div style="font-size:13.5px;font-weight:500">${esc(t.name)}</div><div class="lk-url">${esc(t.url)}</div><div class="tr-bar"><div class="tr-fill" style="width:${(t.clicks/maxClicks*100).toFixed(1)}%"></div></div></div><div style="font-size:14px;font-weight:600">${t.clicks.toLocaleString()}</div><div style="font-size:14px;font-weight:600;color:var(--green)">${t.cvs}</div><div style="font-size:13px">${t.clicks>0?((t.cvs/t.clicks)*100).toFixed(1):'0.0'}%</div><div style="display:flex;gap:5px"><button class="btn-e" onclick="clickSim(${t.id})">+クリック</button><button class="btn-d" onclick="delTraffic(${t.id})">削除</button></div></div>`).join('');
 }
 function clickSim(id){const t=D.traffic.find(x=>x.id===id);if(t){t.clicks++;save();renderTraffic();toast('クリックを記録しました 🔀')}}
 function delTraffic(id){if(!confirm('削除しますか？'))return;D.traffic=D.traffic.filter(x=>x.id!==id);save();renderTraffic();toast('削除しました')}
@@ -1177,203 +1143,123 @@ function addTraffic(){
   const name=$('tr-name').value.trim();if(!name)return;
   const shortId='xxx'+String(nid()).slice(-3);
   D.traffic.push({id:nid(),name,url:`https://lin.ee/${shortId}`,source:$('tr-source').value||'direct',clicks:0,cvs:0,tag:$('tr-tag').value});
-  save();renderTraffic();closeMo('mo-addTraffic');
-  ['tr-name','tr-url','tr-source'].forEach(i=>$(i).value='');
-  toast('トラッキングリンクを作成しました 🔗');
+  save();renderTraffic();closeMo('mo-addTraffic');toast('トラッキングリンクを作成しました 🔗');
 }
 
-// ==================== CV ====================
+// ============================================================
+// CV
+// ============================================================
 function renderCV(){
-  $('cvCards').innerHTML=D.cvPoints.map(cv=>{
-    const sales=cv.amount*cv.count;
-    return`<div class="cv-card2">
-      <div class="cv-top"><div class="cv-nm">${cv.name}</div>${evBadge(cv.type)}</div>
-      <div class="cv-row">
-        <div><div class="cv-n">${cv.count}</div><div style="font-size:11px;color:var(--ts);margin-top:2px">CV数</div></div>
-        ${sales>0?`<div><div class="cv-sales">¥${sales.toLocaleString()}</div><div style="font-size:11px;color:var(--ts);margin-top:2px">売上</div></div>`:''}
-      </div>
-    </div>`;
-  }).join('');
-  $('cvList').innerHTML=D.cvPoints.map(cv=>`
-    <div class="tbl-r" style="grid-template-columns:2fr 1.5fr 1fr 1.2fr 80px">
-      <div style="font-size:14px;font-weight:500">${cv.name}</div>
-      <div>${evBadge(cv.type)}</div>
-      <div style="font-size:13.5px;font-weight:500">¥${cv.amount.toLocaleString()}</div>
-      <div style="font-size:12.5px;color:var(--ts)">${cv.date}</div>
-      <div style="display:flex;gap:5px">
-        <button class="btn-e" onclick="cvFire(${cv.id})">+1</button>
-        <button class="btn-d" onclick="delCV(${cv.id})">削除</button>
-      </div>
-    </div>`).join('');
+  $('cvCards').innerHTML=D.cvPoints.map(cv=>{const s=cv.amount*cv.count;return`<div class="cv-card2"><div class="cv-top"><div class="cv-nm">${esc(cv.name)}</div>${evBadge(cv.type)}</div><div class="cv-row"><div><div class="cv-n">${cv.count}</div><div style="font-size:11px;color:var(--ts);margin-top:2px">CV数</div></div>${s>0?`<div><div class="cv-sales">¥${s.toLocaleString()}</div><div style="font-size:11px;color:var(--ts);margin-top:2px">売上</div></div>`:''}</div></div>`;}).join('');
+  $('cvList').innerHTML=D.cvPoints.map(cv=>`<div class="tbl-r" style="grid-template-columns:2fr 1.5fr 1fr 1.2fr 80px"><div style="font-size:14px;font-weight:500">${esc(cv.name)}</div><div>${evBadge(cv.type)}</div><div style="font-size:13.5px;font-weight:500">¥${cv.amount.toLocaleString()}</div><div style="font-size:12.5px;color:var(--ts)">${esc(cv.date)}</div><div style="display:flex;gap:5px"><button class="btn-e" onclick="cvFire(${cv.id})">+1</button><button class="btn-d" onclick="delCV(${cv.id})">削除</button></div></div>`).join('');
 }
-function cvFire(id){
-  const cv=D.cvPoints.find(x=>x.id===id);
-  if(cv){cv.count++;D.activity.unshift({type:'cv',icon:'💰',text:`CVポイント「${cv.name}」が発生`,time:'たった今',color:'qi-r'});save();renderCV();toast(`CV「${cv.name}」を記録しました 📊`)}
-}
+function cvFire(id){const cv=D.cvPoints.find(x=>x.id===id);if(cv){cv.count++;D.activity.unshift({type:'cv',icon:'💰',text:`CVポイント「${cv.name}」が発生`,time:'たった今',color:'qi-r'});save();renderCV();toast(`CV「${esc(cv.name)}」を記録しました 📊`)}}
 function delCV(id){if(!confirm('削除しますか？'))return;D.cvPoints=D.cvPoints.filter(x=>x.id!==id);save();renderCV();toast('削除しました')}
 function addCV(){
   const name=$('cv-name').value.trim();if(!name)return;
   const d=new Date();
   D.cvPoints.push({id:nid(),name,type:$('cv-type').value,amount:parseInt($('cv-amount').value)||0,date:`${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`,count:0});
-  save();renderCV();closeMo('mo-addCV');$('cv-name').value='';$('cv-amount').value='0';
-  toast('CVポイントを作成しました 📊');
+  save();renderCV();closeMo('mo-addCV');toast('CVポイントを作成しました 📊');
 }
 
-// ==================== SCORING ====================
+// ============================================================
+// SCORING
+// ============================================================
 function renderScoring(){
-  const maxScore=Math.max(...D.friends.map(f=>f.score),1);
-  const avgScore=D.friends.length?Math.round(D.friends.reduce((a,f)=>a+f.score,0)/D.friends.length):0;
-  const topScore=Math.max(...D.friends.map(f=>f.score));
-  $('scoreStats').innerHTML=`
-    <div class="card" style="text-align:center"><div style="font-size:30px;font-weight:700;color:var(--green)">${D.friends.length}</div><div style="font-size:12px;color:var(--ts);margin-top:4px">リード総数</div></div>
-    <div class="card" style="text-align:center"><div style="font-size:30px;font-weight:700;color:var(--green)">${avgScore}pt</div><div style="font-size:12px;color:var(--ts);margin-top:4px">平均スコア</div></div>
-    <div class="card" style="text-align:center"><div style="font-size:30px;font-weight:700;color:var(--green)">${topScore}pt</div><div style="font-size:12px;color:var(--ts);margin-top:4px">最高スコア</div></div>`;
-  $('scoreList').innerHTML=D.scoreRules.map(r=>`
-    <div class="tbl-r" style="grid-template-columns:2fr 1fr 1fr 70px">
-      <div style="font-size:13.5px;font-weight:500">${r.name}</div>
-      <div style="font-size:14px;font-weight:700;color:var(--green)">+${r.score}pt</div>
-      <div><span class="badge ${r.active?'b-green':'b-gray'}">${r.active?'有効':'無効'}</span></div>
-      <div style="display:flex;gap:4px">
-        <button class="btn-e" onclick="toggleScore(${r.id})" style="font-size:11px">切替</button>
-        <button class="btn-d" onclick="delScore(${r.id})">削除</button>
-      </div>
-    </div>`).join('');
-  const sorted=[...D.friends].sort((a,b)=>b.score-a.score);
-  $('leaderboard').innerHTML=sorted.map((f,i)=>`
-    <div class="tbl-r lb-row">
-      <div class="lb-rank ${i<3?'top':''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <div class="av" style="width:28px;height:28px;font-size:15px">${f.av}</div>
-        <div style="font-size:13px;font-weight:500">${f.name}</div>
-      </div>
-      <div><div style="font-size:14px;font-weight:700;color:var(--green)">${f.score}pt</div>
-        <div class="score-bar"><div class="score-fill" style="width:${(f.score/maxScore)*100}%"></div></div></div>
-      <div class="tags" style="max-width:120px">${f.tags.slice(0,2).map(tagBadge).join('')}</div>
-      <div style="font-size:12px;color:var(--ts)">${f.date}</div>
-    </div>`).join('');
+  const maxScore=Math.max(...D.friends.map(f=>f.score||0),1);
+  const avgScore=D.friends.length?Math.round(D.friends.reduce((a,f)=>a+(f.score||0),0)/D.friends.length):0;
+  const topScore=D.friends.length?Math.max(...D.friends.map(f=>f.score||0)):0;
+  $('scoreStats').innerHTML=`<div class="card" style="text-align:center"><div style="font-size:30px;font-weight:700;color:var(--green)">${D.friends.length}</div><div style="font-size:12px;color:var(--ts);margin-top:4px">リード総数</div></div><div class="card" style="text-align:center"><div style="font-size:30px;font-weight:700;color:var(--green)">${avgScore}pt</div><div style="font-size:12px;color:var(--ts);margin-top:4px">平均スコア</div></div><div class="card" style="text-align:center"><div style="font-size:30px;font-weight:700;color:var(--green)">${topScore}pt</div><div style="font-size:12px;color:var(--ts);margin-top:4px">最高スコア</div></div>`;
+  $('scoreList').innerHTML=D.scoreRules.map(r=>`<div class="tbl-r" style="grid-template-columns:2fr 1fr 1fr 70px"><div style="font-size:13.5px;font-weight:500">${esc(r.name)}</div><div style="font-size:14px;font-weight:700;color:var(--green)">+${r.score}pt</div><div><span class="badge ${r.active?'b-green':'b-gray'}">${r.active?'有効':'無効'}</span></div><div style="display:flex;gap:4px"><button class="btn-e" onclick="toggleScore(${r.id})" style="font-size:11px">切替</button><button class="btn-d" onclick="delScore(${r.id})">削除</button></div></div>`).join('');
+  const sorted=[...D.friends].sort((a,b)=>(b.score||0)-(a.score||0));
+  $('leaderboard').innerHTML=sorted.map((f,i)=>`<div class="tbl-r lb-row"><div class="lb-rank ${i<3?'top':''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</div><div style="display:flex;align-items:center;gap:8px"><div class="av" style="width:28px;height:28px;font-size:15px">${f.av}</div><div style="font-size:13px;font-weight:500">${esc(f.name)}</div></div><div><div style="font-size:14px;font-weight:700;color:var(--green)">${f.score||0}pt</div><div class="score-bar"><div class="score-fill" style="width:${((f.score||0)/maxScore*100).toFixed(1)}%"></div></div></div><div class="tags" style="max-width:120px">${(f.tags||[]).slice(0,2).map(tagBadge).join('')}</div><div style="font-size:12px;color:var(--ts)">${esc(f.date)}</div></div>`).join('');
 }
 function toggleScore(id){const r=D.scoreRules.find(x=>x.id===id);if(r){r.active=!r.active;save();renderScoring();toast(r.active?'有効化しました ✅':'無効化しました')}}
 function delScore(id){if(!confirm('削除しますか？'))return;D.scoreRules=D.scoreRules.filter(x=>x.id!==id);save();renderScoring();toast('削除しました')}
 function addScore(){
   const name=$('sc-name').value.trim();if(!name)return;
   D.scoreRules.push({id:nid(),name,score:parseInt($('sc-val').value)||10,trigger:$('sc-trigger').value,active:true});
-  save();renderScoring();closeMo('mo-addScore');$('sc-name').value='';$('sc-val').value='10';
-  toast('スコアリングルールを追加しました ⭐');
+  save();renderScoring();closeMo('mo-addScore');toast('スコアリングルールを追加しました ⭐');
 }
 
-// ==================== AUTOMATION ====================
-function renderAuto(){
-  $('autoList').innerHTML=D.automations.map(a=>`
-    <div class="au-card">
-      <div class="au-ico ${a.color}">${a.icon}</div>
-      <div class="au-info">
-        <div class="au-nm">${a.name}</div>
-        <div class="au-desc">IF: ${a.trigger} → THEN: ${a.action} &nbsp;|&nbsp; ${a.desc}</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button class="btn-d" onclick="delAuto(${a.id})">削除</button>
-        <div class="tgl ${a.active?'':'off'}" onclick="toggleAuto(${a.id})" title="${a.active?'無効化':'有効化'}"></div>
-      </div>
-    </div>`).join('');
-}
-function toggleAuto(id){const a=D.automations.find(x=>x.id===id);if(a){a.active=!a.active;save();renderAuto();toast(a.active?`「${a.name}」を有効化しました ✅`:`「${a.name}」を無効化しました`)}}
+// ============================================================
+// AUTOMATION
+// ============================================================
+function renderAuto(){$('autoList').innerHTML=D.automations.map(a=>`<div class="au-card"><div class="au-ico ${a.color}">${a.icon}</div><div class="au-info"><div class="au-nm">${esc(a.name)}</div><div class="au-desc">IF: ${esc(a.trigger)} → THEN: ${esc(a.action)} | ${esc(a.desc||'')}</div></div><div style="display:flex;gap:8px;align-items:center"><button class="btn-d" onclick="delAuto(${a.id})">削除</button><div class="tgl ${a.active?'':'off'}" onclick="toggleAuto(${a.id})"></div></div></div>`).join('')}
+function toggleAuto(id){const a=D.automations.find(x=>x.id===id);if(a){a.active=!a.active;save();renderAuto();toast(a.active?`「${esc(a.name)}」を有効化 ✅`:`「${esc(a.name)}」を無効化`)}}
 function delAuto(id){if(!confirm('削除しますか？'))return;D.automations=D.automations.filter(x=>x.id!==id);save();renderAuto();toast('削除しました')}
 function addAuto(){
   const name=$('au-name').value.trim();if(!name)return;
   const i=Math.floor(Math.random()*ICONS_AUTO.length);
   D.automations.push({id:nid(),name,trigger:$('au-trigger').value,action:$('au-action').value,desc:$('au-desc').value||`${$('au-trigger').value} → ${$('au-action').value}`,icon:ICONS_AUTO[i],color:COLORS_AUTO[i],active:true});
-  save();renderAuto();closeMo('mo-addAuto');$('au-name').value='';$('au-desc').value='';
-  toast('オートメーションを追加しました ⚡');
+  save();renderAuto();closeMo('mo-addAuto');toast('オートメーションを追加しました ⚡');
 }
 
-// ==================== WEBHOOK ====================
-function renderWebhook(){
-  $('webhookList').innerHTML=D.webhooks.map(w=>`
-    <div class="wh-card">
-      <div class="au-ico ${w.active?'qi-g':'qi-y'}" style="width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px">🔗</div>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:14px;font-weight:600">${w.name}</div>
-        <div class="wh-url">${w.url}</div>
-        <div style="font-size:12px;color:var(--ts);margin-top:3px">イベント: ${w.event} &nbsp;|&nbsp; 送信: ${w.calls}件</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <span class="badge ${w.active?'b-green':'b-gray'}">${w.active?'有効':'無効'}</span>
-        <button class="btn-e" onclick="testWebhook(${w.id})">テスト</button>
-        <button class="btn-d" onclick="delWebhook(${w.id})">削除</button>
-        <div class="tgl ${w.active?'':'off'}" onclick="toggleWebhook(${w.id})"></div>
-      </div>
-    </div>`).join('');
-}
+// ============================================================
+// WEBHOOK
+// ============================================================
+function renderWebhook(){$('webhookList').innerHTML=D.webhooks.map(w=>`<div class="wh-card"><div class="au-ico ${w.active?'qi-g':'qi-y'}" style="width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px">🔗</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">${esc(w.name)}</div><div class="wh-url">${esc(w.url)}</div><div style="font-size:12px;color:var(--ts);margin-top:3px">イベント: ${esc(w.event)} | 送信: ${w.calls}件</div></div><div style="display:flex;gap:8px;align-items:center"><span class="badge ${w.active?'b-green':'b-gray'}">${w.active?'有効':'無効'}</span><button class="btn-e" onclick="testWebhook(${w.id})">テスト</button><button class="btn-d" onclick="delWebhook(${w.id})">削除</button><div class="tgl ${w.active?'':'off'}" onclick="toggleWebhook(${w.id})"></div></div></div>`).join('')}
 function toggleWebhook(id){const w=D.webhooks.find(x=>x.id===id);if(w){w.active=!w.active;save();renderWebhook();toast(w.active?'有効化しました':'無効化しました')}}
-function testWebhook(id){const w=D.webhooks.find(x=>x.id===id);if(w){w.calls++;save();renderWebhook();toast(`「${w.name}」にテスト送信しました ✅`)}}
+function testWebhook(id){const w=D.webhooks.find(x=>x.id===id);if(w){w.calls++;save();renderWebhook();toast(`「${esc(w.name)}」にテスト送信しました ✅`)}}
 function delWebhook(id){if(!confirm('削除しますか？'))return;D.webhooks=D.webhooks.filter(x=>x.id!==id);save();renderWebhook();toast('削除しました')}
 function addWebhook(){
-  const name=$('wh-name').value.trim();const url=$('wh-url').value.trim();
-  if(!name||!url)return;
+  const name=$('wh-name').value.trim(),url=$('wh-url').value.trim();
+  if(!name||!url){alert('名前とURLを入力してください');return;}
+  if(!/^https?:\/\//.test(url)){alert('URLはhttps://から始めてください');return;}
   D.webhooks.push({id:nid(),name,url,event:$('wh-event').value,active:true,calls:0});
-  save();renderWebhook();closeMo('mo-addWebhook');$('wh-name').value='';$('wh-url').value='';
-  toast('Webhookを追加しました 🔗');
+  save();renderWebhook();closeMo('mo-addWebhook');toast('Webhookを追加しました 🔗');
 }
 
-// ==================== NOTIFY ====================
-function renderNotify(){
-  $('notifyList').innerHTML=D.notify.map(n=>`
-    <div class="nf-row">
-      <div><div style="font-size:13.5px;font-weight:500">${n.name}</div><div style="font-size:11.5px;color:var(--ts);margin-top:2px">${n.desc}</div></div>
-      <div class="tgl ${n.active?'':'off'}" onclick="toggleNotify(${n.id})"></div>
-    </div>`).join('');
-}
+// ============================================================
+// NOTIFY
+// ============================================================
+function renderNotify(){$('notifyList').innerHTML=D.notify.map(n=>`<div class="nf-row"><div><div style="font-size:13.5px;font-weight:500">${esc(n.name)}</div><div style="font-size:11.5px;color:var(--ts);margin-top:2px">${esc(n.desc)}</div></div><div class="tgl ${n.active?'':'off'}" onclick="toggleNotify(${n.id})"></div></div>`).join('')}
 function toggleNotify(id){const n=D.notify.find(x=>x.id===id);if(n){n.active=!n.active;save();renderNotify();toast(n.active?'通知をONにしました 🔔':'通知をOFFにしました')}}
 
-// ==================== SETTINGS ====================
+// ============================================================
+// SETTINGS
+// ============================================================
 function renderSettings(){
+  const accounts=getLineAccounts();
+  const acct=accounts.find(a=>a.id===SESSION.lineAccountId)||{name:'未設定',channelId:'',accessToken:'',desc:''};
   $('settingsContent').innerHTML=`
-    <div class="set-title">LINEアカウント接続</div>
-    <div class="set-row"><div><label>チャンネルID</label><span>LINE公式アカウントのチャンネルID</span></div><div class="set-val">1234567890</div></div>
-    <div class="set-row"><div><label>チャンネルシークレット</label><span>APIシークレットキー</span></div><div class="set-val">••••••••••••••••</div></div>
-    <div class="set-row"><div><label>アクセストークン</label><span>LINE Messaging API トークン</span></div>
-      <button class="btn btn-s" style="font-size:12px;padding:6px 12px" onclick="toast('トークンを再発行しました 🔑')">再発行</button></div>
-    <div class="set-row"><div><label>Webhook URL</label><span>LINEからのイベント受信URL</span></div>
-      <div style="display:flex;align-items:center;gap:8px"><div class="set-val" style="font-family:monospace;font-size:11.5px">https://linedar.app/webhook/xxx</div>
-      <button class="btn btn-s" style="font-size:12px;padding:6px 12px" onclick="copyWebhookUrl()">コピー</button></div></div>
-    <div class="set-row"><div><label>接続状態</label><span>LINEとの接続を確認</span></div>
-      <span class="badge b-green">● 接続済み</span></div>
-    <div class="set-title" style="margin-top:0;border-top:1px solid var(--br)">プラン情報</div>
-    <div class="set-row"><div><label>プラン</label></div><div><span class="badge b-green">FREE</span></div></div>
-    <div class="set-row"><div><label>友だち数上限</label></div><div class="set-val">∞ 無制限</div></div>
-    <div class="set-row"><div><label>月間メッセージ数</label></div><div class="set-val">∞ 無制限</div></div>
-    <div class="set-row"><div><label>バージョン</label></div><div class="set-val">ラインダー v1.0.0</div></div>`;
+    <div class="set-section">
+      <div class="set-title">接続中のLINEアカウント</div>
+      <div class="set-row"><div><label>アカウント名</label></div><div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px;font-weight:600">${esc(acct.name)}</span><button class="btn btn-s" style="font-size:12px;padding:6px 12px" onclick="openMo('mo-acctSwitch')">切替</button></div></div>
+      <div class="set-row"><div><label>チャンネルID</label></div><div class="set-val">${acct.channelId?esc(acct.channelId):'<span style="color:#f59e0b">未設定</span>'}</div></div>
+      <div class="set-row"><div><label>アクセストークン</label></div><div class="set-val">${acct.accessToken?'••••••••••••••••':'<span style="color:#f59e0b">未設定</span>'}</div></div>
+      <div class="set-row"><div><label>接続状態</label></div><div>${acct.channelId?'<span class="badge b-green">● 設定済み</span>':'<span class="badge b-yellow">⚠ 未設定</span>'}</div></div>
+      <div class="set-row"><div></div><button class="btn btn-g" style="font-size:12px" onclick="openMo('mo-addAcct')">＋ 新しいLINEアカウントを追加</button></div>
+    </div>
+    <div class="set-section">
+      <div class="set-title">アカウント情報</div>
+      <div class="set-row"><div><label>ログインユーザー</label></div><div class="set-val">${esc(SESSION.userName||'')} (${esc(SESSION.userEmail||'')})</div></div>
+      <div class="set-row"><div><label>登録済みLINEアカウント数</label></div><div class="set-val">${accounts.length}件</div></div>
+      <div class="set-row"><div><label>データ保存場所</label></div><div class="set-val">ブラウザ localStorage（ユーザー別・アカウント別に分離）</div></div>
+    </div>
+    <div class="set-section">
+      <div class="set-title">セキュリティ</div>
+      <div class="set-row"><div><label>パスワード変更</label></div><button class="btn btn-s" style="font-size:12px;padding:6px 12px" onclick="toast('パスワード変更機能は準備中です')">変更</button></div>
+      <div class="set-row"><div><label>全セッション無効化</label></div><button class="btn btn-s" style="font-size:12px;padding:6px 12px;color:var(--danger)" onclick="doLogout()">ログアウト</button></div>
+    </div>
+    <div class="set-section">
+      <div class="set-title">バージョン情報</div>
+      <div class="set-row"><div><label>ラインダー</label></div><div class="set-val">v2.0.0 (セキュア・マルチテナント対応)</div></div>
+    </div>`;
 }
-function copyWebhookUrl(){navigator.clipboard.writeText('https://linedar.app/webhook/xxx').catch(()=>{});toast('Webhook URLをコピーしました 🔗')}
 
-// ==================== RENDERS MAP ====================
-const renders={
-  dashboard:renderDash,
-  friends:()=>{renderTagCheckboxes('fn-tags-sel',[]);renderFriends()},
-  chat:renderChat,
-  scenario:renderScenario,
-  broadcast:renderBroadcast,
-  template:renderTemplate,
-  reminder:renderReminder,
-  traffic:renderTraffic,
-  cv:renderCV,
-  scoring:renderScoring,
-  automation:renderAuto,
-  webhook:renderWebhook,
-  notify:renderNotify,
-  settings:renderSettings,
-};
-
-// ==================== INIT ====================
-// Attach event listeners (DOM is ready - script runs at end of body)
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
 $('bc-target').addEventListener('change',function(){$('bc-tag-wrap').style.display=this.value==='tag'?'block':'none'});
 $('tp-body').addEventListener('input',previewTemplate);
 $('tp-prev-name').addEventListener('input',previewTemplate);
 
-renderDash();
-renderTagCheckboxes('fn-tags-sel',[]);
-renderFriends();
-renderTagCheckboxes('ef-tags-sel',[]);
+// ============================================================
+// INIT
+// ============================================================
+if(checkSession()){showApp();}
+// else login screen is already visible
 </script>
 </body>
 </html>
